@@ -7,7 +7,7 @@ export const profile: Profile = {
   location: "Macau, RN — Brasil",
   availability:
     "Disponível para atuação presencial (preferência), híbrida ou remota — apto para mudança de cidade.",
-  bio: "Mais de 6 anos construindo software — hoje em Java EE, Spring Boot e PostgreSQL na ESIG Software, unindo sistemas críticos de gestão universitária com React, Next.js, TypeScript e fluxo diário com IA.",
+  bio: "Mais de 6 anos construindo software — hoje evoluindo sistemas críticos de gestão universitária com Java EE, Spring Boot e PostgreSQL na ESIG Software, além de desenvolver aplicações web modernas com React, Next.js, TypeScript e fluxo diário com IA.",
   resumeSummary:
     "Desenvolvedor FullStack com mais de 6 anos de experiência (desde março de 2020), atuando em sistemas corporativos de gestão universitária em produção com Java EE, Spring Boot, APIs REST e PostgreSQL, além de aplicações modernas com React, Next.js, TypeScript, Angular e Docker. Experiência em liderança técnica e gestão de equipe, automações RPA e uso disciplinado de agentes de IA no fluxo de engenharia. Disponibilidade para atuação presencial (preferência), híbrida ou remota, com facilidade para mudança de cidade.",
   contact: {
