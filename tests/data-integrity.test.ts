@@ -7,7 +7,7 @@ import { aiPillars, skillGroups } from "@/data/skills";
 describe("portfolio data integrity", () => {
   it("contains Francisco Filho profile, contact channels, and 5 experiences", () => {
     expect(profile.name).toBe("Francisco Filho");
-    expect(profile.handle).toBe("ffilho-dev");
+    expect(profile.handle).toBe("ffilho.dev");
     expect(profile.location).toContain("Macau");
     expect(profile.availability).toMatch(/presencial/i);
     expect(profile.contact.email).toBe("contato@ffilho.dev");

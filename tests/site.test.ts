@@ -13,14 +13,20 @@ describe("site metadata and url helpers", () => {
     );
   });
 
-  it("prefixes VERCEL_URL with https when NEXT_PUBLIC_SITE_URL is unset", () => {
+  it("prefixes VERCEL_URL with https in preview or non-production environments", () => {
+    expect(
+      getSiteUrl({ VERCEL_ENV: "preview", VERCEL_URL: "portfolio-ffilho.vercel.app" }),
+    ).toBe("https://portfolio-ffilho.vercel.app");
     expect(getSiteUrl({ VERCEL_URL: "portfolio-ffilho.vercel.app" })).toBe(
       "https://portfolio-ffilho.vercel.app",
     );
   });
 
-  it("falls back to http://localhost:3000 when no env var is set", () => {
-    expect(getSiteUrl({})).toBe("http://localhost:3000");
+  it("uses https://ffilho.dev in production and as default fallback", () => {
+    expect(
+      getSiteUrl({ VERCEL_ENV: "production", VERCEL_URL: "portfolio-ffilho.vercel.app" }),
+    ).toBe("https://ffilho.dev");
+    expect(getSiteUrl({})).toBe("https://ffilho.dev");
   });
 
   it("formats display URLs cleanly without scheme, www, or trailing slash", () => {

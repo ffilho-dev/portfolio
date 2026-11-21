@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { profile } from "@/data/profile";
 
-const DEFAULT_SITE_URL = "http://localhost:3000";
+const DEFAULT_SITE_URL = "https://ffilho.dev";
 
 export const SITE_NAME = `${profile.name} (${profile.handle})`;
 export const SITE_LOCALE = "pt_BR";
@@ -37,6 +37,10 @@ export function getSiteUrl(
     : "";
   if (publicUrl) {
     return publicUrl;
+  }
+
+  if (env.VERCEL_ENV === "production") {
+    return DEFAULT_SITE_URL;
   }
 
   const vercelUrl = env.VERCEL_URL ? normalizeUrl(env.VERCEL_URL) : "";

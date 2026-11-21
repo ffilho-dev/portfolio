@@ -510,7 +510,7 @@ export async function generateResumePdf(): Promise<Uint8Array> {
     "Next.js",
     "TypeScript",
   ]);
-  pdfDoc.setCreator("ffilho-dev/portfolio (pdf-lib)");
+  pdfDoc.setCreator("ffilho.dev (pdf-lib)");
 
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);

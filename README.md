@@ -1,4 +1,4 @@
-# Portfólio — Francisco Filho (`ffilho-dev`)
+# Portfólio — Francisco Filho (`ffilho.dev`)
 
 Portfólio profissional e currículo web de **Francisco Filho**, Desenvolvedor FullStack com mais de 6 anos de experiência em desenvolvimento de software — combinando sistemas corporativos em produção com Java (Java EE, Spring Boot) e PostgreSQL, ecossistema web moderno (React, Next.js, TypeScript) e engenharia assistida por agentes de IA.
 
@@ -41,4 +41,4 @@ npm run build      # Build estático de produção (Next.js)
 
 ## Variáveis de ambiente (Vercel)
 
-- `NEXT_PUBLIC_SITE_URL`: URL canônica do domínio próprio (ex.: `https://seudominio.com.br`), usada em metadados OpenGraph, `sitemap.xml` e `robots.txt`. Quando omitida, o projeto usa `VERCEL_URL` ou `http://localhost:3000`.
+- `NEXT_PUBLIC_SITE_URL`: URL canônica opcional para sobrescrever o domínio padrão (`https://ffilho.dev`), usada em metadados OpenGraph, `sitemap.xml`, `robots.txt` e no PDF. Em ambientes de preview na Vercel, `VERCEL_URL` é usado automaticamente quando a variável não está definida.

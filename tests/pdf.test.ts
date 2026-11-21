@@ -20,6 +20,7 @@ describe("resume PDF generator", () => {
     const text = buildResumeText();
     expect(text).toContain("Francisco Filho");
     expect(text).toContain("contato@ffilho.dev");
+    expect(text).toContain("https://ffilho.dev");
     expect(text).not.toContain("Francisco Fernandes");
     expect(text).not.toContain("@gmail.com");
     expect(text).toContain("Desenvolvedor FullStack");

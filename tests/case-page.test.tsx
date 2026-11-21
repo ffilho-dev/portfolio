@@ -121,7 +121,7 @@ describe("CaseStudyPage", () => {
     expect(meta.title).toContain("APIs REST");
     expect(meta.description).toBeTruthy();
     expect(meta.openGraph?.locale).toBe("pt_BR");
-    expect(meta.openGraph?.siteName).toContain("ffilho-dev");
+    expect(meta.openGraph?.siteName).toContain("ffilho.dev");
     expect(meta.openGraph?.images).toEqual([
       expect.objectContaining({ url: "/opengraph-image", width: 1200, height: 630 }),
     ]);

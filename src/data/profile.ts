@@ -2,7 +2,7 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Francisco Filho",
-  handle: "ffilho-dev",
+  handle: "ffilho.dev",
   title: "Desenvolvedor FullStack",
   location: "Macau, RN — Brasil",
   availability:
