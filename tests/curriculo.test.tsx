@@ -12,7 +12,9 @@ describe("CurriculoPage", () => {
 
   it("renders download PDF link, print button, full experience timeline, UFERSA 2027, and curso.dev certificate", () => {
     render(<CurriculoPage />);
-    expect(screen.getByRole("heading", { level: 1, name: "Francisco Fernandes" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Francisco Filho" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "contato@ffilho.dev" })).toHaveAttribute("href", "mailto:contato@ffilho.dev");
+    expect(screen.queryByText(/@gmail\.com/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /voltar ao portfólio/i })).toHaveAttribute("href", "/");
     expect(screen.getByRole("link", { name: /baixar pdf/i })).toHaveAttribute("href", "/curriculo.pdf");
     expect(screen.getByRole("button", { name: /imprimir/i })).toBeInTheDocument();

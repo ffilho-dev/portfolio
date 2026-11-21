@@ -25,8 +25,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const SITE_DESCRIPTION =
-  "Portfólio técnico de Francisco Fernandes (ffilho-dev): mais de 6 anos em desenvolvimento FullStack com Java, Spring Boot e PostgreSQL em produção, além de React, Next.js, TypeScript e fluxo diário com IA.";
+const SITE_DESCRIPTION = `Portfólio técnico de ${profile.name} (${profile.handle}): mais de 6 anos em desenvolvimento FullStack com Java, Spring Boot e PostgreSQL em produção, além de React, Next.js, TypeScript e fluxo diário com IA.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),

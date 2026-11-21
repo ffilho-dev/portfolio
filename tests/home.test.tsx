@@ -11,7 +11,7 @@ describe("HomePage", () => {
 
   it("renders lean hero, 3 metrics, 6 production cases with SVG diagrams, AI workflow, 4 projects, trajectory, certificate, and direct contact", () => {
     render(<HomePage />);
-    expect(screen.getByRole("heading", { level: 1, name: "Francisco Fernandes" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Francisco Filho" })).toBeInTheDocument();
     expect(screen.getByText(/Desenvolvedor FullStack/i)).toBeInTheDocument();
     expect(screen.getByText(/presencial/i)).toBeInTheDocument();
     expect(screen.getByText("250+ entregas")).toBeInTheDocument();
@@ -20,6 +20,8 @@ describe("HomePage", () => {
     expect(screen.getAllByRole("link", { name: /ler estudo de caso/i })).toHaveLength(6);
     expect(screen.getByRole("link", { name: /baixar currículo/i })).toHaveAttribute("href", "/curriculo.pdf");
     expect(screen.getByRole("link", { name: /whatsapp/i })).toHaveAttribute("href", "https://wa.me/5584994980792");
+    expect(screen.getByRole("link", { name: "contato@ffilho.dev" })).toHaveAttribute("href", "mailto:contato@ffilho.dev");
+    expect(screen.queryByText(/@gmail\.com/i)).not.toBeInTheDocument();
     expect(screen.getByText(/curso\.dev/i)).toBeInTheDocument();
     expect(screen.getByText(/ProjetoEsigGroup/i)).toBeInTheDocument();
   });

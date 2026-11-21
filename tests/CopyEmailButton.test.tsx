@@ -15,11 +15,11 @@ describe("CopyEmailButton", () => {
       value: { writeText },
       configurable: true,
     });
-    render(<CopyEmailButton email="fcofilho0809@gmail.com" />);
+    render(<CopyEmailButton email="contato@ffilho.dev" />);
     const button = screen.getByRole("button", { name: /copiar e-mail/i });
     expect(button.className).toContain("border-[var(--border)]");
     await user.click(button);
-    expect(writeText).toHaveBeenCalledWith("fcofilho0809@gmail.com");
+    expect(writeText).toHaveBeenCalledWith("contato@ffilho.dev");
     expect(screen.getByRole("status")).toHaveTextContent(/copiado/i);
     expect(button).toBeEnabled();
   });
@@ -30,7 +30,7 @@ describe("CopyEmailButton", () => {
       value: { writeText: vi.fn().mockRejectedValue(new Error("Denied")) },
       configurable: true,
     });
-    render(<CopyEmailButton email="fcofilho0809@gmail.com" />);
+    render(<CopyEmailButton email="contato@ffilho.dev" />);
     await user.click(screen.getByRole("button", { name: /copiar e-mail/i }));
     expect(screen.getByRole("status")).toHaveTextContent(/não foi possível copiar/i);
   });
@@ -41,7 +41,7 @@ describe("CopyEmailButton", () => {
       value: undefined,
       configurable: true,
     });
-    render(<CopyEmailButton email="fcofilho0809@gmail.com" />);
+    render(<CopyEmailButton email="contato@ffilho.dev" />);
     await user.click(screen.getByRole("button", { name: /copiar e-mail/i }));
     expect(screen.getByRole("status")).toHaveTextContent(/não foi possível copiar/i);
   });
@@ -54,7 +54,7 @@ describe("CopyEmailButton", () => {
         value: { writeText },
         configurable: true,
       });
-      render(<CopyEmailButton email="fcofilho0809@gmail.com" />);
+      render(<CopyEmailButton email="contato@ffilho.dev" />);
       const button = screen.getByRole("button", { name: /copiar e-mail/i });
 
       await act(async () => {

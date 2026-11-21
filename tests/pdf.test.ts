@@ -18,7 +18,10 @@ describe("resume PDF generator", () => {
 
   it("includes key factual career info and zero confidential patterns in generated PDF text", () => {
     const text = buildResumeText();
-    expect(text).toContain("Francisco Fernandes");
+    expect(text).toContain("Francisco Filho");
+    expect(text).toContain("contato@ffilho.dev");
+    expect(text).not.toContain("Francisco Fernandes");
+    expect(text).not.toContain("@gmail.com");
     expect(text).toContain("Desenvolvedor FullStack");
     expect(text).toContain("Macau");
     expect(text).toContain("presencial");
@@ -55,7 +58,7 @@ describe("resume PDF generator", () => {
     const doc = await PDFDocument.load(bytes);
     expect(doc.getPageCount()).toBeGreaterThanOrEqual(1);
     expect(doc.getPageCount()).toBeLessThanOrEqual(2);
-    expect(doc.getTitle()).toContain("Francisco Fernandes");
+    expect(doc.getTitle()).toContain("Francisco Filho");
 
     const firstPage = doc.getPage(0);
     const { width, height } = firstPage.getSize();
@@ -68,7 +71,7 @@ describe("resume PDF generator", () => {
     expect(res.status).toBe(200);
     expect(res.headers.get("content-type")).toBe("application/pdf");
     expect(res.headers.get("content-disposition")).toContain(
-      "curriculo-francisco-fernandes.pdf",
+      "curriculo-francisco-filho.pdf",
     );
     const buf = new Uint8Array(await res.arrayBuffer());
     expect(Buffer.from(buf.slice(0, 5)).toString("ascii")).toBe("%PDF-");

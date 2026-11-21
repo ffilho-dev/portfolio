@@ -5,12 +5,12 @@ import { publicProjects } from "@/data/projects";
 import { aiPillars, skillGroups } from "@/data/skills";
 
 describe("portfolio data integrity", () => {
-  it("contains Francisco Fernandes profile, contact channels, and 5 experiences", () => {
-    expect(profile.name).toBe("Francisco Fernandes");
+  it("contains Francisco Filho profile, contact channels, and 5 experiences", () => {
+    expect(profile.name).toBe("Francisco Filho");
     expect(profile.handle).toBe("ffilho-dev");
     expect(profile.location).toContain("Macau");
     expect(profile.availability).toMatch(/presencial/i);
-    expect(profile.contact.email).toBe("fcofilho0809@gmail.com");
+    expect(profile.contact.email).toBe("contato@ffilho.dev");
     expect(profile.contact.whatsappUrl).toBe("https://wa.me/5584994980792");
     expect(profile.contact.linkedinUrl).toContain("francisco-fernandes-41793411a");
     expect(profile.contact.githubUrl).toBe("https://github.com/ffilho-dev");

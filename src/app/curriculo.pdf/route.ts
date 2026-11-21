@@ -11,7 +11,7 @@ export async function GET(): Promise<Response> {
   return new Response(new Uint8Array(bytes), {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'attachment; filename="curriculo-francisco-fernandes.pdf"',
+      "Content-Disposition": 'attachment; filename="curriculo-francisco-filho.pdf"',
       "Content-Length": String(bytes.byteLength),
     },
   });

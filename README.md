@@ -1,6 +1,6 @@
-# Portfólio — Francisco Fernandes (`ffilho-dev`)
+# Portfólio — Francisco Filho (`ffilho-dev`)
 
-Portfólio profissional e currículo web de **Francisco Fernandes**, Desenvolvedor FullStack com mais de 6 anos de experiência em desenvolvimento de software — combinando sistemas corporativos em produção com Java (Java EE, Spring Boot) e PostgreSQL, ecossistema web moderno (React, Next.js, TypeScript) e engenharia assistida por agentes de IA.
+Portfólio profissional e currículo web de **Francisco Filho**, Desenvolvedor FullStack com mais de 6 anos de experiência em desenvolvimento de software — combinando sistemas corporativos em produção com Java (Java EE, Spring Boot) e PostgreSQL, ecossistema web moderno (React, Next.js, TypeScript) e engenharia assistida por agentes de IA.
 
 ## O que este projeto entrega
 

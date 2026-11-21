@@ -1,7 +1,7 @@
 import type { Profile } from "./types";
 
 export const profile: Profile = {
-  name: "Francisco Fernandes",
+  name: "Francisco Filho",
   handle: "ffilho-dev",
   title: "Desenvolvedor FullStack",
   location: "Macau, RN — Brasil",
@@ -11,7 +11,7 @@ export const profile: Profile = {
   resumeSummary:
     "Desenvolvedor FullStack com mais de 6 anos de experiência (desde março de 2020), atuando em sistemas corporativos de gestão universitária em produção com Java EE, Spring Boot, APIs REST e PostgreSQL, além de aplicações modernas com React, Next.js, TypeScript, Angular e Docker. Experiência em liderança técnica e gestão de equipe, automações RPA e uso disciplinado de agentes de IA no fluxo de engenharia. Disponibilidade para atuação presencial (preferência), híbrida ou remota, com facilidade para mudança de cidade.",
   contact: {
-    email: "fcofilho0809@gmail.com",
+    email: "contato@ffilho.dev",
     whatsappDisplay: "(84) 99498-0792",
     whatsappUrl: "https://wa.me/5584994980792",
     linkedinUrl: "https://www.linkedin.com/in/francisco-fernandes-41793411a/",
