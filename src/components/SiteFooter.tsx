@@ -6,16 +6,16 @@ import { profile } from "@/data/profile";
  */
 export function SiteFooter() {
   return (
-    <footer className="no-print border-t border-[var(--rule)] bg-[var(--bg)]">
+    <footer className="no-print border-t border-border bg-background">
       <div className="site-container flex flex-col gap-6 py-8 sm:flex-row sm:items-start sm:justify-between">
         <div className="prose-measure space-y-1">
-          <p className="text-sm font-semibold text-[var(--ink)]">
+          <p className="text-sm font-semibold text-foreground">
             {profile.name}
           </p>
-          <p className="text-sm text-[var(--muted)]">
+          <p className="text-sm text-muted-foreground">
             {profile.title}, {profile.location}
           </p>
-          <p className="text-sm text-[var(--muted)]">{profile.availability}</p>
+          <p className="text-sm text-muted-foreground">{profile.availability}</p>
         </div>
 
         <nav aria-label="Links diretos" className="min-w-0">
@@ -23,7 +23,7 @@ export function SiteFooter() {
             <li>
               <Link
                 href="/curriculo"
-                className="inline-flex min-h-9 items-center text-[var(--muted)] underline-offset-4 transition-[color] duration-150 hover:text-[var(--ink)] hover:underline [@media(pointer:coarse)]:min-h-11"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 Currículo
               </Link>
@@ -31,7 +31,7 @@ export function SiteFooter() {
             <li>
               <a
                 href="/curriculo.pdf"
-                className="inline-flex min-h-9 items-center text-[var(--muted)] underline-offset-4 transition-[color] duration-150 hover:text-[var(--ink)] hover:underline [@media(pointer:coarse)]:min-h-11"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 Baixar PDF
               </a>
@@ -41,7 +41,7 @@ export function SiteFooter() {
                 href={profile.contact.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-9 items-center text-[var(--muted)] underline-offset-4 transition-[color] duration-150 hover:text-[var(--ink)] hover:underline [@media(pointer:coarse)]:min-h-11"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 GitHub
               </a>
@@ -51,7 +51,7 @@ export function SiteFooter() {
                 href={profile.contact.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-9 items-center text-[var(--muted)] underline-offset-4 transition-[color] duration-150 hover:text-[var(--ink)] hover:underline [@media(pointer:coarse)]:min-h-11"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 LinkedIn
               </a>
@@ -61,7 +61,7 @@ export function SiteFooter() {
                 href={profile.contact.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-9 items-center text-[var(--muted)] underline-offset-4 transition-[color] duration-150 hover:text-[var(--ink)] hover:underline [@media(pointer:coarse)]:min-h-11"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 WhatsApp
               </a>
@@ -69,7 +69,7 @@ export function SiteFooter() {
             <li>
               <a
                 href={`mailto:${profile.contact.email}`}
-                className="inline-flex min-h-9 items-center text-[var(--muted)] underline-offset-4 transition-[color] duration-150 hover:text-[var(--ink)] hover:underline [@media(pointer:coarse)]:min-h-11"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 E-mail
               </a>

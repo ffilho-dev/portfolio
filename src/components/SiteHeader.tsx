@@ -1,6 +1,11 @@
+"use client";
+
+import { MessageCircle, Search } from "lucide-react";
 import Link from "next/link";
-import { profile } from "@/data/profile";
+import { usePortfolioOverlays } from "@/components/PortfolioOverlayProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Button } from "@/components/ui/button";
+import { profile } from "@/data/profile";
 
 const NAV_ITEMS = [
   { href: "/#cases", label: "Cases" },
@@ -11,28 +16,30 @@ const NAV_ITEMS = [
 ] as const;
 
 /**
- * Architectural hairline header shared across all routes and hidden on print.
+ * Sticky architectural header shared across all routes and hidden on print.
  */
 export function SiteHeader() {
+  const { openCommand } = usePortfolioOverlays();
+
   return (
-    <header className="no-print border-b border-[var(--rule)] bg-[var(--bg)]">
-      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-3.5">
+    <header className="no-print sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-3">
         <Link
           href="/"
           translate="no"
-          className="inline-flex min-h-9 items-center font-mono text-sm font-medium tracking-tight text-[var(--ink)] transition-[color] duration-150 hover:text-[var(--accent)] [@media(pointer:coarse)]:min-h-11"
+          className="inline-flex min-h-9 items-center font-mono text-sm font-medium tracking-tight text-foreground transition-[color] duration-150 hover:text-signal [@media(pointer:coarse)]:min-h-11"
         >
           {profile.handle}
         </Link>
 
-        <div className="flex w-full items-start justify-between gap-4 md:w-auto md:items-center md:gap-6">
+        <div className="flex w-full flex-wrap items-center justify-between gap-3 md:w-auto md:flex-nowrap md:gap-6">
           <nav aria-label="Principal" className="min-w-0">
             <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-x-5">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="inline-flex min-h-9 items-center text-sm font-medium text-[var(--muted)] transition-[color] duration-150 hover:text-[var(--ink)] [@media(pointer:coarse)]:min-h-11"
+                    className="inline-flex min-h-9 items-center text-sm font-medium text-muted-foreground transition-[color] duration-150 hover:text-foreground [@media(pointer:coarse)]:min-h-11"
                   >
                     {item.label}
                   </Link>
@@ -40,7 +47,43 @@ export function SiteHeader() {
               ))}
             </ul>
           </nav>
-          <ThemeToggle />
+
+          <div className="flex shrink-0 items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={openCommand}
+              aria-keyshortcuts="Control+K Meta+K"
+              className="cursor-pointer text-muted-foreground hover:text-foreground [@media(pointer:coarse)]:min-h-11"
+            >
+              <Search aria-hidden="true" className="size-4" strokeWidth={1.75} />
+              <span>Buscar</span>
+              <kbd
+                aria-hidden="true"
+                className="hidden rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[11px] leading-none text-muted-foreground sm:inline-block"
+              >
+                ⌘K
+              </kbd>
+            </Button>
+
+            <ThemeToggle />
+
+            <Button asChild size="sm" className="hidden md:inline-flex">
+              <a
+                href={profile.contact.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle
+                  aria-hidden="true"
+                  className="size-4"
+                  strokeWidth={1.75}
+                />
+                <span>WhatsApp</span>
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </header>

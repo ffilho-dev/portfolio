@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { CertificationDialog } from "@/components/CertificationDialog";
+import { CommandMenu } from "@/components/CommandMenu";
+import { PortfolioOverlayProvider } from "@/components/PortfolioOverlayProvider";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Toaster } from "@/components/ui/sonner";
 import { profile } from "@/data/profile";
 import { getSiteUrl, SITE_LOCALE, SITE_NAME } from "@/lib/site";
 import {
@@ -87,11 +91,18 @@ export default function RootLayout({
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>
-        <SiteHeader />
-        <main id="conteudo" tabIndex={-1} className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+        <PortfolioOverlayProvider>
+          <SiteHeader />
+          <main id="conteudo" tabIndex={-1} className="flex-1">
+            {children}
+          </main>
+          <SiteFooter />
+          <div className="no-print">
+            <CommandMenu />
+            <CertificationDialog />
+            <Toaster className="toaster group no-print" />
+          </div>
+        </PortfolioOverlayProvider>
       </body>
     </html>
   );
