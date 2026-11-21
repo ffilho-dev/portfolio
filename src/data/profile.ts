@@ -14,7 +14,7 @@ export const profile: Profile = {
     email: "contato@ffilho.dev",
     whatsappDisplay: "(84) 99498-0792",
     whatsappUrl: "https://wa.me/5584994980792",
-    linkedinUrl: "https://www.linkedin.com/in/francisco-fernandes-41793411a/",
+    linkedinUrl: "https://www.linkedin.com/in/francisco-filho-41793411a/",
     githubUrl: "https://github.com/ffilho-dev",
     githubHandle: "ffilho-dev",
   },

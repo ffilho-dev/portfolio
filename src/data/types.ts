@@ -60,6 +60,8 @@ export interface DiagramNode {
 
 export interface CaseStudy {
   readonly slug: string;
+  readonly domain: string;
+  readonly shortTitle: string;
   readonly title: string;
   readonly summary: string;
   readonly context: string;
@@ -92,6 +94,9 @@ export interface SkillGroup {
 }
 
 export interface AiPillar {
+  readonly id: string;
+  readonly shortTitle: string;
   readonly title: string;
   readonly description: string;
+  readonly artifacts: readonly string[];
 }

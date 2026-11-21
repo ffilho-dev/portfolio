@@ -3,6 +3,8 @@ import type { CaseStudy } from "./types";
 export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "motor-socioeconomico-auxilios",
+    domain: "Assistência estudantil",
+    shortTitle: "Motor socioeconômico e folha de auxílios",
     title: "Motor de seleção socioeconômica, pontuação auditável e folha de auxílios",
     summary:
       "Motor parametrizável por unidade para questionários, critérios eliminatórios, espelho imutável de pontuação, recursos e folha de pagamento.",
@@ -46,6 +48,8 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     slug: "apis-rest-sistema-academico",
+    domain: "Integrações & APIs",
+    shortTitle: "APIs REST de matrícula e frequência",
     title: "APIs REST para matrícula, frequência e integração em sistema acadêmico",
     summary:
       "Evolução de contratos REST/JSON para matrícula, turmas e notícias somada à blindagem contra erros e vazamento de registros inválidos.",
@@ -90,6 +94,8 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     slug: "verificacao-digital-diplomas-documentos",
+    domain: "Documentos oficiais",
+    shortTitle: "Verificação digital de diplomas (QR Code)",
     title: "Verificação digital de diplomas via QR Code e geração de documentos oficiais",
     summary:
       "Autenticidade digital via código verificador e QR Code, diplomas de pós-graduação e Residência em Saúde, declarações docentes e dossiês em PDF.",
@@ -130,6 +136,8 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     slug: "acervo-marc21-biblioteca-catalogacao",
+    domain: "Biblioteca & Dados",
+    shortTitle: "Saneamento MARC21 e biblioteca",
     title: "Saneamento de acervo MARC21, catalogação e ficha catalográfica",
     summary:
       "Higienização em lote de registros MARC21 no PostgreSQL, correção de cache JDBC e rotina de reservas, multas e fluxo de ficha catalográfica.",
@@ -174,6 +182,8 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     slug: "fluxos-pesquisa-extensao-bolsas",
+    domain: "Pesquisa & Extensão",
+    shortTitle: "Pesquisa, Extensão e bolsas",
     title: "Fluxos de Pesquisa, Extensão, bolsas e curricularização",
     summary:
       "Cadastro e validação de projetos externos, ciclo de avaliação e prorrogação com notificações, creditação de extensão e controle de bolsas.",
@@ -218,6 +228,8 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     slug: "sustentacao-multi-institucional-regras-criticas",
+    domain: "Sustentação crítica",
+    shortTitle: "Sustentação para 12 instituições",
     title: "Customizações, regras críticas e sustentação para 12 instituições",
     summary:
       "Mais de 250 demandas entregues atravessando 4 sistemas corporativos para 12 instituições públicas, com auditorias SQL e isolamento por branch.",
