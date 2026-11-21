@@ -37,22 +37,22 @@ export function CasesBentoSection({ studies }: CasesBentoSectionProps) {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    registerCaseHandler((slug) => {
-      setActiveSlug(slug);
-    });
-    return () => registerCaseHandler(null);
+    registerCaseHandler(
+      (slug) => {
+        setActiveSlug(slug);
+      },
+      () => {
+        setActiveSlug(null);
+      },
+    );
+    return () => registerCaseHandler(null, null);
   }, [registerCaseHandler]);
-
-  const overlayActive = commandOpen || certDialogOpen;
-  if (overlayActive && activeSlug !== null) {
-    setActiveSlug(null);
-  }
 
   const filteredStudies = studies.filter((study) =>
     caseMatchesStackFilter(study, filter),
   );
   const activeStudy =
-    !overlayActive && activeSlug
+    !commandOpen && !certDialogOpen && activeSlug
       ? (studies.find((item) => item.slug === activeSlug) ?? null)
       : null;
 

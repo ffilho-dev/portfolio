@@ -13,6 +13,7 @@ import {
 } from "react";
 
 export type CaseOpenHandler = (slug: string) => void;
+export type CaseDismissHandler = () => void;
 type ActiveOverlay = "none" | "command" | "cert";
 
 export interface PortfolioOverlayContextValue {
@@ -23,7 +24,10 @@ export interface PortfolioOverlayContextValue {
   setCertDialogOpen: (open: boolean) => void;
   openCertDialog: () => void;
   openCase: (slug: string) => void;
-  registerCaseHandler: (handler: CaseOpenHandler | null) => void;
+  registerCaseHandler: (
+    handler: CaseOpenHandler | null,
+    onDismiss?: CaseDismissHandler | null,
+  ) => void;
 }
 
 const PortfolioOverlayContext =
@@ -41,6 +45,7 @@ export function PortfolioOverlayProvider({
   const router = useRouter();
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlay>("none");
   const caseHandlerRef = useRef<CaseOpenHandler | null>(null);
+  const caseDismissRef = useRef<CaseDismissHandler | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -52,6 +57,7 @@ export function PortfolioOverlayProvider({
         event.key.toLowerCase() === "k"
       ) {
         event.preventDefault();
+        caseDismissRef.current?.();
         setActiveOverlay((prev) => (prev === "command" ? "none" : "command"));
       }
     };
@@ -61,28 +67,43 @@ export function PortfolioOverlayProvider({
   }, []);
 
   const setCommandOpen = useCallback((open: boolean) => {
+    if (open) {
+      caseDismissRef.current?.();
+    }
     setActiveOverlay((prev) =>
       open ? "command" : prev === "command" ? "none" : prev,
     );
   }, []);
 
   const setCertDialogOpen = useCallback((open: boolean) => {
+    if (open) {
+      caseDismissRef.current?.();
+    }
     setActiveOverlay((prev) =>
       open ? "cert" : prev === "cert" ? "none" : prev,
     );
   }, []);
 
   const openCommand = useCallback(() => {
+    caseDismissRef.current?.();
     setActiveOverlay("command");
   }, []);
 
   const openCertDialog = useCallback(() => {
+    caseDismissRef.current?.();
     setActiveOverlay("cert");
   }, []);
 
-  const registerCaseHandler = useCallback((handler: CaseOpenHandler | null) => {
-    caseHandlerRef.current = handler;
-  }, []);
+  const registerCaseHandler = useCallback(
+    (
+      handler: CaseOpenHandler | null,
+      onDismiss?: CaseDismissHandler | null,
+    ) => {
+      caseHandlerRef.current = handler;
+      caseDismissRef.current = onDismiss ?? null;
+    },
+    [],
+  );
 
   const openCase = useCallback(
     (slug: string) => {

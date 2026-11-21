@@ -72,7 +72,7 @@ export function CaseSheet({
       >
         {study ? (
           <>
-            <SheetHeader className="border-b border-border px-5 pt-6 pb-5 pe-12 sm:px-6">
+            <SheetHeader className="border-b border-border ps-5 pe-12 pt-6 pb-5 sm:ps-6 sm:pe-12">
               <div className="flex flex-wrap items-center gap-2.5">
                 <Badge
                   variant="outline"

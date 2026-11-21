@@ -326,6 +326,11 @@ describe("HomePage", () => {
       screen.queryByRole("dialog", { name: caseStudies[0].title }),
     ).not.toBeInTheDocument();
 
+    // Closing CommandMenu afterward must keep CaseSheet closed (must not pop back open)
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: "k", ctrlKey: true });
     const targetCase = caseStudies[2];
     await user.click(
       screen.getByRole("option", {
@@ -339,6 +344,16 @@ describe("HomePage", () => {
     ).toBeInTheDocument();
 
     fireEvent.keyDown(window, { key: "k", ctrlKey: true });
+    await user.click(
+      screen.getByRole("option", {
+        name: /ver os 16 módulos da certificação curso\.dev/i,
+      }),
+    );
+    expect(screen.getAllByRole("dialog")).toHaveLength(1);
+    expect(
+      screen.getByRole("dialog", { name: profile.featuredCertification.title }),
+    ).toBeInTheDocument();
+
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
