@@ -1,5 +1,6 @@
 import { PDFDocument } from "pdf-lib";
 import { describe, expect, it } from "vitest";
+import { caseStudies } from "@/data/cases";
 import { buildResumeText, generateResumePdf, sanitizePdfText } from "@/lib/pdf";
 import { GET } from "@/app/curriculo.pdf/route";
 import { assertNoConfidentialContent } from "./confidentiality-guard";
@@ -37,6 +38,11 @@ describe("resume PDF generator", () => {
     expect(text).toContain("Qualidade, Infra e IA");
     expect(text).toContain("Em produção:");
     expect(text).not.toContain("Live:");
+    expect(text).not.toContain("120+");
+    expect(text).not.toContain("2024-2026");
+    for (const study of caseStudies) {
+      expect(text).toContain(study.title);
+    }
 
     assertNoConfidentialContent(text);
   });

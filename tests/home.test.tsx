@@ -9,13 +9,15 @@ describe("HomePage", () => {
     cleanup();
   });
 
-  it("renders lean hero, 3 metrics, 4 production cases with SVG diagrams, AI workflow, 4 projects, trajectory, certificate, and direct contact", () => {
+  it("renders lean hero, 3 metrics, 6 production cases with SVG diagrams, AI workflow, 4 projects, trajectory, certificate, and direct contact", () => {
     render(<HomePage />);
     expect(screen.getByRole("heading", { level: 1, name: "Francisco Fernandes" })).toBeInTheDocument();
     expect(screen.getByText(/Desenvolvedor FullStack/i)).toBeInTheDocument();
     expect(screen.getByText(/presencial/i)).toBeInTheDocument();
-    expect(screen.getAllByRole("img")).toHaveLength(4);
-    expect(screen.getAllByRole("link", { name: /ler estudo de caso/i })).toHaveLength(4);
+    expect(screen.getByText("250+ entregas")).toBeInTheDocument();
+    expect(screen.getByText(/ciclo 2023–2026/i)).toBeInTheDocument();
+    expect(screen.getAllByRole("img")).toHaveLength(6);
+    expect(screen.getAllByRole("link", { name: /ler estudo de caso/i })).toHaveLength(6);
     expect(screen.getByRole("link", { name: /baixar currículo/i })).toHaveAttribute("href", "/curriculo.pdf");
     expect(screen.getByRole("link", { name: /whatsapp/i })).toHaveAttribute("href", "https://wa.me/5584994980792");
     expect(screen.getByText(/curso\.dev/i)).toBeInTheDocument();

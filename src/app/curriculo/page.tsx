@@ -182,7 +182,7 @@ export default function CurriculoPage() {
               Destaques técnicos em produção
             </h2>
             <p className="prose-measure mt-1 text-xs text-[var(--muted)] print:mt-0.5 print:max-w-none print:text-[8pt]">
-              Entregas anonimizadas em sistemas corporativos de gestão universitária (2024–2026).
+              Entregas anonimizadas em sistemas corporativos de gestão universitária (2023–2026).
             </p>
             <div className="mt-4 space-y-4 print:mt-1.5 print:space-y-2">
               {caseStudies.map((study) => (

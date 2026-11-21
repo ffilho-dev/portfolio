@@ -2,6 +2,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import CurriculoPage, { metadata as curriculoMetadata } from "@/app/curriculo/page";
 import { PrintButton } from "@/components/PrintButton";
+import { caseStudies } from "@/data/cases";
 
 describe("CurriculoPage", () => {
   afterEach(() => {
@@ -20,6 +21,14 @@ describe("CurriculoPage", () => {
     expect(screen.getByText(/Turing Tecnologia/i)).toBeInTheDocument();
     expect(screen.getByText(/Yank Solutions/i)).toBeInTheDocument();
     expect(screen.getByText(/Salinor/i)).toBeInTheDocument();
+    expect(screen.getByText(/\(2023–2026\)/)).toBeInTheDocument();
+    expect(screen.queryByText(/2024–2026/)).not.toBeInTheDocument();
+    for (const study of caseStudies) {
+      expect(screen.getByRole("link", { name: study.title })).toHaveAttribute(
+        "href",
+        `/cases/${study.slug}`,
+      );
+    }
     expect(screen.getByText(/UFERSA/i)).toBeInTheDocument();
     expect(screen.getByText(/2027/)).toBeInTheDocument();
     expect(screen.getByText(/Inglês/i)).toBeInTheDocument();

@@ -22,10 +22,38 @@ describe("CaseStudyPage", () => {
     notFoundMock.mockClear();
   });
 
-  it("generates static params for all 4 anonymized cases", () => {
+  it("generates static params for all 6 anonymized cases", () => {
     const params = generateStaticParams();
-    expect(params).toHaveLength(4);
-    expect(params.map((p) => p.slug)).toContain("motor-socioeconomico-auxilios");
+    expect(params).toHaveLength(6);
+    const slugs = params.map((p) => p.slug);
+    expect(slugs).toContain("motor-socioeconomico-auxilios");
+    expect(slugs).toContain("acervo-marc21-biblioteca-catalogacao");
+    expect(slugs).toContain("fluxos-pesquisa-extensao-bolsas");
+  });
+
+  it("renders both new MARC21 and research/extension case study pages with expanded SVG diagrams", async () => {
+    for (const slug of [
+      "acervo-marc21-biblioteca-catalogacao",
+      "fluxos-pesquisa-extensao-bolsas",
+    ]) {
+      const ui = await CaseStudyPage({
+        params: Promise.resolve({ slug }),
+      });
+      render(ui);
+      const study = caseStudies.find((item) => item.slug === slug)!;
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(study.title);
+      const expandedSvg = screen.getByRole("img");
+      expect(expandedSvg.getAttribute("viewBox")).toMatch(/^0 0 720 \d+$/);
+      expect(screen.getByRole("heading", { name: /problema real/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /restrições e contexto operacional/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /solução e decisões técnicas/i }),
+      ).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: /resultado prático/i })).toBeInTheDocument();
+      cleanup();
+    }
   });
 
   it("renders full factual case study sections, expanded SVG diagram, and next-case link", async () => {
@@ -110,7 +138,7 @@ describe("CaseStudyPage", () => {
     expect(missingMeta.title).toBeTruthy();
 
     const entries = sitemap();
-    expect(entries.length).toBeGreaterThanOrEqual(6);
+    expect(entries.length).toBeGreaterThanOrEqual(8);
     const urls = entries.map((entry) => entry.url);
     expect(urls.some((url) => url.endsWith("/curriculo"))).toBe(true);
     for (const item of caseStudies) {

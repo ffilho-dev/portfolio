@@ -4,7 +4,7 @@ Portfólio profissional e currículo web de **Francisco Fernandes**, Desenvolved
 
 ## O que este projeto entrega
 
-- **Dossiê linear (`/`)**: abertura enxuta, lastro real em produção, 4 estudos de caso anonimizados com diagramas arquiteturais inline em SVG, práticas concretas de engenharia com IA (`AGENTS.md`, Skills e MCPs), 4 projetos públicos curados, stack por categoria, trajetória e contato direto.
+- **Dossiê linear (`/`)**: abertura enxuta, lastro real em produção, 6 estudos de caso anonimizados com diagramas arquiteturais inline em SVG, práticas concretas de engenharia com IA (`AGENTS.md`, Skills e MCPs), 4 projetos públicos curados, stack por categoria, trajetória e contato direto.
 - **Estudos de caso aprofundados (`/cases/[slug]`)**: páginas geradas estaticamente (SSG) com diagrama expandido, problema real, restrições operacionais, decisões técnicas e resultado.
 - **Currículo web e PDF ATS-friendly (`/curriculo` e `/curriculo.pdf`)**: página otimizada para leitura e impressão A4 (`@media print`) + gerador estático de PDF vetorial via `pdf-lib` em build time, sempre sincronizado com os dados tipados de `src/data/`.
 - **Tema Claro / Escuro sem FOUC**: respeita `prefers-color-scheme` via `color-scheme: light dark` e `light-dark()` (com fallback), além de alternador manual com contraste WCAG AA/AAA e suporte a `forced-colors`.
