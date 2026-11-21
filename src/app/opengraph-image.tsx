@@ -29,8 +29,8 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#F7F8FA",
-          color: "#0F172A",
+          backgroundColor: "#FFFFFF",
+          color: "#09090B",
           padding: "56px 64px",
           fontFamily: "sans-serif",
           borderTop: "8px solid #0F4C5C",
@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid #CBD5E1",
+            borderBottom: "1px solid #E4E4E7",
             paddingBottom: "20px",
           }}
         >
@@ -49,7 +49,7 @@ export default function OpenGraphImage() {
             style={{
               fontSize: 22,
               fontWeight: 600,
-              color: "#0F172A",
+              color: "#09090B",
               letterSpacing: "-0.02em",
             }}
           >
@@ -58,7 +58,7 @@ export default function OpenGraphImage() {
           <span
             style={{
               fontSize: 20,
-              color: "#334155",
+              color: "#52525B",
             }}
           >
             {profile.location}
@@ -76,7 +76,7 @@ export default function OpenGraphImage() {
             style={{
               fontSize: 64,
               fontWeight: 700,
-              color: "#0F172A",
+              color: "#09090B",
               lineHeight: 1.08,
               letterSpacing: "-0.03em",
             }}
@@ -96,7 +96,7 @@ export default function OpenGraphImage() {
           <div
             style={{
               fontSize: 24,
-              color: "#334155",
+              color: "#52525B",
               lineHeight: 1.45,
               maxWidth: "960px",
             }}
@@ -110,7 +110,7 @@ export default function OpenGraphImage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderTop: "1px solid #CBD5E1",
+            borderTop: "1px solid #E4E4E7",
             paddingTop: "24px",
           }}
         >
@@ -127,9 +127,9 @@ export default function OpenGraphImage() {
                 style={{
                   fontSize: 20,
                   fontWeight: 600,
-                  color: "#0F172A",
-                  backgroundColor: "#FFFFFF",
-                  border: "1px solid #64748B",
+                  color: "#09090B",
+                  backgroundColor: "#F4F4F5",
+                  border: "1px solid #E4E4E7",
                   borderRadius: "6px",
                   padding: "8px 16px",
                 }}
@@ -143,7 +143,7 @@ export default function OpenGraphImage() {
             style={{
               fontSize: 20,
               fontWeight: 500,
-              color: "#334155",
+              color: "#52525B",
             }}
           >
             {metricsCopy}

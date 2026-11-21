@@ -2,7 +2,13 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @media not print {
+      @slot;
+    }
+  }
+}
 
 @theme inline {
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -171,13 +177,6 @@
     --signal-soft: light-dark(var(--signal-soft-light), var(--signal-soft-dark));
     --signal-border: light-dark(var(--signal-border-light), var(--signal-border-dark));
   }
-
-  /* Temporary compatibility aliases for unmigrated routes (removed in Task 5) */
-  --bg: var(--background);
-  --surface: var(--card);
-  --ink: var(--foreground);
-  --rule: var(--border);
-  --accent-ink: var(--signal-foreground);
 
   accent-color: var(--signal);
   scrollbar-color: var(--muted-foreground) var(--background);
@@ -475,7 +474,6 @@
     --signal-foreground: #ffffff;
     --signal-soft: #ffffff;
     --signal-border: #cccccc;
-    --rule: #cccccc;
   }
 
   html,

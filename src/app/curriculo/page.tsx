@@ -1,6 +1,9 @@
+import { ArrowLeft, FileDown } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PrintButton } from "@/components/PrintButton";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { caseStudies } from "@/data/cases";
 import { profile } from "@/data/profile";
 import { publicProjects } from "@/data/projects";
@@ -21,112 +24,104 @@ export default function CurriculoPage() {
   return (
     <div className="site-container py-8 sm:py-12 print:py-0">
       <div className="mx-auto max-w-[52rem]">
-        <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-5">
-          <Link
-            href="/"
-            className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2 text-sm font-medium text-[var(--ink)] transition-[color,background-color,border-color] duration-150 hover:border-[var(--accent)] hover:text-[var(--accent)] [@media(pointer:coarse)]:min-h-11"
+        <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-border pb-5">
+          <Button
+            asChild
+            variant="outline"
+            className="[@media(pointer:coarse)]:min-h-11"
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 16 16"
-              fill="none"
-              className="size-4 shrink-0"
-            >
-              <path
-                d="M10 3.5L5.5 8L10 12.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <Link href="/">
+              <ArrowLeft
+                aria-hidden="true"
+                className="size-4 text-muted-foreground"
+                strokeWidth={1.75}
               />
-            </svg>
-            <span>Voltar ao portfólio</span>
-          </Link>
+              <span>Voltar ao portfólio</span>
+            </Link>
+          </Button>
 
           <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="/curriculo.pdf"
-              className="inline-flex min-h-10 items-center gap-2 rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--accent-ink)] transition-[opacity,background-color] duration-150 hover:opacity-90 [@media(pointer:coarse)]:min-h-11"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-4 shrink-0"
-              >
-                <path d="M12 3v12" />
-                <path d="m7 10 5 5 5-5" />
-                <path d="M5 21h14" />
-              </svg>
-              <span>Baixar PDF</span>
-            </a>
+            <Button asChild className="[@media(pointer:coarse)]:min-h-11">
+              <a href="/curriculo.pdf">
+                <FileDown
+                  aria-hidden="true"
+                  className="size-4"
+                  strokeWidth={1.75}
+                />
+                <span>Baixar PDF</span>
+              </a>
+            </Button>
             <PrintButton />
           </div>
         </div>
 
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-10 print:rounded-none print:border-0 print:bg-transparent print:p-0">
-          <header className="border-b border-[var(--rule)] pb-6 print:pb-3">
-            <h1 className="text-2xl font-bold tracking-tight text-[var(--ink)] sm:text-3xl print:text-[17pt] print:leading-tight">
+        <Card className="gap-0 p-6 sm:p-10 print:block print:rounded-none print:border-0 print:bg-transparent print:p-0 print:shadow-none">
+          <header className="border-b border-border pb-6 print:pb-3">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl print:text-[17pt] print:leading-tight">
               {profile.name}
             </h1>
-            <p className="mt-1 text-base font-semibold text-[var(--accent)] sm:text-lg print:mt-0.5 print:text-[10.5pt]">
+            <p className="mt-1 text-base font-semibold text-signal sm:text-lg print:mt-0.5 print:text-[10.5pt]">
               {profile.title}
             </p>
 
-            <div className="prose-measure mt-3 space-y-1 text-sm text-[var(--muted)] print:mt-1.5 print:max-w-none print:space-y-0.5 print:text-[9pt]">
+            <div className="prose-measure mt-3 space-y-1 text-sm text-muted-foreground print:mt-1.5 print:max-w-none print:space-y-0.5 print:text-[9pt]">
               <p>{profile.location}</p>
               <p>{profile.availability}</p>
             </div>
 
             <ul
               aria-label="Canais de contato"
-              className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--ink)] print:mt-2 print:gap-x-4 print:gap-y-0.5 print:text-[8.5pt]"
+              className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground print:mt-2 print:gap-x-4 print:gap-y-0.5 print:text-[8.5pt]"
             >
               <li>
-                <span className="font-medium text-[var(--muted)]">WhatsApp: </span>
+                <span className="font-medium text-muted-foreground">
+                  WhatsApp:{" "}
+                </span>
                 <a
                   href={contact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="tabular-data inline-flex min-h-10 items-center font-mono underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-[var(--accent)] hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
+                  className="tabular-data inline-flex min-h-10 items-center font-mono underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-signal hover:decoration-signal [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
                 >
                   {contact.whatsappDisplay}
                 </a>
               </li>
               <li>
-                <span className="font-medium text-[var(--muted)]">E-mail: </span>
+                <span className="font-medium text-muted-foreground">
+                  E-mail:{" "}
+                </span>
                 <a
                   href={`mailto:${contact.email}`}
                   translate="no"
-                  className="inline-flex min-h-10 items-center [overflow-wrap:anywhere] underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-[var(--accent)] hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
+                  className="inline-flex min-h-10 items-center [overflow-wrap:anywhere] underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-signal hover:decoration-signal [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
                 >
                   {contact.email}
                 </a>
               </li>
               <li>
-                <span className="font-medium text-[var(--muted)]">LinkedIn: </span>
+                <span className="font-medium text-muted-foreground">
+                  LinkedIn:{" "}
+                </span>
                 <a
                   href={contact.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   translate="no"
-                  className="inline-flex min-h-10 items-center [overflow-wrap:anywhere] underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-[var(--accent)] hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
+                  className="inline-flex min-h-10 items-center [overflow-wrap:anywhere] underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-signal hover:decoration-signal [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
                 >
                   {formatDisplayUrl(contact.linkedinUrl)}
                 </a>
               </li>
               <li>
-                <span className="font-medium text-[var(--muted)]">GitHub: </span>
+                <span className="font-medium text-muted-foreground">
+                  GitHub:{" "}
+                </span>
                 <a
                   href={contact.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   translate="no"
-                  className="inline-flex min-h-10 items-center underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-[var(--accent)] hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
+                  className="inline-flex min-h-10 items-center underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-signal hover:decoration-signal [@media(pointer:coarse)]:min-h-11 print:min-h-0 print:no-underline"
                 >
                   github.com/{contact.githubHandle}
                 </a>
@@ -134,17 +129,17 @@ export default function CurriculoPage() {
             </ul>
           </header>
 
-          <section className="print-avoid-break break-inside-avoid border-b border-[var(--rule)] py-6 print:py-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+          <section className="print-avoid-break break-inside-avoid border-b border-border py-6 print:py-2.5">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Resumo profissional
             </h2>
-            <p className="prose-measure mt-2.5 text-sm leading-relaxed text-[var(--ink)] print:mt-1 print:max-w-none print:text-[9pt] print:leading-snug">
+            <p className="prose-measure mt-2.5 text-sm leading-relaxed text-foreground print:mt-1 print:max-w-none print:text-[9pt] print:leading-snug">
               {profile.resumeSummary}
             </p>
           </section>
 
-          <section className="print-allow-break border-b border-[var(--rule)] py-6 print:py-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+          <section className="print-allow-break border-b border-border py-6 print:py-2.5">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Experiência profissional
             </h2>
             <ol className="mt-4 space-y-5 print:mt-1.5 print:space-y-2">
@@ -154,22 +149,22 @@ export default function CurriculoPage() {
                   className="print-entry print-avoid-break break-inside-avoid"
                 >
                   <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-                    <h3 className="text-sm font-semibold text-[var(--ink)] sm:text-base print:text-[9.5pt]">
+                    <h3 className="text-sm font-semibold text-foreground sm:text-base print:text-[9.5pt]">
                       {exp.company}
                     </h3>
-                    <span className="tabular-data font-mono text-xs text-[var(--muted)] print:text-[8pt]">
+                    <span className="tabular-data font-mono text-xs text-muted-foreground print:text-[8pt]">
                       {exp.period}
                     </span>
                   </div>
                   <div className="mt-0.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5 text-sm print:mt-0 print:text-[8.5pt]">
-                    <p className="font-medium text-[var(--ink)]">{exp.role}</p>
+                    <p className="font-medium text-foreground">{exp.role}</p>
                     {exp.location ? (
-                      <p className="text-xs text-[var(--muted)] print:text-[8pt]">
+                      <p className="text-xs text-muted-foreground print:text-[8pt]">
                         {exp.location}
                       </p>
                     ) : null}
                   </div>
-                  <p className="prose-measure mt-1.5 text-sm leading-relaxed text-[var(--muted)] print:mt-0.5 print:max-w-none print:text-[8.5pt] print:leading-snug">
+                  <p className="prose-measure mt-1.5 text-sm leading-relaxed text-muted-foreground print:mt-0.5 print:max-w-none print:text-[8.5pt] print:leading-snug">
                     {exp.summary}
                   </p>
                 </li>
@@ -177,11 +172,11 @@ export default function CurriculoPage() {
             </ol>
           </section>
 
-          <section className="print-allow-break border-b border-[var(--rule)] py-6 print:py-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+          <section className="print-allow-break border-b border-border py-6 print:py-2.5">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Destaques técnicos em produção
             </h2>
-            <p className="prose-measure mt-1 text-xs text-[var(--muted)] print:mt-0.5 print:max-w-none print:text-[8pt]">
+            <p className="prose-measure mt-1 text-xs text-muted-foreground print:mt-0.5 print:max-w-none print:text-[8pt]">
               Entregas anonimizadas em sistemas corporativos de gestão universitária (2023–2026).
             </p>
             <div className="mt-4 space-y-4 print:mt-1.5 print:space-y-2">
@@ -191,25 +186,25 @@ export default function CurriculoPage() {
                   className="print-entry print-avoid-break break-inside-avoid space-y-1 print:space-y-0.5"
                 >
                   <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-                    <h3 className="text-sm font-semibold text-[var(--ink)] print:text-[9pt]">
+                    <h3 className="text-sm font-semibold text-foreground print:text-[9pt]">
                       <Link
                         href={`/cases/${study.slug}`}
-                        className="underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-[var(--accent)] hover:decoration-[var(--accent)] print:no-underline"
+                        className="underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-signal hover:decoration-signal print:no-underline"
                       >
                         {study.title}
                       </Link>
                     </h3>
-                    <span className="tabular-data shrink-0 font-mono text-xs text-[var(--muted)] print:text-[8pt]">
+                    <span className="tabular-data shrink-0 font-mono text-xs text-muted-foreground print:text-[8pt]">
                       {study.period}
                     </span>
                   </div>
                   <p
                     translate="no"
-                    className="text-xs text-[var(--muted)] print:text-[7.5pt]"
+                    className="text-xs text-muted-foreground print:text-[7.5pt]"
                   >
                     {study.stack.join(", ")}
                   </p>
-                  <p className="prose-measure text-sm leading-relaxed text-[var(--muted)] print:max-w-none print:text-[8.5pt] print:leading-snug">
+                  <p className="prose-measure text-sm leading-relaxed text-muted-foreground print:max-w-none print:text-[8.5pt] print:leading-snug">
                     {study.summary}
                   </p>
                 </article>
@@ -217,18 +212,18 @@ export default function CurriculoPage() {
             </div>
           </section>
 
-          <section className="print-avoid-break break-inside-avoid border-b border-[var(--rule)] py-6 print:py-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+          <section className="print-avoid-break break-inside-avoid border-b border-border py-6 print:py-2.5">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Competências técnicas e IA no fluxo
             </h2>
             <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3 print:mt-1.5 print:grid-cols-1 print:gap-1">
               {skillGroups.map((group) => (
                 <div key={group.category} className="min-w-0">
-                  <h3 className="text-sm font-semibold text-[var(--ink)] print:inline print:text-[8.5pt]">
+                  <h3 className="text-sm font-semibold text-foreground print:inline print:text-[8.5pt]">
                     {group.category}
                     <span className="hidden print:inline">: </span>
                   </h3>
-                  <ul className="mt-1.5 space-y-1 text-sm text-[var(--muted)] print:mt-0 print:inline print:space-y-0 print:text-[8.5pt]">
+                  <ul className="mt-1.5 space-y-1 text-sm text-muted-foreground print:mt-0 print:inline print:space-y-0 print:text-[8.5pt]">
                     {group.items.map((item, idx) => (
                       <li key={item} className="print:inline">
                         {item}
@@ -242,11 +237,11 @@ export default function CurriculoPage() {
               ))}
             </div>
 
-            <div className="mt-4 border-t border-[var(--rule)] pt-3 print:mt-2 print:pt-1.5">
-              <h3 className="text-sm font-semibold text-[var(--ink)] print:text-[8.5pt]">
+            <div className="mt-4 border-t border-border pt-3 print:mt-2 print:pt-1.5">
+              <h3 className="text-sm font-semibold text-foreground print:text-[8.5pt]">
                 Fluxo de engenharia com IA
               </h3>
-              <ul className="mt-1.5 space-y-1 text-sm text-[var(--muted)] print:mt-0.5 print:space-y-0.5 print:text-[8.5pt]">
+              <ul className="mt-1.5 space-y-1 text-sm text-muted-foreground print:mt-0.5 print:space-y-0.5 print:text-[8.5pt]">
                 {aiPillars.map((pillar) => (
                   <li key={pillar.title}>{pillar.title}</li>
                 ))}
@@ -254,8 +249,8 @@ export default function CurriculoPage() {
             </div>
           </section>
 
-          <section className="print-allow-break border-b border-[var(--rule)] py-6 print:py-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+          <section className="print-allow-break border-b border-border py-6 print:py-2.5">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Projetos públicos selecionados
             </h2>
             <ul className="mt-3 space-y-3 print:mt-1.5 print:space-y-1.5">
@@ -275,24 +270,24 @@ export default function CurriculoPage() {
                         <h3
                           id={titleId}
                           translate="no"
-                          className="text-sm font-semibold text-[var(--ink)] print:text-[9pt]"
+                          className="text-sm font-semibold text-foreground print:text-[9pt]"
                         >
                           {project.name}
                         </h3>
                         {project.isLegacyAccount ? (
-                          <span className="text-xs italic text-[var(--muted)] print:text-[7.5pt]">
+                          <span className="text-xs italic text-muted-foreground print:text-[7.5pt]">
                             ({project.legacyNote ?? "conta anterior"})
                           </span>
                         ) : null}
                       </div>
                       <span
                         translate="no"
-                        className="text-xs text-[var(--muted)] print:text-[7.5pt]"
+                        className="text-xs text-muted-foreground print:text-[7.5pt]"
                       >
                         {project.stack.join(", ")}
                       </span>
                     </div>
-                    <p className="prose-measure text-sm leading-relaxed text-[var(--muted)] print:max-w-none print:text-[8.5pt] print:leading-snug">
+                    <p className="prose-measure text-sm leading-relaxed text-muted-foreground print:max-w-none print:text-[8.5pt] print:leading-snug">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm print:hidden">
@@ -303,7 +298,7 @@ export default function CurriculoPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-labelledby={`${liveId} ${titleId}`}
-                          className="inline-flex min-h-10 items-center font-semibold text-[var(--accent)] underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11"
+                          className="inline-flex min-h-10 items-center font-semibold text-signal underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-signal [@media(pointer:coarse)]:min-h-11"
                         >
                           Em produção
                         </a>
@@ -314,12 +309,12 @@ export default function CurriculoPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-labelledby={`${repoId} ${titleId}`}
-                        className="inline-flex min-h-10 items-center font-medium text-[var(--ink)] underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-[var(--accent)] hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11"
+                        className="inline-flex min-h-10 items-center font-medium text-foreground underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-signal hover:decoration-signal [@media(pointer:coarse)]:min-h-11"
                       >
                         Código
                       </a>
                     </div>
-                    <p className="hidden text-[7.5pt] leading-tight text-[var(--muted)] print:block">
+                    <p className="hidden text-[7.5pt] leading-tight text-muted-foreground print:block">
                       {project.liveUrl ? (
                         <>
                           Em produção: <span translate="no">{project.liveUrl}</span>
@@ -334,40 +329,42 @@ export default function CurriculoPage() {
             </ul>
           </section>
 
-          <section className="print-avoid-break break-inside-avoid border-b border-[var(--rule)] py-6 print:py-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+          <section className="print-avoid-break break-inside-avoid border-b border-border py-6 print:py-2.5">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Formação acadêmica e idiomas
             </h2>
             <div className="mt-3 flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline print:mt-1.5">
               <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-[var(--ink)] sm:text-base print:text-[9pt]">
+                <h3 className="text-sm font-semibold text-foreground sm:text-base print:text-[9pt]">
                   {education.institution}
                 </h3>
-                <p className="text-sm text-[var(--muted)] print:text-[8.5pt]">
+                <p className="text-sm text-muted-foreground print:text-[8.5pt]">
                   {education.degree}
                 </p>
               </div>
-              <span className="tabular-data shrink-0 font-mono text-xs text-[var(--muted)] print:text-[8pt]">
+              <span className="tabular-data shrink-0 font-mono text-xs text-muted-foreground print:text-[8pt]">
                 {education.period}
               </span>
             </div>
-            <p className="mt-2.5 text-sm text-[var(--muted)] print:mt-1 print:text-[8.5pt]">
-              <span className="font-semibold text-[var(--ink)]">Idiomas: </span>
+            <p className="mt-2.5 text-sm text-muted-foreground print:mt-1 print:text-[8.5pt]">
+              <span className="font-semibold text-foreground">Idiomas: </span>
               {profile.languages.join(", ")}
             </p>
           </section>
 
           <section className="print-allow-break pt-6 print:pt-2.5">
-            <h2 className="text-base font-bold tracking-tight text-[var(--accent)] sm:text-lg print:text-[10pt]">
+            <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
               Certificações
             </h2>
             <div className="print-entry print-avoid-break break-inside-avoid mt-3 space-y-2 print:mt-1.5 print:space-y-1">
               <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-                <h3 className="text-sm font-semibold text-[var(--ink)] sm:text-base print:text-[9pt]">
+                <h3 className="text-sm font-semibold text-foreground sm:text-base print:text-[9pt]">
                   {featuredCertification.title}
                 </h3>
-                <div className="flex flex-wrap gap-x-3 text-xs text-[var(--muted)] print:text-[8pt]">
-                  <span className="tabular-data font-mono">{featuredCertification.hours}h</span>
+                <div className="flex flex-wrap gap-x-3 text-xs text-muted-foreground print:text-[8pt]">
+                  <span className="tabular-data font-mono">
+                    {featuredCertification.hours}h
+                  </span>
                   <span>
                     Emitido em{" "}
                     <span className="tabular-data font-mono">
@@ -376,7 +373,10 @@ export default function CurriculoPage() {
                   </span>
                 </div>
               </div>
-              <p translate="no" className="text-sm text-[var(--muted)] print:text-[8.5pt]">
+              <p
+                translate="no"
+                className="text-sm text-muted-foreground print:text-[8.5pt]"
+              >
                 {featuredCertification.issuer}
               </p>
               <div className="text-sm print:text-[8pt]">
@@ -384,19 +384,20 @@ export default function CurriculoPage() {
                   href={featuredCertification.verifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-10 items-center font-semibold text-[var(--accent)] underline decoration-[var(--rule)] underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-[var(--accent)] [@media(pointer:coarse)]:min-h-11 print:hidden"
+                  className="inline-flex min-h-10 items-center font-semibold text-signal underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-signal [@media(pointer:coarse)]:min-h-11 print:hidden"
                 >
                   Verificar certificado
                 </a>
-                <p className="hidden text-[8pt] text-[var(--muted)] print:block">
-                  Verificação: <span translate="no">{featuredCertification.verifyUrl}</span>
+                <p className="hidden text-[8pt] text-muted-foreground print:block">
+                  Verificação:{" "}
+                  <span translate="no">{featuredCertification.verifyUrl}</span>
                 </p>
               </div>
               <div>
-                <p className="text-xs font-medium text-[var(--ink)] print:text-[8pt]">
+                <p className="text-xs font-medium text-foreground print:text-[8pt]">
                   Módulos concluídos ({featuredCertification.modules.length}):
                 </p>
-                <ul className="mt-1.5 grid grid-cols-1 gap-x-6 gap-y-1 ps-4 text-xs text-[var(--muted)] sm:grid-cols-2 print:mt-1 print:grid-cols-3 print:gap-x-4 print:gap-y-0.5 print:ps-4 print:text-[7.5pt]">
+                <ul className="mt-1.5 grid grid-cols-1 gap-x-6 gap-y-1 ps-4 text-xs text-muted-foreground sm:grid-cols-2 print:mt-1 print:grid-cols-3 print:gap-x-4 print:gap-y-0.5 print:ps-4 print:text-[7.5pt]">
                   {featuredCertification.modules.map((moduleName) => (
                     <li key={moduleName} className="list-disc">
                       {moduleName}
@@ -406,11 +407,11 @@ export default function CurriculoPage() {
               </div>
             </div>
 
-            <div className="print-entry print-avoid-break break-inside-avoid mt-4 border-t border-[var(--rule)] pt-3 print:mt-2 print:pt-1.5">
-              <h3 className="text-xs font-semibold text-[var(--ink)] print:text-[8pt]">
+            <div className="print-entry print-avoid-break break-inside-avoid mt-4 border-t border-border pt-3 print:mt-2 print:pt-1.5">
+              <h3 className="text-xs font-semibold text-foreground print:text-[8pt]">
                 Outras certificações
               </h3>
-              <ul className="mt-1.5 space-y-1 ps-4 text-sm text-[var(--muted)] print:mt-0.5 print:space-y-0.5 print:ps-4 print:text-[8pt]">
+              <ul className="mt-1.5 space-y-1 ps-4 text-sm text-muted-foreground print:mt-0.5 print:space-y-0.5 print:ps-4 print:text-[8pt]">
                 {profile.otherCertifications.map((cert) => (
                   <li key={cert} className="list-disc">
                     {cert}
@@ -419,7 +420,7 @@ export default function CurriculoPage() {
               </ul>
             </div>
           </section>
-        </div>
+        </Card>
       </div>
     </div>
   );
