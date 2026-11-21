@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light dark;
+
+  /* Claro (Opção A — Branco mineral + Petróleo profundo) */
+  --bg-light: #f7f8fa;
+  --surface-light: #ffffff;
+  --ink-light: #0f172a;
+  --muted-light: #334155;
+  --border-light: #64748b;
+  --rule-light: #cbd5e1;
+  --accent-light: #0f4c5c;
+  --accent-ink-light: #ffffff;
+
+  /* Escuro (Opção C — Ardósia real + Âmbar de instrumentação) */
+  --bg-dark: #161b22;
+  --surface-dark: #1f2630;
+  --ink-dark: #f8fafc;
+  --muted-dark: #cbd5e1;
+  --border-dark: #6e7f94;
+  --rule-dark: #3b4654;
+  --accent-dark: #e09f3e;
+  --accent-ink-dark: #161b22;
+
+  /* Fallback defaults for browsers without light-dark() */
+  --bg: var(--bg-light);
+  --surface: var(--surface-light);
+  --ink: var(--ink-light);
+  --muted: var(--muted-light);
+  --border: var(--border-light);
+  --rule: var(--rule-light);
+  --accent: var(--accent-light);
+  --accent-ink: var(--accent-ink-light);
+
+  @media (prefers-color-scheme: dark) {
+    --bg: var(--bg-dark);
+    --surface: var(--surface-dark);
+    --ink: var(--ink-dark);
+    --muted: var(--muted-dark);
+    --border: var(--border-dark);
+    --rule: var(--rule-dark);
+    --accent: var(--accent-dark);
+    --accent-ink: var(--accent-ink-dark);
+  }
+
+  @supports (color: light-dark(white, black)) {
+    --bg: light-dark(var(--bg-light), var(--bg-dark));
+    --surface: light-dark(var(--surface-light), var(--surface-dark));
+    --ink: light-dark(var(--ink-light), var(--ink-dark));
+    --muted: light-dark(var(--muted-light), var(--muted-dark));
+    --border: light-dark(var(--border-light), var(--border-dark));
+    --rule: light-dark(var(--rule-light), var(--rule-dark));
+    --accent: light-dark(var(--accent-light), var(--accent-dark));
+    --accent-ink: light-dark(var(--accent-ink-light), var(--accent-ink-dark));
+  }
+
+  accent-color: var(--accent);
+  scrollbar-color: var(--border) var(--bg);
+}
+
+:root:where(:has(> head > meta[name="color-scheme"][content="dark"])) {
+  color-scheme: dark;
+  --bg: var(--bg-dark);
+  --surface: var(--surface-dark);
+  --ink: var(--ink-dark);
+  --muted: var(--muted-dark);
+  --border: var(--border-dark);
+  --rule: var(--rule-dark);
+  --accent: var(--accent-dark);
+  --accent-ink: var(--accent-ink-dark);
+}
+
+:root:where(:has(> head > meta[name="color-scheme"][content="light"])) {
+  color-scheme: light;
+  --bg: var(--bg-light);
+  --surface: var(--surface-light);
+  --ink: var(--ink-light);
+  --muted: var(--muted-light);
+  --border: var(--border-light);
+  --rule: var(--rule-light);
+  --accent: var(--accent-light);
+  --accent-ink: var(--accent-ink-light);
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    text-align: start;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  h1,
+  h2,
+  h3,
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :where(a, button, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  a,
+  button,
+  summary {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .site-container {
+    inline-size: min(100% - 2rem, 65rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 48rem) {
+    .site-container {
+      inline-size: min(100% - 3rem, 65rem);
+    }
+  }
+
+  .prose-measure {
+    max-inline-size: 68ch;
+  }
+
+  .tabular-data {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .skip-link:not(:focus, :focus-within, :active) {
+    position: absolute;
+    clip-path: inset(50%);
+    overflow: hidden;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    white-space: nowrap;
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    position: fixed;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 0.75rem;
+    z-index: 50;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    border-radius: 0.375rem;
+    background-color: var(--accent);
+    color: var(--accent-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .theme-toggle-btn {
+    min-inline-size: 2.5rem;
+    min-block-size: 2.5rem;
+  }
+
+  @media (pointer: coarse) {
+    .theme-toggle-btn {
+      min-inline-size: 2.75rem;
+      min-block-size: 2.75rem;
+    }
+  }
+
+  /* CSS-driven icon visibility matches <meta name="color-scheme"> and OS without hydration flicker */
+  .theme-icon-to-dark {
+    display: block;
+  }
+
+  .theme-icon-to-light {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not(:has(> head > meta[name="color-scheme"][content="light"]))) .theme-icon-to-dark {
+      display: none;
+    }
+
+    :root:where(:not(:has(> head > meta[name="color-scheme"][content="light"]))) .theme-icon-to-light {
+      display: block;
+    }
+  }
+
+  :root:where(:has(> head > meta[name="color-scheme"][content="dark"])) .theme-icon-to-dark {
+    display: none;
+  }
+
+  :root:where(:has(> head > meta[name="color-scheme"][content="dark"])) .theme-icon-to-light {
+    display: block;
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --bg: Canvas;
+    --surface: Canvas;
+    --ink: CanvasText;
+    --muted: CanvasText;
+    --border: ButtonBorder;
+    --rule: CanvasText;
+    --accent: Highlight;
+    --accent-ink: HighlightText;
+  }
+
+  :where(a, button, summary, [tabindex]):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-safe-only {
+    animation: none;
+    transform: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 14mm 15mm;
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --ink: #111111;
+    --muted: #333333;
+    --border: #555555;
+    --rule: #cccccc;
+    --accent: #111111;
+    --accent-ink: #ffffff;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .site-container {
+    inline-size: 100%;
+    max-inline-size: none;
+  }
+
+  main {
+    padding-block: 0 !important;
+  }
+
+  .print-entry,
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+
+  .print-allow-break {
+    break-inside: auto;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}
