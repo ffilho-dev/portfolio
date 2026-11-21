@@ -28,8 +28,8 @@ export const profile: Profile = {
       label: "públicas de ensino atendidas na ESIG",
     },
     {
-      value: "120+ entregas",
-      label: "mapeadas no ciclo 2024–2026",
+      value: "250+ entregas",
+      label: "mapeadas no ciclo 2023–2026",
     },
   ],
   experiences: [

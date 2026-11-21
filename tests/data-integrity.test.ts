@@ -15,6 +15,13 @@ describe("portfolio data integrity", () => {
     expect(profile.contact.linkedinUrl).toContain("francisco-fernandes-41793411a");
     expect(profile.contact.githubUrl).toBe("https://github.com/ffilho-dev");
     expect(profile.metrics).toHaveLength(3);
+    expect(profile.metrics).toContainEqual({
+      value: "250+ entregas",
+      label: "mapeadas no ciclo 2023–2026",
+    });
+    const metricsBlob = profile.metrics.map((m) => `${m.value} ${m.label}`).join(" ");
+    expect(metricsBlob).not.toContain("120+");
+    expect(metricsBlob).not.toContain("2024–2026");
     expect(profile.experiences).toHaveLength(5);
     expect(profile.education.expectedYear).toBe("2027");
     expect(profile.featuredCertification.hours).toBe(81);
@@ -24,10 +31,16 @@ describe("portfolio data integrity", () => {
     );
   });
 
-  it("contains 4 unique anonymized case studies with valid diagram flows", () => {
-    expect(caseStudies).toHaveLength(4);
-    const slugs = new Set(caseStudies.map((c) => c.slug));
-    expect(slugs.size).toBe(4);
+  it("contains 6 unique anonymized case studies with valid diagram flows and updated 2023–2026 metrics", () => {
+    expect(caseStudies).toHaveLength(6);
+    expect(caseStudies.map((c) => c.slug)).toEqual([
+      "motor-socioeconomico-auxilios",
+      "apis-rest-sistema-academico",
+      "verificacao-digital-diplomas-documentos",
+      "acervo-marc21-biblioteca-catalogacao",
+      "fluxos-pesquisa-extensao-bolsas",
+      "sustentacao-multi-institucional-regras-criticas",
+    ]);
     for (const item of caseStudies) {
       expect(getCaseStudyBySlug(item.slug)).toEqual(item);
       expect(item.problem.length).toBeGreaterThan(40);
@@ -35,8 +48,22 @@ describe("portfolio data integrity", () => {
       expect(item.solution.length).toBeGreaterThan(40);
       expect(item.result.length).toBeGreaterThan(20);
       expect(item.diagramNodes.length).toBeGreaterThanOrEqual(4);
+      for (const node of item.diagramNodes) {
+        expect(node.label.trim().length).toBeGreaterThan(0);
+        expect(node.label.length).toBeLessThanOrEqual(40);
+        expect(node.detail.trim().length).toBeGreaterThan(0);
+        expect(node.detail.length).toBeLessThanOrEqual(90);
+      }
       expect(item.stack.length).toBeGreaterThanOrEqual(3);
     }
+    const sustentacao = getCaseStudyBySlug("sustentacao-multi-institucional-regras-criticas");
+    expect(sustentacao).toBeDefined();
+    const sustentacaoBlob = JSON.stringify(sustentacao);
+    expect(sustentacaoBlob).toContain("250");
+    expect(sustentacaoBlob).toContain("2023–2026");
+    expect(sustentacaoBlob).toContain("4 sistemas corporativos");
+    expect(sustentacaoBlob).not.toContain("120");
+    expect(sustentacaoBlob).not.toContain("3 sistemas");
     expect(getCaseStudyBySlug("slug-inexistente")).toBeUndefined();
   });
 
