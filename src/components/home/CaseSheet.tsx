@@ -55,8 +55,16 @@ export function CaseSheet({
       : 0;
   const activeNode = study ? study.diagramNodes[activeStepIndex] : undefined;
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      setSelectedStep({ slug: "", index: 0 });
+    }
+    onOpenChange(open);
+  };
+
   const handleSelectNext = () => {
     if (!nextStudy) return;
+    setSelectedStep({ slug: nextStudy.slug, index: 0 });
     onSelectSlug(nextStudy.slug);
     if (contentRef.current) {
       contentRef.current.scrollTop = 0;
@@ -64,7 +72,7 @@ export function CaseSheet({
   };
 
   return (
-    <Sheet open={Boolean(study)} onOpenChange={onOpenChange}>
+    <Sheet open={Boolean(study)} onOpenChange={handleOpenChange}>
       <SheetContent
         ref={contentRef}
         side="right"
@@ -72,7 +80,7 @@ export function CaseSheet({
       >
         {study ? (
           <>
-            <SheetHeader className="border-b border-border ps-5 pe-12 pt-6 pb-5 sm:ps-6 sm:pe-12">
+            <SheetHeader className="border-b border-border ps-5 pe-14 pt-6 pb-5 sm:ps-6 sm:pe-14">
               <div className="flex flex-wrap items-center gap-2.5">
                 <Badge
                   variant="outline"
@@ -223,7 +231,7 @@ export function CaseSheet({
                 >
                   <Link
                     href={`/cases/${study.slug}`}
-                    onClick={() => onOpenChange(false)}
+                    onClick={() => handleOpenChange(false)}
                   >
                     <FileText
                       aria-hidden="true"

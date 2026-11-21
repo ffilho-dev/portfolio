@@ -199,13 +199,39 @@ describe("HomePage", () => {
     expect(
       within(updatedSheet).getByText(secondStudy.diagramNodes[0].detail),
     ).toBeInTheDocument();
+
+    const updatedStep2Button = within(updatedSheet).getByRole("button", {
+      name: (name) => name.includes(secondStudy.diagramNodes[1].label),
+    });
+    await user.click(updatedStep2Button);
+    expect(updatedStep2Button).toHaveAttribute("aria-pressed", "true");
+
+    await user.click(within(updatedSheet).getByRole("button", { name: "Fechar" }));
+    expect(
+      screen.queryByRole("dialog", { name: secondStudy.title }),
+    ).not.toBeInTheDocument();
+
+    await user.click(inspectButtons[1]);
+    const reopenedSheet = screen.getByRole("dialog", { name: secondStudy.title });
+    const reopenedStep1Button = within(reopenedSheet).getByRole("button", {
+      name: (name) => name.includes(secondStudy.diagramNodes[0].label),
+    });
+    expect(reopenedStep1Button).toHaveAttribute("aria-pressed", "true");
+    expect(
+      within(reopenedSheet).getByText(secondStudy.diagramNodes[0].detail),
+    ).toBeInTheDocument();
   });
 
-  it("switches AI workflow tabs and shows full pillar description and artifacts", async () => {
+  it("switches AI workflow tabs without height lock or overflow clipping and shows full pillar description and artifacts", async () => {
     const user = userEvent.setup();
     const { container } = renderHome();
 
     const iaSection = container.querySelector("section#ia") as HTMLElement;
+    const tablist = within(iaSection).getByRole("tablist", {
+      name: /pilares de trabalho com ia/i,
+    });
+    expect(tablist).toHaveClass("overflow-visible", "flex-wrap");
+    expect(tablist.className).not.toContain("overflow-x-auto");
     expect(within(iaSection).getByText(aiPillars[0].description)).toBeInTheDocument();
 
     const verificationPillar = aiPillars[2];
@@ -224,17 +250,22 @@ describe("HomePage", () => {
     }
   });
 
-  it("cross-highlights stack technologies across cases and projects, opens CaseSheet, and clears selection", async () => {
+  it("cross-highlights stack technologies across cases and projects, announces selection changes politely, opens CaseSheet, and clears selection", async () => {
     const user = userEvent.setup();
     const { container } = renderHome();
 
     const stackSection = container.querySelector("section#stack") as HTMLElement;
+    const liveStatus = within(stackSection).getByRole("status");
+    expect(liveStatus).toHaveAttribute("aria-live", "polite");
+    expect(liveStatus).toHaveTextContent("");
+
     const pgToggle = within(stackSection).getByRole("button", {
       name: "PostgreSQL",
     });
     await user.click(pgToggle);
 
     expect(pgToggle).toHaveAttribute("aria-pressed", "true");
+    expect(liveStatus).toHaveTextContent(/PostgreSQL selecionada/i);
     expect(
       within(stackSection).getByRole("heading", {
         name: /onde “PostgreSQL” aparece no portfólio/i,
@@ -265,6 +296,7 @@ describe("HomePage", () => {
       }),
     ).not.toBeInTheDocument();
     expect(pgToggle).toHaveAttribute("aria-pressed", "false");
+    expect(liveStatus).toHaveTextContent(/Seleção de tecnologia limpa/i);
   });
 
   it("renders ESIG expanded by default in trajectory accordion and opens the 16-module CertificationDialog", async () => {

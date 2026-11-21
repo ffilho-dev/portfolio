@@ -97,11 +97,9 @@ export default function RootLayout({
             {children}
           </main>
           <SiteFooter />
-          <div className="no-print">
-            <CommandMenu />
-            <CertificationDialog />
-            <Toaster className="toaster group no-print" />
-          </div>
+          <CommandMenu />
+          <CertificationDialog />
+          <Toaster className="toaster group no-print" />
         </PortfolioOverlayProvider>
       </body>
     </html>

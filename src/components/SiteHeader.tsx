@@ -16,30 +16,30 @@ const NAV_ITEMS = [
 ] as const;
 
 /**
- * Sticky architectural header shared across all routes and hidden on print.
+ * Architectural header (sticky from md) shared across all routes and hidden on print.
  */
 export function SiteHeader() {
   const { openCommand } = usePortfolioOverlays();
 
   return (
-    <header className="no-print sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-3">
+    <header className="no-print z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:sticky md:top-0">
+      <div className="site-container flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2.5 md:flex-nowrap md:gap-x-4 md:py-3 lg:gap-x-6">
         <Link
           href="/"
           translate="no"
-          className="inline-flex min-h-9 items-center font-mono text-sm font-medium tracking-tight text-foreground transition-[color] duration-150 hover:text-signal [@media(pointer:coarse)]:min-h-11"
+          className="inline-flex min-h-9 shrink-0 items-center font-mono text-sm font-medium tracking-tight text-foreground transition-[color] duration-150 hover:text-signal [@media(pointer:coarse)]:min-h-11"
         >
           {profile.handle}
         </Link>
 
-        <div className="flex w-full flex-wrap items-center justify-between gap-3 md:w-auto md:flex-nowrap md:gap-6">
+        <div className="flex w-full flex-wrap items-center justify-between gap-2 md:w-auto md:flex-nowrap md:gap-4 lg:gap-6">
           <nav aria-label="Principal" className="min-w-0">
-            <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-x-5">
+            <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 md:flex-nowrap md:gap-x-4 lg:gap-x-5">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="inline-flex min-h-9 items-center text-sm font-medium text-muted-foreground transition-[color] duration-150 hover:text-foreground [@media(pointer:coarse)]:min-h-11"
+                    className="inline-flex min-h-9 items-center whitespace-nowrap text-sm font-medium text-muted-foreground transition-[color] duration-150 hover:text-foreground [@media(pointer:coarse)]:min-h-11"
                   >
                     {item.label}
                   </Link>
@@ -69,7 +69,7 @@ export function SiteHeader() {
 
             <ThemeToggle />
 
-            <Button asChild size="sm" className="hidden md:inline-flex">
+            <Button asChild size="sm" className="hidden lg:inline-flex">
               <a
                 href={profile.contact.whatsappUrl}
                 target="_blank"

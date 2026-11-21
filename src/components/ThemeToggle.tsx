@@ -154,7 +154,7 @@ export function ThemeToggle() {
   const resolvedScheme = useResolvedTheme();
 
   useEffect(() => {
-    const persisted = readStoredScheme();
+    const persisted = readEffectiveOverride();
     applySchemeToDocument(persisted, document, readSystemPrefersDark());
     if (persisted) {
       notifyThemeListeners();

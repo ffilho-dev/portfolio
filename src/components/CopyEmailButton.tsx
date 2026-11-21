@@ -46,11 +46,15 @@ export function CopyEmailButton({ email }: { email: string }) {
   const [announcement, setAnnouncement] = useState("");
   const timeoutRef = useRef<number | null>(null);
   const lastAnnouncementRef = useRef("");
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true;
     return () => {
+      mountedRef.current = false;
       if (timeoutRef.current !== null) {
         window.clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
   }, []);
@@ -62,6 +66,9 @@ export function CopyEmailButton({ email }: { email: string }) {
     }
 
     const ok = await copyEmailWithToast(email);
+    if (!mountedRef.current) {
+      return;
+    }
 
     const baseMessage = ok
       ? "E-mail copiado"
@@ -79,6 +86,9 @@ export function CopyEmailButton({ email }: { email: string }) {
       window.clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = window.setTimeout(() => {
+      if (!mountedRef.current) {
+        return;
+      }
       setStatus("idle");
       setAnnouncement("");
       timeoutRef.current = null;

@@ -206,11 +206,13 @@ describe("Global overlays and shell", () => {
 
     const header = container.querySelector("header");
     const footer = container.querySelector("footer");
-    expect(header).toHaveClass("no-print");
+    expect(header).toHaveClass("no-print", "md:sticky", "md:top-0");
+    expect(header?.className).not.toMatch(/(?:^|\s)sticky(?:\s|$)/);
+    expect(header?.innerHTML).not.toMatch(/(?:^|[\s"])order-/);
     expect(footer).toHaveClass("no-print");
-    expect(
-      within(header!).getByRole("link", { name: /whatsapp/i }),
-    ).toHaveAttribute("href", profile.contact.whatsappUrl);
+    const headerWhatsapp = within(header!).getByRole("link", { name: /whatsapp/i });
+    expect(headerWhatsapp).toHaveAttribute("href", profile.contact.whatsappUrl);
+    expect(headerWhatsapp).toHaveClass("hidden", "lg:inline-flex");
     expect(
       within(footer!).getByRole("link", { name: /linkedin/i }),
     ).toHaveAttribute("href", profile.contact.linkedinUrl);

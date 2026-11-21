@@ -1,5 +1,6 @@
 "use client"
 
+import { cn } from "cn"
 import {
   CircleCheckIcon,
   InfoIcon,
@@ -10,13 +11,24 @@ import {
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { useResolvedTheme } from "@/components/ThemeToggle"
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({
+  className,
+  containerAriaLabel = "Notificações",
+  toastOptions,
+  ...props
+}: ToasterProps) => {
   const resolvedTheme = useResolvedTheme()
 
   return (
     <Sonner
       theme={resolvedTheme}
-      className="toaster group"
+      className={cn("toaster group no-print", className)}
+      containerAriaLabel={containerAriaLabel}
+      toastOptions={{
+        ...toastOptions,
+        closeButtonAriaLabel:
+          toastOptions?.closeButtonAriaLabel ?? "Fechar notificação",
+      }}
       icons={{
         success: <CircleCheckIcon className="size-4" />,
         info: <InfoIcon className="size-4" />,

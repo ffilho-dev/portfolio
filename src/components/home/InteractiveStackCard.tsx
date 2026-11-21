@@ -31,10 +31,24 @@ export function InteractiveStackCard({
 }: InteractiveStackCardProps) {
   const { openCase } = usePortfolioOverlays();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const matches = selectedSkill
     ? findPortfolioMatchesForSkill(selectedSkill, cases, projects)
     : null;
+
+  const handleSelectSkill = (nextSkill: string | null) => {
+    setHasInteracted(true);
+    setSelectedSkill(nextSkill);
+  };
+
+  const statusAnnouncement = !hasInteracted
+    ? ""
+    : selectedSkill && matches
+      ? matches.cases.length === 0 && matches.projects.length === 0
+        ? `Tecnologia ${selectedSkill} selecionada: competência transversal sem tag literal nos cases ou projetos listados.`
+        : `Tecnologia ${selectedSkill} selecionada: ${matches.cases.length} ${matches.cases.length === 1 ? "case em produção" : "cases em produção"} e ${matches.projects.length} ${matches.projects.length === 1 ? "projeto público" : "projetos públicos"}.`
+      : "Seleção de tecnologia limpa.";
 
   return (
     <section id="stack" className="scroll-mt-20">
@@ -65,7 +79,7 @@ export function InteractiveStackCard({
                         size="sm"
                         pressed={selectedSkill === skill}
                         onPressedChange={(pressed) =>
-                          setSelectedSkill(pressed ? skill : null)
+                          handleSelectSkill(pressed ? skill : null)
                         }
                         className="h-auto min-h-8 cursor-pointer px-2.5 py-1.5 text-start text-xs font-medium whitespace-normal data-[state=on]:border-signal data-[state=on]:bg-signal-soft data-[state=on]:font-semibold data-[state=on]:text-signal [@media(pointer:coarse)]:min-h-11"
                       >
@@ -78,6 +92,10 @@ export function InteractiveStackCard({
             ))}
           </div>
 
+          <p role="status" aria-live="polite" className="sr-only">
+            {statusAnnouncement}
+          </p>
+
           {selectedSkill && matches ? (
             <div className="space-y-4 rounded-xl border border-signal-border bg-signal-soft/50 p-4 sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -89,7 +107,7 @@ export function InteractiveStackCard({
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => setSelectedSkill(null)}
+                  onClick={() => handleSelectSkill(null)}
                   className="cursor-pointer [@media(pointer:coarse)]:min-h-11"
                 >
                   <X

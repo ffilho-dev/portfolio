@@ -41,13 +41,13 @@ export function AiTabsCard({ pillars, className }: AiTabsCardProps) {
             <TabsList
               variant="line"
               aria-label="Pilares de trabalho com IA"
-              className="h-auto w-full justify-start gap-1 overflow-x-auto overscroll-x-contain rounded-none border-b border-border bg-transparent p-0"
+              className="w-full flex-wrap justify-start gap-x-1 gap-y-1 overflow-visible rounded-none border-b border-border bg-transparent p-0"
             >
               {pillars.map((pillar) => (
                 <TabsTrigger
                   key={pillar.id}
                   value={pillar.id}
-                  className="h-auto flex-none cursor-pointer rounded-none border-0 border-b-2 border-b-transparent px-3 py-2.5 text-sm text-muted-foreground after:hidden hover:text-foreground group-data-[variant=line]/tabs-list:data-[state=active]:border-b-signal group-data-[variant=line]/tabs-list:data-[state=active]:font-semibold group-data-[variant=line]/tabs-list:data-[state=active]:text-foreground dark:group-data-[variant=line]/tabs-list:data-[state=active]:border-b-signal dark:group-data-[variant=line]/tabs-list:data-[state=active]:text-foreground [@media(pointer:coarse)]:min-h-11"
+                  className="h-auto flex-none cursor-pointer rounded-none border-0 border-b-2 border-b-transparent px-2.5 py-2 text-[13px] leading-snug text-muted-foreground after:hidden hover:text-foreground group-data-[variant=line]/tabs-list:data-[state=active]:border-b-signal group-data-[variant=line]/tabs-list:data-[state=active]:font-semibold group-data-[variant=line]/tabs-list:data-[state=active]:text-foreground dark:group-data-[variant=line]/tabs-list:data-[state=active]:border-b-signal dark:group-data-[variant=line]/tabs-list:data-[state=active]:text-foreground [@media(pointer:coarse)]:min-h-11"
                 >
                   {pillar.shortTitle}
                 </TabsTrigger>

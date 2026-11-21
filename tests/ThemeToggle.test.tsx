@@ -54,16 +54,29 @@ describe("ThemeToggle", () => {
     expect(document.documentElement.classList.contains("dark")).toBe(true);
   });
 
-  it("still applies visual override to meta when localStorage.setItem throws", async () => {
+  it("still applies visual override to meta and .dark class when localStorage throws, and preserves it on remount", async () => {
     const user = userEvent.setup();
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new DOMException("Blocked", "SecurityError");
+    });
     vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new DOMException("Blocked", "SecurityError");
     });
-    render(<ThemeToggle />);
+
+    const { unmount } = render(<ThemeToggle />);
     const button = screen.getByRole("button");
     await user.click(button);
+
     const meta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
     expect(meta?.content).toBe("dark");
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
+
+    unmount();
+    render(<ThemeToggle />);
+    expect(meta?.content).toBe("dark");
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
+    expect(screen.getByRole("button", { name: /alternar para tema claro/i })).toBeInTheDocument();
+
     vi.restoreAllMocks();
   });
 

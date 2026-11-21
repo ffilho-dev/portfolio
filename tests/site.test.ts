@@ -31,8 +31,8 @@ describe("site metadata and url helpers", () => {
 
   it("formats display URLs cleanly without scheme, www, or trailing slash", () => {
     expect(
-      formatDisplayUrl("https://www.linkedin.com/in/francisco-fernandes-41793411a/"),
-    ).toBe("linkedin.com/in/francisco-fernandes-41793411a");
+      formatDisplayUrl("https://www.linkedin.com/in/francisco-filho-41793411a/"),
+    ).toBe("linkedin.com/in/francisco-filho-41793411a");
   });
 
   it("slugifies labels into lowercase ASCII DOM identifiers", () => {

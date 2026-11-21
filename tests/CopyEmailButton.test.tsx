@@ -99,4 +99,34 @@ describe("CopyEmailButton", () => {
       vi.useRealTimers();
     }
   });
+
+  it("ignores async clipboard resolution and avoids scheduling timers after unmount", async () => {
+    let resolveCopy!: () => void;
+    const writeText = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveCopy = resolve;
+        }),
+    );
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
+    const setTimeoutSpy = vi.spyOn(window, "setTimeout");
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    const { unmount } = render(<CopyEmailButton email="contato@ffilho.dev" />);
+    const setTimeoutCallsBeforeClick = setTimeoutSpy.mock.calls.length;
+
+    fireEvent.click(screen.getByRole("button", { name: /copiar e-mail/i }));
+    unmount();
+
+    await act(async () => {
+      resolveCopy();
+      await Promise.resolve();
+    });
+
+    expect(setTimeoutSpy.mock.calls.length).toBe(setTimeoutCallsBeforeClick);
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
+  });
 });
