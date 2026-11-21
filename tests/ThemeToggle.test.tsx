@@ -1,7 +1,11 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  ThemeToggle,
+  toggleDocumentTheme,
+  useResolvedTheme,
+} from "@/components/ThemeToggle";
 
 describe("ThemeToggle", () => {
   let mediaListeners: Array<(event: MediaQueryListEvent) => void>;
@@ -9,10 +13,12 @@ describe("ThemeToggle", () => {
 
   afterEach(() => {
     cleanup();
+    document.documentElement.classList.remove("dark");
   });
 
   beforeEach(() => {
     document.head.innerHTML = '<meta name="color-scheme" content="light dark">';
+    document.documentElement.classList.remove("dark");
     localStorage.clear();
     mediaListeners = [];
     systemPrefersDark = false;
@@ -35,14 +41,17 @@ describe("ThemeToggle", () => {
     });
   });
 
-  it("toggles meta color-scheme and persists override", async () => {
+  it("toggles meta color-scheme, .dark class, and persists override", async () => {
     const user = userEvent.setup();
     render(<ThemeToggle />);
     const button = screen.getByRole("button", { name: /alternar para tema escuro/i });
+    expect(document.documentElement.classList.contains("dark")).toBe(false);
+
     await user.click(button);
     const meta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
     expect(meta?.content).toBe("dark");
     expect(localStorage.getItem("color-scheme")).toBe("dark");
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
   });
 
   it("still applies visual override to meta when localStorage.setItem throws", async () => {
@@ -90,9 +99,10 @@ describe("ThemeToggle", () => {
     expect(meta?.content).toBe("dark");
   });
 
-  it("updates aria-label when OS preference flips while stored preference is null", () => {
+  it("updates aria-label and .dark class when OS preference flips while stored preference is null", () => {
     render(<ThemeToggle />);
     expect(screen.getByRole("button", { name: /alternar para tema escuro/i })).toBeInTheDocument();
+    expect(document.documentElement.classList.contains("dark")).toBe(false);
 
     act(() => {
       systemPrefersDark = true;
@@ -102,7 +112,18 @@ describe("ThemeToggle", () => {
     });
 
     expect(localStorage.getItem("color-scheme")).toBeNull();
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
     expect(screen.getByRole("button", { name: /alternar para tema claro/i })).toBeInTheDocument();
+
+    act(() => {
+      systemPrefersDark = false;
+      for (const listener of mediaListeners) {
+        listener({ matches: false } as MediaQueryListEvent);
+      }
+    });
+
+    expect(document.documentElement.classList.contains("dark")).toBe(false);
+    expect(screen.getByRole("button", { name: /alternar para tema escuro/i })).toBeInTheDocument();
   });
 
   it("syncs theme override across tabs via window storage event", () => {
@@ -118,6 +139,29 @@ describe("ThemeToggle", () => {
 
     const meta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
     expect(meta?.content).toBe("dark");
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
     expect(screen.getByRole("button", { name: /alternar para tema claro/i })).toBeInTheDocument();
+  });
+
+  it("exposes useResolvedTheme and toggleDocumentTheme synchronized with the store", () => {
+    function ThemeProbe() {
+      const resolved = useResolvedTheme();
+      return <span data-testid="resolved-theme">{resolved}</span>;
+    }
+
+    render(<ThemeProbe />);
+    expect(screen.getByTestId("resolved-theme")).toHaveTextContent("light");
+
+    let nextScheme: string | undefined;
+    act(() => {
+      nextScheme = toggleDocumentTheme();
+    });
+
+    expect(nextScheme).toBe("dark");
+    expect(screen.getByTestId("resolved-theme")).toHaveTextContent("dark");
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
+    expect(
+      document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]')?.content,
+    ).toBe("dark");
   });
 });

@@ -1,89 +1,247 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-signal-soft: var(--signal-soft);
+  --color-signal-border: var(--signal-border);
+}
 
 :root {
   color-scheme: light dark;
+  --radius: 0.625rem;
 
-  /* Claro (Opção A — Branco mineral + Petróleo profundo) */
-  --bg-light: #f7f8fa;
-  --surface-light: #ffffff;
-  --ink-light: #0f172a;
-  --muted-light: #334155;
-  --border-light: #64748b;
-  --rule-light: #cbd5e1;
-  --accent-light: #0f4c5c;
-  --accent-ink-light: #ffffff;
+  /* Claro (Zinc + Petróleo) */
+  --background-light: #ffffff;
+  --foreground-light: #09090b;
+  --card-light: #ffffff;
+  --card-foreground-light: #09090b;
+  --popover-light: #ffffff;
+  --popover-foreground-light: #09090b;
+  --primary-light: #18181b;
+  --primary-foreground-light: #fafafa;
+  --secondary-light: #f4f4f5;
+  --secondary-foreground-light: #18181b;
+  --muted-light: #f4f4f5;
+  --muted-foreground-light: #52525b;
+  --accent-light: #f4f4f5;
+  --accent-foreground-light: #18181b;
+  --destructive-light: #dc2626;
+  --destructive-foreground-light: #fafafa;
+  --border-light: #e4e4e7;
+  --input-light: #d4d4d8;
+  --ring-light: #18181b;
+  --signal-light: #0f4c5c;
+  --signal-foreground-light: #ffffff;
+  --signal-soft-light: #ecfeff;
+  --signal-border-light: #a5f3fc;
 
-  /* Escuro (Opção C — Ardósia real + Âmbar de instrumentação) */
-  --bg-dark: #161b22;
-  --surface-dark: #1f2630;
-  --ink-dark: #f8fafc;
-  --muted-dark: #cbd5e1;
-  --border-dark: #6e7f94;
-  --rule-dark: #3b4654;
-  --accent-dark: #e09f3e;
-  --accent-ink-dark: #161b22;
+  /* Escuro (Zinc + Âmbar) */
+  --background-dark: #09090b;
+  --foreground-dark: #fafafa;
+  --card-dark: #0f0f12;
+  --card-foreground-dark: #fafafa;
+  --popover-dark: #111114;
+  --popover-foreground-dark: #fafafa;
+  --primary-dark: #fafafa;
+  --primary-foreground-dark: #18181b;
+  --secondary-dark: #27272a;
+  --secondary-foreground-dark: #fafafa;
+  --muted-dark: #1c1c20;
+  --muted-foreground-dark: #a1a1aa;
+  --accent-dark: #27272a;
+  --accent-foreground-dark: #fafafa;
+  --destructive-dark: #ef4444;
+  --destructive-foreground-dark: #fafafa;
+  --border-dark: #27272a;
+  --input-dark: #3f3f46;
+  --ring-dark: #d4d4d8;
+  --signal-dark: #e09f3e;
+  --signal-foreground-dark: #09090b;
+  --signal-soft-dark: #271f12;
+  --signal-border-dark: #5c431a;
 
   /* Fallback defaults for browsers without light-dark() */
-  --bg: var(--bg-light);
-  --surface: var(--surface-light);
-  --ink: var(--ink-light);
+  --background: var(--background-light);
+  --foreground: var(--foreground-light);
+  --card: var(--card-light);
+  --card-foreground: var(--card-foreground-light);
+  --popover: var(--popover-light);
+  --popover-foreground: var(--popover-foreground-light);
+  --primary: var(--primary-light);
+  --primary-foreground: var(--primary-foreground-light);
+  --secondary: var(--secondary-light);
+  --secondary-foreground: var(--secondary-foreground-light);
   --muted: var(--muted-light);
-  --border: var(--border-light);
-  --rule: var(--rule-light);
+  --muted-foreground: var(--muted-foreground-light);
   --accent: var(--accent-light);
-  --accent-ink: var(--accent-ink-light);
+  --accent-foreground: var(--accent-foreground-light);
+  --destructive: var(--destructive-light);
+  --destructive-foreground: var(--destructive-foreground-light);
+  --border: var(--border-light);
+  --input: var(--input-light);
+  --ring: var(--ring-light);
+  --signal: var(--signal-light);
+  --signal-foreground: var(--signal-foreground-light);
+  --signal-soft: var(--signal-soft-light);
+  --signal-border: var(--signal-border-light);
 
   @media (prefers-color-scheme: dark) {
-    --bg: var(--bg-dark);
-    --surface: var(--surface-dark);
-    --ink: var(--ink-dark);
+    --background: var(--background-dark);
+    --foreground: var(--foreground-dark);
+    --card: var(--card-dark);
+    --card-foreground: var(--card-foreground-dark);
+    --popover: var(--popover-dark);
+    --popover-foreground: var(--popover-foreground-dark);
+    --primary: var(--primary-dark);
+    --primary-foreground: var(--primary-foreground-dark);
+    --secondary: var(--secondary-dark);
+    --secondary-foreground: var(--secondary-foreground-dark);
     --muted: var(--muted-dark);
-    --border: var(--border-dark);
-    --rule: var(--rule-dark);
+    --muted-foreground: var(--muted-foreground-dark);
     --accent: var(--accent-dark);
-    --accent-ink: var(--accent-ink-dark);
+    --accent-foreground: var(--accent-foreground-dark);
+    --destructive: var(--destructive-dark);
+    --destructive-foreground: var(--destructive-foreground-dark);
+    --border: var(--border-dark);
+    --input: var(--input-dark);
+    --ring: var(--ring-dark);
+    --signal: var(--signal-dark);
+    --signal-foreground: var(--signal-foreground-dark);
+    --signal-soft: var(--signal-soft-dark);
+    --signal-border: var(--signal-border-dark);
   }
 
   @supports (color: light-dark(white, black)) {
-    --bg: light-dark(var(--bg-light), var(--bg-dark));
-    --surface: light-dark(var(--surface-light), var(--surface-dark));
-    --ink: light-dark(var(--ink-light), var(--ink-dark));
+    --background: light-dark(var(--background-light), var(--background-dark));
+    --foreground: light-dark(var(--foreground-light), var(--foreground-dark));
+    --card: light-dark(var(--card-light), var(--card-dark));
+    --card-foreground: light-dark(var(--card-foreground-light), var(--card-foreground-dark));
+    --popover: light-dark(var(--popover-light), var(--popover-dark));
+    --popover-foreground: light-dark(var(--popover-foreground-light), var(--popover-foreground-dark));
+    --primary: light-dark(var(--primary-light), var(--primary-dark));
+    --primary-foreground: light-dark(var(--primary-foreground-light), var(--primary-foreground-dark));
+    --secondary: light-dark(var(--secondary-light), var(--secondary-dark));
+    --secondary-foreground: light-dark(var(--secondary-foreground-light), var(--secondary-foreground-dark));
     --muted: light-dark(var(--muted-light), var(--muted-dark));
-    --border: light-dark(var(--border-light), var(--border-dark));
-    --rule: light-dark(var(--rule-light), var(--rule-dark));
+    --muted-foreground: light-dark(var(--muted-foreground-light), var(--muted-foreground-dark));
     --accent: light-dark(var(--accent-light), var(--accent-dark));
-    --accent-ink: light-dark(var(--accent-ink-light), var(--accent-ink-dark));
+    --accent-foreground: light-dark(var(--accent-foreground-light), var(--accent-foreground-dark));
+    --destructive: light-dark(var(--destructive-light), var(--destructive-dark));
+    --destructive-foreground: light-dark(var(--destructive-foreground-light), var(--destructive-foreground-dark));
+    --border: light-dark(var(--border-light), var(--border-dark));
+    --input: light-dark(var(--input-light), var(--input-dark));
+    --ring: light-dark(var(--ring-light), var(--ring-dark));
+    --signal: light-dark(var(--signal-light), var(--signal-dark));
+    --signal-foreground: light-dark(var(--signal-foreground-light), var(--signal-foreground-dark));
+    --signal-soft: light-dark(var(--signal-soft-light), var(--signal-soft-dark));
+    --signal-border: light-dark(var(--signal-border-light), var(--signal-border-dark));
   }
 
-  accent-color: var(--accent);
-  scrollbar-color: var(--border) var(--bg);
+  /* Temporary compatibility aliases for unmigrated routes (removed in Task 5) */
+  --bg: var(--background);
+  --surface: var(--card);
+  --ink: var(--foreground);
+  --rule: var(--border);
+  --accent-ink: var(--signal-foreground);
+
+  accent-color: var(--signal);
+  scrollbar-color: var(--muted-foreground) var(--background);
 }
 
 :root:where(:has(> head > meta[name="color-scheme"][content="dark"])) {
   color-scheme: dark;
-  --bg: var(--bg-dark);
-  --surface: var(--surface-dark);
-  --ink: var(--ink-dark);
+  --background: var(--background-dark);
+  --foreground: var(--foreground-dark);
+  --card: var(--card-dark);
+  --card-foreground: var(--card-foreground-dark);
+  --popover: var(--popover-dark);
+  --popover-foreground: var(--popover-foreground-dark);
+  --primary: var(--primary-dark);
+  --primary-foreground: var(--primary-foreground-dark);
+  --secondary: var(--secondary-dark);
+  --secondary-foreground: var(--secondary-foreground-dark);
   --muted: var(--muted-dark);
-  --border: var(--border-dark);
-  --rule: var(--rule-dark);
+  --muted-foreground: var(--muted-foreground-dark);
   --accent: var(--accent-dark);
-  --accent-ink: var(--accent-ink-dark);
+  --accent-foreground: var(--accent-foreground-dark);
+  --destructive: var(--destructive-dark);
+  --destructive-foreground: var(--destructive-foreground-dark);
+  --border: var(--border-dark);
+  --input: var(--input-dark);
+  --ring: var(--ring-dark);
+  --signal: var(--signal-dark);
+  --signal-foreground: var(--signal-foreground-dark);
+  --signal-soft: var(--signal-soft-dark);
+  --signal-border: var(--signal-border-dark);
 }
 
 :root:where(:has(> head > meta[name="color-scheme"][content="light"])) {
   color-scheme: light;
-  --bg: var(--bg-light);
-  --surface: var(--surface-light);
-  --ink: var(--ink-light);
+  --background: var(--background-light);
+  --foreground: var(--foreground-light);
+  --card: var(--card-light);
+  --card-foreground: var(--card-foreground-light);
+  --popover: var(--popover-light);
+  --popover-foreground: var(--popover-foreground-light);
+  --primary: var(--primary-light);
+  --primary-foreground: var(--primary-foreground-light);
+  --secondary: var(--secondary-light);
+  --secondary-foreground: var(--secondary-foreground-light);
   --muted: var(--muted-light);
-  --border: var(--border-light);
-  --rule: var(--rule-light);
+  --muted-foreground: var(--muted-foreground-light);
   --accent: var(--accent-light);
-  --accent-ink: var(--accent-ink-light);
+  --accent-foreground: var(--accent-foreground-light);
+  --destructive: var(--destructive-light);
+  --destructive-foreground: var(--destructive-foreground-light);
+  --border: var(--border-light);
+  --input: var(--input-light);
+  --ring: var(--ring-light);
+  --signal: var(--signal-light);
+  --signal-foreground: var(--signal-foreground-light);
+  --signal-soft: var(--signal-soft-light);
+  --signal-border: var(--signal-border-light);
 }
 
 @layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
   html {
     overflow-x: clip;
   }
@@ -95,9 +253,9 @@
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
     line-height: 1.6;
     text-align: start;
     overflow-x: clip;
@@ -127,16 +285,16 @@
   pre,
   kbd,
   samp {
-    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-family: var(--font-mono);
   }
 
   ::selection {
-    background-color: var(--accent);
-    color: var(--accent-ink);
+    background-color: var(--signal);
+    color: var(--signal-foreground);
   }
 
   :where(a, button, summary, [tabindex]):focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
 
@@ -149,13 +307,13 @@
 
 @layer components {
   .site-container {
-    inline-size: min(100% - 2rem, 65rem);
+    inline-size: min(100% - 2rem, 72rem);
     margin-inline: auto;
   }
 
   @media (min-width: 48rem) {
     .site-container {
-      inline-size: min(100% - 3rem, 65rem);
+      inline-size: min(100% - 3rem, 72rem);
     }
   }
 
@@ -188,8 +346,8 @@
     padding-block: 0.5rem;
     padding-inline: 1rem;
     border-radius: 0.375rem;
-    background-color: var(--accent);
-    color: var(--accent-ink);
+    background-color: var(--signal);
+    color: var(--signal-foreground);
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;
@@ -237,14 +395,29 @@
 
 @media (forced-colors: active) {
   :root {
-    --bg: Canvas;
-    --surface: Canvas;
-    --ink: CanvasText;
-    --muted: CanvasText;
-    --border: ButtonBorder;
-    --rule: CanvasText;
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card: Canvas;
+    --card-foreground: CanvasText;
+    --popover: Canvas;
+    --popover-foreground: CanvasText;
+    --primary: Highlight;
+    --primary-foreground: HighlightText;
+    --secondary: Canvas;
+    --secondary-foreground: CanvasText;
+    --muted: Canvas;
+    --muted-foreground: CanvasText;
     --accent: Highlight;
-    --accent-ink: HighlightText;
+    --accent-foreground: HighlightText;
+    --destructive: Highlight;
+    --destructive-foreground: HighlightText;
+    --border: ButtonBorder;
+    --input: ButtonBorder;
+    --ring: Highlight;
+    --signal: Highlight;
+    --signal-foreground: HighlightText;
+    --signal-soft: Canvas;
+    --signal-border: ButtonBorder;
   }
 
   :where(a, button, summary, [tabindex]):focus-visible {
@@ -258,9 +431,15 @@
     scroll-behavior: auto;
   }
 
-  .motion-safe-only {
+  .motion-safe-only,
+  [data-slot="dialog-overlay"],
+  [data-slot="dialog-content"],
+  [data-slot="sheet-overlay"],
+  [data-slot="sheet-content"],
+  [data-slot="accordion-content"] {
     animation: none;
     transform: none;
+    transition: none;
   }
 }
 
@@ -270,16 +449,33 @@
 }
 
 @media print {
-  :root {
+  :root,
+  :root.dark {
     color-scheme: light;
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --ink: #111111;
-    --muted: #333333;
+    --background: #ffffff;
+    --foreground: #111111;
+    --card: #ffffff;
+    --card-foreground: #111111;
+    --popover: #ffffff;
+    --popover-foreground: #111111;
+    --primary: #111111;
+    --primary-foreground: #ffffff;
+    --secondary: #f4f4f5;
+    --secondary-foreground: #111111;
+    --muted: #f4f4f5;
+    --muted-foreground: #333333;
+    --accent: #f4f4f5;
+    --accent-foreground: #111111;
+    --destructive: #111111;
+    --destructive-foreground: #ffffff;
     --border: #555555;
+    --input: #d4d4d8;
+    --ring: #111111;
+    --signal: #111111;
+    --signal-foreground: #ffffff;
+    --signal-soft: #ffffff;
+    --signal-border: #cccccc;
     --rule: #cccccc;
-    --accent: #111111;
-    --accent-ink: #ffffff;
   }
 
   html,

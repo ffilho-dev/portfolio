@@ -57,7 +57,13 @@ describe("two-state color scheme logic", () => {
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull();
   });
 
-  it("updates meta[name=color-scheme] and meta[name=theme-color] content cleanly", () => {
+  it("exposes Zinc light and dark theme-color constants", () => {
+    expect(THEME_COLOR_LIGHT).toBe("#FFFFFF");
+    expect(THEME_COLOR_DARK).toBe("#09090B");
+  });
+
+  it("updates meta[name=color-scheme], meta[name=theme-color], and .dark class cleanly", () => {
+    document.documentElement.classList.remove("dark");
     const meta = document.createElement("meta");
     meta.name = "color-scheme";
     meta.content = "light dark";
@@ -75,25 +81,34 @@ describe("two-state color scheme logic", () => {
     expect(meta.content).toBe("dark");
     expect(themeLight.content).toBe(THEME_COLOR_DARK);
     expect(themeDark.content).toBe(THEME_COLOR_DARK);
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
 
     applySchemeToDocument("light", document);
     expect(meta.content).toBe("light");
     expect(themeLight.content).toBe(THEME_COLOR_LIGHT);
     expect(themeDark.content).toBe(THEME_COLOR_LIGHT);
+    expect(document.documentElement.classList.contains("dark")).toBe(false);
 
-    applySchemeToDocument(null, document);
+    applySchemeToDocument(null, document, true);
     expect(meta.content).toBe("light dark");
     expect(themeLight.content).toBe(THEME_COLOR_LIGHT);
     expect(themeDark.content).toBe(THEME_COLOR_DARK);
+    expect(document.documentElement.classList.contains("dark")).toBe(true);
+
+    applySchemeToDocument(null, document, false);
+    expect(meta.content).toBe("light dark");
+    expect(document.documentElement.classList.contains("dark")).toBe(false);
 
     meta.remove();
     themeLight.remove();
     themeDark.remove();
+    document.documentElement.classList.remove("dark");
   });
 
-  it("wraps localStorage access in try/catch inside THEME_INIT_SCRIPT", () => {
+  it("wraps localStorage access in try/catch and syncs .dark inside THEME_INIT_SCRIPT", () => {
     expect(THEME_INIT_SCRIPT).toContain("try");
     expect(THEME_INIT_SCRIPT).toContain('meta[name="color-scheme"]');
     expect(THEME_INIT_SCRIPT).toContain('meta[name="theme-color"]');
+    expect(THEME_INIT_SCRIPT).toContain('classList.toggle("dark"');
   });
 });

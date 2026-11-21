@@ -158,7 +158,7 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
         width={width - 2}
         height={totalHeight - 2}
         rx="6"
-        fill="var(--surface)"
+        fill="var(--card)"
         stroke="var(--border)"
         strokeWidth="1"
       />
@@ -195,7 +195,7 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
                 <path
                   d={`M ${spineX - arrowSpread} ${arrowMidY - 2.5} L ${spineX} ${arrowMidY + 3.5} L ${spineX + arrowSpread} ${arrowMidY - 2.5}`}
                   fill="none"
-                  stroke="var(--accent)"
+                  stroke="var(--signal)"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -208,7 +208,7 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
               y1={item.centerY}
               x2={boxX}
               y2={item.centerY}
-              stroke={isTerminal ? "var(--accent)" : "var(--border)"}
+              stroke={isTerminal ? "var(--signal)" : "var(--border)"}
               strokeWidth="1.25"
             />
 
@@ -216,8 +216,8 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
               cx={spineX}
               cy={item.centerY}
               r={markerR}
-              fill={isEndpoint ? "var(--accent)" : "var(--surface)"}
-              stroke="var(--accent)"
+              fill={isEndpoint ? "var(--signal)" : "var(--card)"}
+              stroke="var(--signal)"
               strokeWidth="1.5"
             />
 
@@ -227,8 +227,8 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
               width={boxW}
               height={item.rowH}
               rx="4"
-              fill="var(--bg)"
-              stroke={isTerminal ? "var(--accent)" : "var(--border)"}
+              fill="var(--background)"
+              stroke={isTerminal ? "var(--signal)" : "var(--border)"}
               strokeWidth={isTerminal ? "1.5" : "1.2"}
             />
 
@@ -239,14 +239,14 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
                 width={isExpanded ? "4" : "3.5"}
                 height={item.rowH}
                 rx="2"
-                fill="var(--accent)"
+                fill="var(--signal)"
               />
             ) : null}
 
             <text
               x={boxX + boxPadX}
               y={labelStartY}
-              fill="var(--ink)"
+              fill="var(--foreground)"
               fontSize={labelFontSize}
               fontWeight={isExpanded || isEndpoint ? "500" : "400"}
               textAnchor="start"
@@ -278,7 +278,7 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
                   strokeWidth="1.2"
                   strokeDasharray="3 3"
                 />
-                <circle cx={detailX} cy={item.centerY} r="2.5" fill="var(--accent)" />
+                <circle cx={detailX} cy={item.centerY} r="2.5" fill="var(--signal)" />
 
                 <rect
                   x={detailX}
@@ -286,7 +286,7 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
                   width={detailW}
                   height={item.rowH}
                   rx="4"
-                  fill="var(--surface)"
+                  fill="var(--card)"
                   stroke="var(--border)"
                   strokeWidth="1"
                 />
@@ -294,7 +294,7 @@ export function CaseDiagram({ title, nodes, variant }: CaseDiagramProps) {
                 <text
                   x={detailX + detailPadX}
                   y={detailStartY}
-                  fill="var(--muted)"
+                  fill="var(--muted-foreground)"
                   fontSize={detailFontSize}
                   textAnchor="start"
                   style={{

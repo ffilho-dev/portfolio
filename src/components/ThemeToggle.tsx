@@ -1,6 +1,8 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useSyncExternalStore } from "react";
+import { Button } from "@/components/ui/button";
 import {
   THEME_STORAGE_KEY,
   applySchemeToDocument,
@@ -72,8 +74,15 @@ function subscribeToTheme(onStoreChange: () => void): () => void {
       ? window.matchMedia("(prefers-color-scheme: dark)")
       : null;
 
-  const handleMediaChange = () => {
+  const handleMediaChange = (event: MediaQueryListEvent) => {
     // Never delete the user's stored override when OS changes to match it.
+    if (typeof document !== "undefined") {
+      const nextSystemDark =
+        typeof event?.matches === "boolean"
+          ? event.matches
+          : readSystemPrefersDark();
+      applySchemeToDocument(readEffectiveOverride(), document, nextSystemDark);
+    }
     onStoreChange();
   };
 
@@ -91,7 +100,7 @@ function subscribeToTheme(onStoreChange: () => void): () => void {
         nextStored = readStoredScheme(event.storageArea);
       }
     }
-    applySchemeToDocument(nextStored, document);
+    applySchemeToDocument(nextStored, document, readSystemPrefersDark());
     onStoreChange();
   };
 
@@ -110,32 +119,47 @@ function subscribeToTheme(onStoreChange: () => void): () => void {
 }
 
 /**
- * Two-state theme toggle syncing <meta name="color-scheme"> and localStorage
- * with OS preferences and cross-tab storage events.
+ * Subscribes to the current resolved color scheme ("light" or "dark").
  */
-export function ThemeToggle() {
+export function useResolvedTheme(): ColorSchemePreference {
   const snapshot = useSyncExternalStore(
     subscribeToTheme,
     getThemeSnapshot,
     getServerThemeSnapshot,
   );
   const { stored, systemPrefersDark } = parseSnapshot(snapshot);
-  const resolvedScheme = getResolvedScheme(stored, systemPrefersDark);
+  return getResolvedScheme(stored, systemPrefersDark);
+}
+
+/**
+ * Toggles the active document theme and returns the resulting resolved scheme.
+ */
+export function toggleDocumentTheme(): ColorSchemePreference {
+  const stored = readEffectiveOverride();
+  const systemPrefersDark = readSystemPrefersDark();
+  const nextStored = computeNextStoredScheme(stored, systemPrefersDark);
+  if (typeof document !== "undefined") {
+    applySchemeToDocument(nextStored, document, systemPrefersDark);
+  }
+  writeStoredScheme(nextStored);
+  notifyThemeListeners();
+  return getResolvedScheme(nextStored, systemPrefersDark);
+}
+
+/**
+ * Two-state theme toggle syncing <meta name="color-scheme">, .dark, and localStorage
+ * with OS preferences and cross-tab storage events.
+ */
+export function ThemeToggle() {
+  const resolvedScheme = useResolvedTheme();
 
   useEffect(() => {
     const persisted = readStoredScheme();
+    applySchemeToDocument(persisted, document, readSystemPrefersDark());
     if (persisted) {
-      applySchemeToDocument(persisted, document);
       notifyThemeListeners();
     }
   }, []);
-
-  const handleToggle = () => {
-    const nextStored = computeNextStoredScheme(stored, systemPrefersDark);
-    applySchemeToDocument(nextStored, document);
-    writeStoredScheme(nextStored);
-    notifyThemeListeners();
-  };
 
   const ariaLabel =
     resolvedScheme === "dark"
@@ -143,37 +167,24 @@ export function ThemeToggle() {
       : "Alternar para tema escuro";
 
   return (
-    <button
+    <Button
       type="button"
-      onClick={handleToggle}
+      variant="outline"
+      size="icon"
+      onClick={toggleDocumentTheme}
       aria-label={ariaLabel}
-      className="theme-toggle-btn inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--muted)] transition-[color,background-color,border-color] duration-150 hover:border-[var(--accent)] hover:bg-[var(--surface)] hover:text-[var(--ink)]"
+      className="theme-toggle-btn cursor-pointer text-muted-foreground hover:text-foreground"
     >
-      <svg
+      <Moon
         aria-hidden="true"
         className="theme-icon-to-dark size-4"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
-      </svg>
-      <svg
+        strokeWidth={1.75}
+      />
+      <Sun
         aria-hidden="true"
         className="theme-icon-to-light size-4"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41" />
-      </svg>
-    </button>
+        strokeWidth={1.75}
+      />
+    </Button>
   );
 }

@@ -14,14 +14,14 @@ import "./globals.css";
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-mono",
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -61,6 +61,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${plusJakarta.variable} ${ibmPlexMono.variable}`}
+      suppressHydrationWarning
     >
       <head>
         <meta

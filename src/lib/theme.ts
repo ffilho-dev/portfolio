@@ -2,14 +2,14 @@ export type ColorSchemePreference = "light" | "dark";
 export type MetaColorScheme = "light dark" | "light" | "dark";
 
 export const THEME_STORAGE_KEY = "color-scheme";
-export const THEME_COLOR_LIGHT = "#F7F8FA";
-export const THEME_COLOR_DARK = "#161B22";
+export const THEME_COLOR_LIGHT = "#FFFFFF";
+export const THEME_COLOR_DARK = "#09090B";
 
 /**
  * Synchronous inline script executed in <head> immediately after
  * <meta name="color-scheme" content="light dark"> to avoid FOUC.
  */
-export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem("${THEME_STORAGE_KEY}");var v=s==="light"||s==="dark"?s:"light dark";var m=document.querySelector('meta[name="color-scheme"]');if(m){m.content=v;}if(v!=="light dark"){var c=v==="dark"?"${THEME_COLOR_DARK}":"${THEME_COLOR_LIGHT}";var t=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<t.length;i++){t[i].content=c;}}}catch(e){}})();`;
+export const THEME_INIT_SCRIPT = `(function(){var s=null;try{s=localStorage.getItem("${THEME_STORAGE_KEY}");}catch(e){}var v=s==="light"||s==="dark"?s:"light dark";var m=document.querySelector('meta[name="color-scheme"]');if(m){m.content=v;}var isDark=v==="dark"||(v==="light dark"&&typeof window!=="undefined"&&typeof window.matchMedia==="function"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",isDark);if(v!=="light dark"){var c=v==="dark"?"${THEME_COLOR_DARK}":"${THEME_COLOR_LIGHT}";var t=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<t.length;i++){t[i].content=c;}}})();`;
 
 function resolveStorage(explicitStorage?: Storage): Storage | undefined {
   if (explicitStorage) {
@@ -19,6 +19,16 @@ function resolveStorage(explicitStorage?: Storage): Storage | undefined {
     return undefined;
   }
   return window.localStorage;
+}
+
+function detectSystemPrefersDark(targetDoc: Document): boolean {
+  const win =
+    targetDoc.defaultView ??
+    (typeof window !== "undefined" ? window : undefined);
+  if (!win || typeof win.matchMedia !== "function") {
+    return false;
+  }
+  return win.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
 /**
@@ -94,12 +104,13 @@ export function computeNextStoredScheme(
 }
 
 /**
- * Updates <meta name="color-scheme"> and <meta name="theme-color"> content on the
- * document to reflect either an explicit override or "light dark" (follow system preference).
+ * Updates <meta name="color-scheme">, <meta name="theme-color">, and the
+ * root .dark class to reflect an explicit override or system preference.
  */
 export function applySchemeToDocument(
   stored: ColorSchemePreference | null,
   doc?: Document,
+  systemPrefersDark?: boolean,
 ): void {
   const targetDoc =
     doc ?? (typeof document !== "undefined" ? document : undefined);
@@ -128,4 +139,10 @@ export function applySchemeToDocument(
         : THEME_COLOR_LIGHT;
     }
   }
+
+  const resolved = getResolvedScheme(
+    stored,
+    systemPrefersDark ?? detectSystemPrefersDark(targetDoc),
+  );
+  targetDoc.documentElement.classList.toggle("dark", resolved === "dark");
 }

@@ -78,6 +78,12 @@ describe("CaseDiagram", () => {
     expect(
       expandedSvg.querySelectorAll('rect[stroke="var(--border)"]').length,
     ).toBeGreaterThanOrEqual(sample.diagramNodes.length + 1);
+    expect(expandedSvg.querySelectorAll('[fill="var(--card)"]')).not.toHaveLength(0);
+    expect(expandedSvg.querySelectorAll('[fill="var(--background)"]')).not.toHaveLength(0);
+    expect(expandedSvg.querySelectorAll('[fill="var(--foreground)"]')).not.toHaveLength(0);
+    expect(expandedSvg.querySelectorAll('[fill="var(--muted-foreground)"]')).not.toHaveLength(0);
+    expect(expandedSvg.querySelectorAll('[stroke="var(--signal)"]')).not.toHaveLength(0);
+    expect(expandedSvg.querySelectorAll('[fill="var(--surface)"], [fill="var(--bg)"], [fill="var(--ink)"], [fill="var(--muted)"], [stroke="var(--accent)"]')).toHaveLength(0);
   });
 
   it("chunks unspaced long tokens without overflowing max line width", () => {
