@@ -13,6 +13,7 @@ import {
 } from "react";
 
 export type CaseOpenHandler = (slug: string) => void;
+type ActiveOverlay = "none" | "command" | "cert";
 
 export interface PortfolioOverlayContextValue {
   commandOpen: boolean;
@@ -29,8 +30,8 @@ const PortfolioOverlayContext =
   createContext<PortfolioOverlayContextValue | null>(null);
 
 /**
- * Provides global overlay state for the command palette, certification dialog,
- * and Home CaseSheet delegation with router fallback across all routes.
+ * Provides mutually exclusive global overlay state for the command palette,
+ * certification dialog, and Home CaseSheet delegation across all routes.
  */
 export function PortfolioOverlayProvider({
   children,
@@ -38,8 +39,7 @@ export function PortfolioOverlayProvider({
   children: ReactNode;
 }) {
   const router = useRouter();
-  const [commandOpen, setCommandOpen] = useState(false);
-  const [certDialogOpen, setCertDialogOpen] = useState(false);
+  const [activeOverlay, setActiveOverlay] = useState<ActiveOverlay>("none");
   const caseHandlerRef = useRef<CaseOpenHandler | null>(null);
 
   useEffect(() => {
@@ -48,10 +48,11 @@ export function PortfolioOverlayProvider({
         !event.isComposing &&
         (event.metaKey || event.ctrlKey) &&
         !event.altKey &&
+        !event.shiftKey &&
         event.key.toLowerCase() === "k"
       ) {
         event.preventDefault();
-        setCommandOpen((prev) => !prev);
+        setActiveOverlay((prev) => (prev === "command" ? "none" : "command"));
       }
     };
 
@@ -59,12 +60,24 @@ export function PortfolioOverlayProvider({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const setCommandOpen = useCallback((open: boolean) => {
+    setActiveOverlay((prev) =>
+      open ? "command" : prev === "command" ? "none" : prev,
+    );
+  }, []);
+
+  const setCertDialogOpen = useCallback((open: boolean) => {
+    setActiveOverlay((prev) =>
+      open ? "cert" : prev === "cert" ? "none" : prev,
+    );
+  }, []);
+
   const openCommand = useCallback(() => {
-    setCommandOpen(true);
+    setActiveOverlay("command");
   }, []);
 
   const openCertDialog = useCallback(() => {
-    setCertDialogOpen(true);
+    setActiveOverlay("cert");
   }, []);
 
   const registerCaseHandler = useCallback((handler: CaseOpenHandler | null) => {
@@ -73,6 +86,7 @@ export function PortfolioOverlayProvider({
 
   const openCase = useCallback(
     (slug: string) => {
+      setActiveOverlay("none");
       const handler = caseHandlerRef.current;
       if (handler) {
         handler(slug);
@@ -82,6 +96,9 @@ export function PortfolioOverlayProvider({
     },
     [router],
   );
+
+  const commandOpen = activeOverlay === "command";
+  const certDialogOpen = activeOverlay === "cert";
 
   const value = useMemo<PortfolioOverlayContextValue>(
     () => ({
@@ -96,8 +113,10 @@ export function PortfolioOverlayProvider({
     }),
     [
       commandOpen,
+      setCommandOpen,
       openCommand,
       certDialogOpen,
+      setCertDialogOpen,
       openCertDialog,
       openCase,
       registerCaseHandler,

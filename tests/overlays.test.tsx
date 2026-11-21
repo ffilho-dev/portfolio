@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { toast } from "sonner";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -38,12 +38,32 @@ function CaseHandlerRegistrar({
   return null;
 }
 
-function renderShell(caseHandler?: (slug: string) => void) {
+function OverlayControlProbe({
+  onControls,
+}: {
+  onControls: (value: ReturnType<typeof usePortfolioOverlays>) => void;
+}) {
+  const overlays = usePortfolioOverlays();
+
+  useEffect(() => {
+    onControls(overlays);
+  }, [onControls, overlays]);
+
+  return (
+    <span data-testid="overlay-state">{`${overlays.commandOpen}:${overlays.certDialogOpen}`}</span>
+  );
+}
+
+function renderShell(
+  caseHandler?: (slug: string) => void,
+  onControls?: (value: ReturnType<typeof usePortfolioOverlays>) => void,
+) {
   return render(
     <PortfolioOverlayProvider>
       <SiteHeader />
       <main id="conteudo">
         {caseHandler ? <CaseHandlerRegistrar onOpenCase={caseHandler} /> : null}
+        {onControls ? <OverlayControlProbe onControls={onControls} /> : null}
       </main>
       <SiteFooter />
       <CommandMenu />
@@ -224,5 +244,104 @@ describe("Global overlays and shell", () => {
     await user.clear(input);
     await user.type(input, "termo-inexistente-xyz");
     expect(screen.getByText("Nenhum resultado encontrado.")).toBeInTheDocument();
+  });
+
+  it("enforces mutual exclusion between CertificationDialog and CommandMenu across Ctrl+K, programmatic setters, and openCase", () => {
+    let controls!: ReturnType<typeof usePortfolioOverlays>;
+    renderShell(undefined, (value) => {
+      controls = value;
+    });
+
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("false:false");
+
+    // Open CertificationDialog first
+    act(() => {
+      controls.openCertDialog();
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("false:true");
+    expect(screen.getAllByRole("dialog")).toHaveLength(1);
+    expect(
+      screen.getByRole("dialog", { name: profile.featuredCertification.title }),
+    ).toBeInTheDocument();
+
+    // Pressing Ctrl+K while CertificationDialog is open must close CertificationDialog and open CommandMenu
+    fireEvent.keyDown(window, { key: "k", ctrlKey: true });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("true:false");
+    expect(screen.getAllByRole("dialog")).toHaveLength(1);
+    expect(
+      screen.getByRole("dialog", { name: /paleta de comandos/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("dialog", { name: profile.featuredCertification.title }),
+    ).not.toBeInTheDocument();
+
+    // Calling setCertDialogOpen(true) while CommandMenu is open must close CommandMenu
+    act(() => {
+      controls.setCertDialogOpen(true);
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("false:true");
+    expect(screen.getAllByRole("dialog")).toHaveLength(1);
+    expect(
+      screen.getByRole("dialog", { name: profile.featuredCertification.title }),
+    ).toBeInTheDocument();
+
+    // Calling setCommandOpen(true) while CertificationDialog is open must close CertificationDialog
+    act(() => {
+      controls.setCommandOpen(true);
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("true:false");
+    expect(screen.getAllByRole("dialog")).toHaveLength(1);
+
+    // Calling openCertDialog() while CommandMenu is open, then openCase(), closes overlays before navigating
+    act(() => {
+      controls.openCertDialog();
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("false:true");
+
+    act(() => {
+      controls.openCase("motor-socioeconomico-auxilios");
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("false:false");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(pushMock).toHaveBeenCalledWith("/cases/motor-socioeconomico-auxilios");
+
+    // Calling openCommand() while CertificationDialog is open must also close CertificationDialog
+    act(() => {
+      controls.setCertDialogOpen(true);
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("false:true");
+    act(() => {
+      controls.openCommand();
+    });
+    expect(screen.getByTestId("overlay-state")).toHaveTextContent("true:false");
+    expect(screen.getAllByRole("dialog")).toHaveLength(1);
+  });
+
+  it("ignores Ctrl+Shift+K and Cmd+Shift+K so browser console shortcuts are not intercepted", () => {
+    renderShell();
+
+    const ctrlShiftEvent = new KeyboardEvent("keydown", {
+      key: "k",
+      ctrlKey: true,
+      shiftKey: true,
+      cancelable: true,
+      bubbles: true,
+    });
+    window.dispatchEvent(ctrlShiftEvent);
+
+    expect(ctrlShiftEvent.defaultPrevented).toBe(false);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+    const metaShiftEvent = new KeyboardEvent("keydown", {
+      key: "k",
+      metaKey: true,
+      shiftKey: true,
+      cancelable: true,
+      bubbles: true,
+    });
+    window.dispatchEvent(metaShiftEvent);
+
+    expect(metaShiftEvent.defaultPrevented).toBe(false);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 });
