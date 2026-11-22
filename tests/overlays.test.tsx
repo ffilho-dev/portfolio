@@ -212,6 +212,16 @@ describe("Global overlays and shell", () => {
     expect(header?.className).not.toMatch(/(?:^|\s)sticky(?:\s|$)/);
     expect(header?.innerHTML).not.toMatch(/(?:^|[\s"])order-/);
     expect(footer).toHaveClass("no-print");
+    const brandLink = within(header!).getByRole("link", { name: profile.handle });
+    expect(brandLink).toHaveAttribute("href", "/");
+    const brandMark = brandLink.querySelector('svg[data-slot="brand-mark"]');
+    expect(brandMark).not.toBeNull();
+    expect(brandMark).toHaveAttribute("aria-hidden", "true");
+    expect(brandMark).toHaveAttribute("viewBox", "0 0 32 32");
+    expect(brandMark?.innerHTML).toContain("M5.5 11L11.5 16L5.5 21");
+    expect(brandMark?.innerHTML).toContain(
+      "M15 9H24V12.5H18.5V15H23V18.5H18.5V23H15V9Z",
+    );
     const headerWhatsapp = within(header!).getByRole("link", { name: /whatsapp/i });
     expect(headerWhatsapp).toHaveAttribute("href", profile.contact.whatsappUrl);
     expect(headerWhatsapp).toHaveClass("hidden", "lg:inline-flex");

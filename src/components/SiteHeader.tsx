@@ -27,9 +27,53 @@ export function SiteHeader() {
         <Link
           href="/"
           translate="no"
-          className="inline-flex min-h-9 shrink-0 items-center font-mono text-sm font-medium tracking-tight text-foreground transition-[color] duration-150 hover:text-signal [@media(pointer:coarse)]:min-h-11"
+          className="inline-flex min-h-9 shrink-0 items-center gap-2 font-mono text-sm font-medium tracking-tight text-foreground transition-[color] duration-150 hover:text-signal [@media(pointer:coarse)]:min-h-11"
         >
-          {profile.handle}
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            data-slot="brand-mark"
+            viewBox="0 0 32 32"
+            className="size-5 shrink-0"
+          >
+            <rect
+              width="32"
+              height="32"
+              rx="6"
+              className="fill-[#0F4C5C] dark:fill-[#09090B]"
+            />
+            <rect
+              x="1.5"
+              y="1.5"
+              width="29"
+              height="29"
+              rx="5"
+              fill="none"
+              strokeWidth="2"
+              className="stroke-none dark:stroke-[#E09F3E]"
+            />
+            <path
+              d="M5.5 11L11.5 16L5.5 21"
+              fill="none"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="stroke-[#A5F3FC] dark:stroke-[#E09F3E]"
+            />
+            <path
+              d="M15 9H24V12.5H18.5V15H23V18.5H18.5V23H15V9Z"
+              className="fill-[#FFFFFF] dark:fill-[#FAFAFA]"
+            />
+            <rect
+              x="22"
+              y="20.5"
+              width="5.5"
+              height="3"
+              rx="1"
+              className="fill-[#A5F3FC] dark:fill-[#E09F3E]"
+            />
+          </svg>
+          <span>{profile.handle}</span>
         </Link>
 
         <div className="flex w-full flex-wrap items-center justify-between gap-2 md:w-auto md:flex-nowrap md:gap-4 lg:gap-6">
