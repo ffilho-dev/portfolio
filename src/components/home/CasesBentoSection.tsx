@@ -61,7 +61,7 @@ export function CasesBentoSection({ studies }: CasesBentoSectionProps) {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
           <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-[1.75rem]">
-            Cases em produção
+            Estudos de caso em produção
           </h2>
           <p className="prose-measure text-sm text-muted-foreground">
             Entregas reais na ESIG Software, apresentadas de forma anonimizada
@@ -81,7 +81,7 @@ export function CasesBentoSection({ studies }: CasesBentoSectionProps) {
             variant="outline"
             size="sm"
             spacing={2}
-            aria-label="Filtrar cases por tecnologia"
+            aria-label="Filtrar estudos de caso por tecnologia"
             className="flex flex-wrap justify-start gap-2"
           >
             {CASE_STACK_FILTERS.map((stackFilter) => (
@@ -183,7 +183,7 @@ export function CasesBentoSection({ studies }: CasesBentoSectionProps) {
                       className="size-3.5"
                       strokeWidth={1.75}
                     />
-                    <span>Inspecionar case</span>
+                    <span>Ver resumo</span>
                   </Button>
 
                   <Link
@@ -192,7 +192,7 @@ export function CasesBentoSection({ studies }: CasesBentoSectionProps) {
                     aria-labelledby={`${linkId} ${titleId}`}
                     className="inline-flex min-h-9 items-center text-sm font-semibold text-signal underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-signal [@media(pointer:coarse)]:min-h-11"
                   >
-                    Ler estudo de caso
+                    Ler estudo completo
                   </Link>
                 </CardFooter>
               </Card>

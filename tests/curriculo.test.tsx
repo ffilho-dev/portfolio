@@ -23,13 +23,26 @@ describe("CurriculoPage", () => {
     );
     expect(container.innerHTML).not.toContain("francisco-fernandes-41793411a");
     expect(screen.getByRole("link", { name: /voltar ao portfólio/i })).toHaveAttribute("href", "/");
-    expect(screen.getByRole("link", { name: /baixar pdf/i })).toHaveAttribute("href", "/curriculo.pdf");
+    expect(
+      screen.getByRole("link", { name: /baixar currículo \(pdf\)/i }),
+    ).toHaveAttribute("href", "/curriculo.pdf");
     expect(screen.getByRole("button", { name: /imprimir/i })).toBeInTheDocument();
-    expect(screen.getByText(/ESIG Software/i)).toBeInTheDocument();
-    expect(screen.getByText(/Quark Tecnologia/i)).toBeInTheDocument();
-    expect(screen.getByText(/Turing Tecnologia/i)).toBeInTheDocument();
-    expect(screen.getByText(/Yank Solutions/i)).toBeInTheDocument();
-    expect(screen.getByText(/Salinor/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /ESIG Software/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Quark Tecnologia" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/QuarkClinic/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /Turing Tecnologia/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Yank Solutions" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /Salinor/i }),
+    ).toBeInTheDocument();
     expect(screen.getByText(/\(2023–2026\)/)).toBeInTheDocument();
     expect(screen.queryByText(/2024–2026/)).not.toBeInTheDocument();
     for (const study of caseStudies) {
@@ -38,10 +51,21 @@ describe("CurriculoPage", () => {
         `/cases/${study.slug}`,
       );
     }
-    expect(screen.getByText(/UFERSA/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Formação acadêmica" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 3,
+        name: /Universidade Federal Rural do Semi-Árido \(UFERSA\)/i,
+      }),
+    ).toBeInTheDocument();
     expect(screen.getByText(/2027/)).toBeInTheDocument();
-    expect(screen.getByText(/Inglês/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Inglês/i)).not.toBeInTheDocument();
     expect(screen.getByText(/81\s*h/i)).toBeInTheDocument();
+    expect(screen.getByText("Rocketseat")).toBeInTheDocument();
+    expect(screen.getByText("Alura")).toBeInTheDocument();
+    expect(screen.getByText("balta.io")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /verificar certificado/i })).toHaveAttribute(
       "href",
       "https://curso.dev/certificados/19acb84f-0036-43b6-bc20-fc39d7e4fa29",

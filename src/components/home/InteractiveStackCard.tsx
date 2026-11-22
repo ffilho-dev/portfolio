@@ -46,8 +46,8 @@ export function InteractiveStackCard({
     ? ""
     : selectedSkill && matches
       ? matches.cases.length === 0 && matches.projects.length === 0
-        ? `Tecnologia ${selectedSkill} selecionada: competência transversal sem tag literal nos cases ou projetos listados.`
-        : `Tecnologia ${selectedSkill} selecionada: ${matches.cases.length} ${matches.cases.length === 1 ? "case em produção" : "cases em produção"} e ${matches.projects.length} ${matches.projects.length === 1 ? "projeto público" : "projetos públicos"}.`
+        ? `Tecnologia ${selectedSkill} selecionada: competência usada no trabalho diário, em infraestrutura ou na formação, sem marcação direta nos estudos de caso ou projetos listados.`
+        : `Tecnologia ${selectedSkill} selecionada: ${matches.cases.length} ${matches.cases.length === 1 ? "estudo de caso em produção" : "estudos de caso em produção"} e ${matches.projects.length} ${matches.projects.length === 1 ? "projeto público" : "projetos públicos"}.`
       : "Seleção de tecnologia limpa.";
 
   return (
@@ -58,8 +58,8 @@ export function InteractiveStackCard({
             Stack técnica
           </h2>
           <CardDescription className="prose-measure">
-            Selecione uma tecnologia para rastrear em quais cases em produção e
-            projetos públicos ela aparece.
+            Selecione uma tecnologia para rastrear em quais estudos de caso em
+            produção e projetos públicos ela aparece.
           </CardDescription>
         </CardHeader>
 
@@ -121,9 +121,8 @@ export function InteractiveStackCard({
 
               {matches.cases.length === 0 && matches.projects.length === 0 ? (
                 <p className="prose-measure text-sm text-muted-foreground">
-                  Competência transversal aplicada no ambiente de trabalho,
-                  infraestrutura ou formação contínua, sem tag literal
-                  correspondente nos estudos de caso ou projetos públicos
+                  Competência usada no trabalho diário, em infraestrutura ou na
+                  formação, sem marcação direta nos estudos de caso ou projetos
                   listados.
                 </p>
               ) : (
@@ -131,7 +130,7 @@ export function InteractiveStackCard({
                   {matches.cases.length > 0 ? (
                     <div className="min-w-0 space-y-2">
                       <p className="text-xs font-medium text-muted-foreground">
-                        Cases em produção (
+                        Estudos de caso em produção (
                         <span className="tabular-data font-mono">
                           {matches.cases.length}
                         </span>

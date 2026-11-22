@@ -171,37 +171,52 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
     },
     {
       heading: sanitizePdfText("Destaques técnicos em produção"),
-      blocks: caseStudies.map((study, index) => ({
-        lines: [
-          {
-            text: sanitizePdfText(study.title),
-            bold: true,
-            size: 8.9,
-            tone: "ink",
-            lineHeight: 11.3,
-          },
-          {
-            text: sanitizePdfText(
-              `${study.period} | ${study.role} | Stack: ${study.stack.join(", ")}`,
-            ),
-            size: 8.1,
-            tone: "muted",
-            lineHeight: 10.6,
-            spaceBefore: 1,
-          },
-          {
-            text: sanitizePdfText(study.summary),
-            size: 8.5,
-            tone: "ink",
-            lineHeight: 11.2,
-            spaceBefore: 1.5,
-          },
-        ],
-        spaceAfter: index === caseStudies.length - 1 ? 3 : 5,
-      })),
+      blocks: [
+        {
+          lines: [
+            {
+              text: sanitizePdfText(
+                "Entregas anonimizadas em sistemas corporativos de gestão universitária (2023–2026).",
+              ),
+              size: 8,
+              tone: "muted",
+              lineHeight: 10.4,
+            },
+          ],
+          spaceAfter: 3,
+        },
+        ...caseStudies.map((study, index) => ({
+          lines: [
+            {
+              text: sanitizePdfText(study.title),
+              bold: true,
+              size: 8.8,
+              tone: "ink" as const,
+              lineHeight: 11.2,
+            },
+            {
+              text: sanitizePdfText(
+                `${study.period} | ${study.role} | Stack: ${study.stack.join(", ")}`,
+              ),
+              size: 8,
+              tone: "muted" as const,
+              lineHeight: 10.5,
+              spaceBefore: 1,
+            },
+            {
+              text: sanitizePdfText(study.summary),
+              size: 8.4,
+              tone: "ink" as const,
+              lineHeight: 11,
+              spaceBefore: 1.5,
+            },
+          ],
+          spaceAfter: index === caseStudies.length - 1 ? 3 : 4.5,
+        })),
+      ],
     },
     {
-      heading: sanitizePdfText("Competências técnicas e fluxo com IA"),
+      heading: sanitizePdfText("Competências técnicas e IA no fluxo"),
       keepTogether: true,
       blocks: [
         ...skillGroups.map((group) => ({
@@ -210,9 +225,9 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
               text: sanitizePdfText(
                 `${group.category}: ${group.items.join(", ")}`,
               ),
-              size: 8.5,
+              size: 8.4,
               tone: "ink" as const,
-              lineHeight: 11.2,
+              lineHeight: 11,
             },
           ],
           spaceAfter: 2.5,
@@ -221,11 +236,17 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
           lines: [
             {
               text: sanitizePdfText(
-                `IA aplicada à engenharia: ${aiPillars.map((p) => p.title).join("; ")}.`,
+                `Fluxo de engenharia com IA: ${aiPillars
+                  .map((p) =>
+                    p.id === "contexto"
+                      ? "Agentes com contexto estruturado (instruções persistentes AGENTS.md, Skills reutilizáveis e integrações MCP)"
+                      : p.title,
+                  )
+                  .join("; ")}.`,
               ),
-              size: 8.5,
+              size: 8.4,
               tone: "muted",
-              lineHeight: 11.2,
+              lineHeight: 11,
               spaceBefore: 1,
             },
           ],
@@ -241,14 +262,14 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
             text: sanitizePdfText(
               `${project.name}${
                 project.isLegacyAccount
-                  ? ` (${project.legacyNote ?? "conta anterior"})`
+                  ? ` (${project.legacyNote ?? "conta anterior no GitHub"})`
                   : ""
               } - ${project.stack.join(", ")}`,
             ),
             bold: true,
-            size: 8.6,
+            size: 8.5,
             tone: "ink",
-            lineHeight: 11.2,
+            lineHeight: 11,
           },
           {
             text: sanitizePdfText(
@@ -256,17 +277,17 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
                 project.liveUrl ? `Em produção: ${project.liveUrl} | ` : ""
               }Código: ${project.repoUrl}`,
             ),
-            size: 8.3,
+            size: 8.2,
             tone: "muted",
-            lineHeight: 10.8,
+            lineHeight: 10.6,
             spaceBefore: 1,
           },
         ],
-        spaceAfter: index === publicProjects.length - 1 ? 3 : 4,
+        spaceAfter: index === publicProjects.length - 1 ? 3 : 3.8,
       })),
     },
     {
-      heading: sanitizePdfText("Formação acadêmica e idiomas"),
+      heading: sanitizePdfText("Formação acadêmica"),
       keepTogether: true,
       blocks: [
         {
@@ -276,17 +297,15 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
                 `${education.institution} - ${education.degree}`,
               ),
               bold: true,
-              size: 8.8,
+              size: 8.7,
               tone: "ink",
-              lineHeight: 11.4,
+              lineHeight: 11.2,
             },
             {
-              text: sanitizePdfText(
-                `${education.period} | Idiomas: ${profile.languages.join(", ")}`,
-              ),
-              size: 8.4,
+              text: sanitizePdfText(education.period),
+              size: 8.3,
               tone: "muted",
-              lineHeight: 11,
+              lineHeight: 10.8,
               spaceBefore: 1,
             },
           ],
@@ -305,40 +324,42 @@ function buildResumeDocumentModel(): ResumeDocumentModel {
                 `${featuredCertification.title} - ${featuredCertification.issuer} (${featuredCertification.hours}h, emitido em ${featuredCertification.issuedAt})`,
               ),
               bold: true,
-              size: 8.8,
+              size: 8.7,
               tone: "ink",
-              lineHeight: 11.4,
+              lineHeight: 11.2,
             },
             {
               text: sanitizePdfText(
                 `Verificação: ${featuredCertification.verifyUrl}`,
               ),
-              size: 8.2,
+              size: 8.1,
               tone: "accent",
-              lineHeight: 10.8,
+              lineHeight: 10.6,
               spaceBefore: 1,
             },
             {
               text: sanitizePdfText(
-                `Módulos (${featuredCertification.modules.length}): ${featuredCertification.modules.join(", ")}.`,
+                `Módulos concluídos (${featuredCertification.modules.length}): ${featuredCertification.modules.join(", ")}.`,
               ),
-              size: 8.2,
+              size: 8.1,
               tone: "muted",
-              lineHeight: 10.8,
+              lineHeight: 10.6,
               spaceBefore: 1.5,
             },
           ],
-          spaceAfter: 4,
+          spaceAfter: 3.5,
         },
         {
           lines: [
             {
               text: sanitizePdfText(
-                `Outras certificações: ${profile.otherCertifications.join(", ")}.`,
+                `Outras certificações: ${profile.otherCertifications
+                  .map((cert) => `${cert.title} (${cert.issuer}, ${cert.issuedAt})`)
+                  .join("; ")}.`,
               ),
-              size: 8.4,
+              size: 8.3,
               tone: "ink",
-              lineHeight: 11,
+              lineHeight: 10.8,
             },
           ],
           spaceAfter: 2,
@@ -500,15 +521,17 @@ export async function generateResumePdf(): Promise<Uint8Array> {
 
   pdfDoc.setTitle(sanitizePdfText(`${model.name} - Currículo (${model.title})`));
   pdfDoc.setAuthor(model.name);
-  pdfDoc.setSubject(sanitizePdfText(`${model.title} - Currículo Técnico`));
+  pdfDoc.setSubject(sanitizePdfText(`${model.title} - Currículo profissional`));
   pdfDoc.setKeywords([
-    "Desenvolvedor FullStack",
+    "Desenvolvedor Full Stack",
     "Java",
     "Spring Boot",
     "PostgreSQL",
+    "APIs REST",
     "React",
     "Next.js",
     "TypeScript",
+    "IA",
   ]);
   pdfDoc.setCreator("ffilho.dev (pdf-lib)");
 

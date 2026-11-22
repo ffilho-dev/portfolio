@@ -57,7 +57,7 @@ export default async function CaseStudyPage({ params }: CasePageProps) {
   const nextStudy = caseStudies[(currentIndex + 1) % caseStudies.length];
 
   const detailSections = [
-    { id: "problema", heading: "Problema real", body: study.problem },
+    { id: "problema", heading: "Problema", body: study.problem },
     {
       id: "restricoes",
       heading: "Restrições e contexto operacional",
@@ -85,7 +85,7 @@ export default async function CaseStudyPage({ params }: CasePageProps) {
               className="size-4"
               strokeWidth={1.75}
             />
-            <span>Voltar para cases</span>
+            <span>Voltar aos estudos de caso</span>
           </Link>
         </Button>
       </nav>
@@ -222,7 +222,7 @@ export default async function CaseStudyPage({ params }: CasePageProps) {
                 id="section-resultado"
                 className="text-lg font-semibold leading-snug text-signal"
               >
-                Resultado prático
+                Resultado
               </h2>
               <p className="prose-measure text-base leading-relaxed text-foreground">
                 {study.result}

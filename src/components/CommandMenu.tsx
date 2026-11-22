@@ -78,11 +78,11 @@ export function CommandMenu() {
       onOpenChange={setCommandOpen}
       className="no-print"
     >
-      <CommandInput placeholder="Buscar cases, projetos, rotas ou ações…" />
+      <CommandInput placeholder="Buscar estudos de caso, projetos, rotas ou ações…" />
       <CommandList className="max-h-[min(65dvh,24rem)]">
         <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 
-        <CommandGroup heading="Cases em produção">
+        <CommandGroup heading="Estudos de caso em produção">
           {caseStudies.map((study) => (
             <CommandItem
               key={study.slug}
@@ -133,7 +133,7 @@ export function CommandMenu() {
               </span>
               {project.isLegacyAccount ? (
                 <Badge variant="outline" className="shrink-0 text-[11px]">
-                  {project.legacyNote ?? "conta anterior"}
+                  {project.legacyNote ?? "conta anterior no GitHub"}
                 </Badge>
               ) : null}
             </CommandItem>

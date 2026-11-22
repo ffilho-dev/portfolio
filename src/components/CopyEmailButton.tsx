@@ -72,7 +72,7 @@ export function CopyEmailButton({ email }: { email: string }) {
 
     const baseMessage = ok
       ? "E-mail copiado"
-      : "Não foi possível copiar automaticamente — use o link de e-mail";
+      : `Não foi possível copiar automaticamente. Use o link direto para ${email}.`;
     const nextMessage =
       lastAnnouncementRef.current === baseMessage
         ? `${baseMessage}\u00A0`

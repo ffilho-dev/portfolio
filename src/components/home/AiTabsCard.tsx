@@ -31,7 +31,7 @@ export function AiTabsCard({ pillars, className }: AiTabsCardProps) {
             Como trabalho com IA no dia a dia
           </h2>
           <CardDescription className="prose-measure">
-            Uso disciplinado de agentes de codificação com especificação prévia,
+            Uso estruturado de agentes de codificação com especificação prévia,
             contexto isolado e verificação humana.
           </CardDescription>
         </CardHeader>

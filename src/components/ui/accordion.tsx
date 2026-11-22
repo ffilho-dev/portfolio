@@ -27,21 +27,36 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
+  headingLevel = "h3",
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
+  headingLevel?: "h3" | "h4"
+}) {
+  const trigger = (
+    <AccordionPrimitive.Trigger
+      data-slot="accordion-trigger"
+      className={cn(
+        "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-[color,background-color,border-color,box-shadow,opacity] outline-none hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200" />
+    </AccordionPrimitive.Trigger>
+  )
+
+  if (headingLevel === "h4") {
+    return (
+      <AccordionPrimitive.Header asChild>
+        <h4 className="flex">{trigger}</h4>
+      </AccordionPrimitive.Header>
+    )
+  }
+
   return (
     <AccordionPrimitive.Header className="flex">
-      <AccordionPrimitive.Trigger
-        data-slot="accordion-trigger"
-        className={cn(
-          "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-[color,background-color,border-color,box-shadow,opacity] outline-none hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200" />
-      </AccordionPrimitive.Trigger>
+      {trigger}
     </AccordionPrimitive.Header>
   )
 }

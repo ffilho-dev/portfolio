@@ -42,8 +42,9 @@ describe("HomePage", () => {
     const { container } = renderHome();
 
     expect(screen.getByRole("heading", { level: 1, name: "Francisco Filho" })).toBeInTheDocument();
-    expect(screen.getByText("Desenvolvedor FullStack")).toBeInTheDocument();
+    expect(screen.getByText("Desenvolvedor Full Stack")).toBeInTheDocument();
     expect(screen.getByText(/presencial/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Inglês/i)).not.toBeInTheDocument();
 
     expect(screen.getByText("6+ anos")).toBeInTheDocument();
     expect(screen.getByText("12 instituições")).toBeInTheDocument();
@@ -91,14 +92,16 @@ describe("HomePage", () => {
 
     const projetosSection = container.querySelector("section#projetos") as HTMLElement;
     expect(within(projetosSection).getByText("clone-tabnews")).toBeInTheDocument();
-    expect(within(projetosSection).getByRole("link", { name: /live/i })).toHaveAttribute(
+    expect(
+      within(projetosSection).getByRole("link", { name: /em produção clone-tabnews/i }),
+    ).toHaveAttribute(
       "href",
       "https://clone-tabnews-gamma-wheat.vercel.app",
     );
     expect(within(projetosSection).getByText("ProjetoEsigGroup")).toBeInTheDocument();
     expect(within(projetosSection).getByText("BotRegistroImoveisBrasil")).toBeInTheDocument();
-    expect(within(projetosSection).getByText("ffilho-dev/portfolio")).toBeInTheDocument();
-    expect(within(projetosSection).getAllByText(/conta anterior/i)).toHaveLength(2);
+    expect(within(projetosSection).getByText("portfolio")).toBeInTheDocument();
+    expect(within(projetosSection).getAllByText(/conta anterior no GitHub/i)).toHaveLength(2);
   });
 
   it("renders all 6 direct case links and inspect buttons, and filters cases by stack via ToggleGroup", async () => {
@@ -107,7 +110,7 @@ describe("HomePage", () => {
 
     const casesSection = container.querySelector("section#cases") as HTMLElement;
     const caseLinks = within(casesSection).getAllByRole("link", {
-      name: /ler estudo de caso/i,
+      name: /ler estudo completo/i,
     });
     expect(caseLinks).toHaveLength(6);
     expect(caseLinks.map((link) => link.getAttribute("href"))).toEqual(
@@ -116,14 +119,14 @@ describe("HomePage", () => {
     expect(new Set(caseLinks.map((link) => link.textContent)).size).toBe(1);
 
     const inspectButtons = within(casesSection).getAllByRole("button", {
-      name: /inspecionar case/i,
+      name: /ver resumo/i,
     });
     expect(inspectButtons).toHaveLength(6);
     expect(within(casesSection).getAllByRole("img")).toHaveLength(6);
 
     await user.click(within(casesSection).getByRole("radio", { name: "PostgreSQL" }));
     const postgresLinks = within(casesSection).getAllByRole("link", {
-      name: /ler estudo de caso/i,
+      name: /ler estudo completo/i,
     });
     expect(postgresLinks.map((link) => link.getAttribute("href"))).toContain(
       "/cases/sustentacao-multi-institucional-regras-criticas",
@@ -132,7 +135,7 @@ describe("HomePage", () => {
 
     await user.click(within(casesSection).getByRole("radio", { name: "APIs REST/JSON" }));
     const restLinks = within(casesSection).getAllByRole("link", {
-      name: /ler estudo de caso/i,
+      name: /ler estudo completo/i,
     });
     expect(restLinks).toHaveLength(1);
     expect(restLinks[0]).toHaveAttribute("href", "/cases/apis-rest-sistema-academico");
@@ -142,7 +145,7 @@ describe("HomePage", () => {
 
     await user.click(within(casesSection).getByRole("radio", { name: "Todos" }));
     expect(
-      within(casesSection).getAllByRole("link", { name: /ler estudo de caso/i }),
+      within(casesSection).getAllByRole("link", { name: /ler estudo completo/i }),
     ).toHaveLength(6);
   });
 
@@ -152,7 +155,7 @@ describe("HomePage", () => {
 
     const casesSection = container.querySelector("section#cases") as HTMLElement;
     const inspectButtons = within(casesSection).getAllByRole("button", {
-      name: /inspecionar case/i,
+      name: /ver resumo/i,
     });
 
     await user.click(inspectButtons[0]);
@@ -160,6 +163,8 @@ describe("HomePage", () => {
     const firstStudy = caseStudies[0];
     const sheet = screen.getByRole("dialog", { name: firstStudy.title });
     expect(sheet).toBeInTheDocument();
+    expect(within(sheet).getByText(firstStudy.context)).toBeInTheDocument();
+    expect(within(sheet).getByText(firstStudy.diagramSummary)).toBeInTheDocument();
     expect(within(sheet).getByText(firstStudy.problem)).toBeInTheDocument();
     expect(within(sheet).getByText(firstStudy.constraints)).toBeInTheDocument();
     expect(within(sheet).getByText(firstStudy.solution)).toBeInTheDocument();
@@ -168,7 +173,10 @@ describe("HomePage", () => {
       within(sheet).getByRole("link", { name: /abrir página completa/i }),
     ).toHaveAttribute("href", `/cases/${firstStudy.slug}`);
     expect(
-      within(sheet).getByRole("link", { name: /baixar pdf/i }),
+      within(sheet).getByRole("link", { name: /ver currículo/i }),
+    ).toHaveAttribute("href", "/curriculo");
+    expect(
+      within(sheet).getByRole("link", { name: /baixar currículo \(pdf\)/i }),
     ).toHaveAttribute("href", "/curriculo.pdf");
 
     expect(
@@ -304,6 +312,10 @@ describe("HomePage", () => {
     const { container } = renderHome();
 
     const trajSection = container.querySelector("section#trajetoria") as HTMLElement;
+    expect(within(trajSection).getAllByRole("heading", { level: 4 })).toHaveLength(5);
+    expect(within(trajSection).getByText(/Rocketseat/i)).toBeInTheDocument();
+    expect(within(trajSection).getByText(/Alura/i)).toBeInTheDocument();
+    expect(within(trajSection).getByText(/balta\.io/i)).toBeInTheDocument();
     const esigTrigger = within(trajSection).getByRole("button", {
       name: /ESIG Software/i,
     });
@@ -343,7 +355,7 @@ describe("HomePage", () => {
 
     const casesSection = container.querySelector("section#cases") as HTMLElement;
     await user.click(
-      within(casesSection).getAllByRole("button", { name: /inspecionar case/i })[0],
+      within(casesSection).getAllByRole("button", { name: /ver resumo/i })[0],
     );
     expect(
       screen.getByRole("dialog", { name: caseStudies[0].title }),

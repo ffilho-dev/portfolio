@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, FileDown, FileText } from "lucide-react";
+import { FileDown, FileText } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -105,6 +105,11 @@ export function CaseSheet({
                 {study.summary}
               </p>
 
+              <p className="prose-measure text-xs leading-relaxed text-muted-foreground">
+                <span className="font-medium text-foreground">Contexto: </span>
+                {study.context}
+              </p>
+
               <ul
                 aria-label={`Tecnologias de ${study.title}`}
                 role="list"
@@ -126,6 +131,9 @@ export function CaseSheet({
                   <h3 className="text-sm font-semibold text-foreground">
                     {study.diagramTitle}
                   </h3>
+                  <p className="prose-measure text-xs leading-relaxed text-muted-foreground">
+                    {study.diagramSummary}
+                  </p>
                   <p className="text-xs text-muted-foreground">
                     Selecione uma etapa do fluxo para ver os detalhes técnicos.
                   </p>
@@ -186,7 +194,7 @@ export function CaseSheet({
               <div className="space-y-5">
                 <div className="space-y-1.5">
                   <h3 className="text-sm font-semibold text-foreground">
-                    Problema real
+                    Problema
                   </h3>
                   <p className="prose-measure text-sm leading-relaxed text-muted-foreground">
                     {study.problem}
@@ -213,7 +221,7 @@ export function CaseSheet({
 
                 <div className="space-y-1.5 rounded-lg border border-signal-border bg-signal-soft p-4">
                   <h3 className="text-sm font-semibold text-signal">
-                    Resultado prático
+                    Resultado
                   </h3>
                   <p className="prose-measure text-sm leading-relaxed text-foreground">
                     {study.result}
@@ -251,30 +259,41 @@ export function CaseSheet({
                     className="h-auto min-h-8 max-w-full cursor-pointer py-1.5 text-start whitespace-normal [@media(pointer:coarse)]:min-h-11"
                   >
                     <span>Próximo: {nextStudy.shortTitle}</span>
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="size-4 shrink-0"
-                      strokeWidth={1.75}
-                    />
                   </Button>
                 ) : null}
               </div>
 
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="[@media(pointer:coarse)]:min-h-11"
-              >
-                <a href="/curriculo.pdf">
-                  <FileDown
-                    aria-hidden="true"
-                    className="size-4"
-                    strokeWidth={1.75}
-                  />
-                  <span>Baixar PDF</span>
-                </a>
-              </Button>
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="[@media(pointer:coarse)]:min-h-11"
+                >
+                  <Link
+                    href="/curriculo"
+                    onClick={() => handleOpenChange(false)}
+                  >
+                    <span>Ver currículo</span>
+                  </Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="[@media(pointer:coarse)]:min-h-11"
+                >
+                  <a href="/curriculo.pdf">
+                    <FileDown
+                      aria-hidden="true"
+                      className="size-4"
+                      strokeWidth={1.75}
+                    />
+                    <span>Baixar currículo (PDF)</span>
+                  </a>
+                </Button>
+              </div>
             </SheetFooter>
           </>
         ) : null}

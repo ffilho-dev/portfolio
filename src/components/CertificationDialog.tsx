@@ -36,7 +36,7 @@ export function CertificationDialog() {
             <span className="tabular-data font-mono">
               {featuredCertification.modules.length}
             </span>{" "}
-            módulos concluídos, emitido em{" "}
+            módulos concluídos; certificado emitido em{" "}
             <span className="tabular-data font-mono">
               {featuredCertification.issuedAt}
             </span>

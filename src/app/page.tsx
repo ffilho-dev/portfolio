@@ -223,8 +223,8 @@ export default function HomePage() {
                 Projetos públicos selecionados
               </h2>
               <CardDescription className="prose-measure">
-                Repositórios curados com foco em engenharia fullstack, automação
-                e qualidade de código.
+                Repositórios públicos de aplicações Full Stack, automação e
+                engenharia de software.
               </CardDescription>
             </CardHeader>
 
@@ -256,7 +256,7 @@ export default function HomePage() {
                                 variant="outline"
                                 className="text-[11px] font-normal text-muted-foreground"
                               >
-                                {project.legacyNote ?? "conta anterior"}
+                                {project.legacyNote ?? "conta anterior no GitHub"}
                               </Badge>
                             ) : null}
                           </div>
@@ -276,7 +276,7 @@ export default function HomePage() {
                                   rel="noopener noreferrer"
                                   aria-labelledby={`${liveId} ${titleId}`}
                                 >
-                                  <span>Live</span>
+                                  <span>Em produção</span>
                                   <ExternalLink
                                     aria-hidden="true"
                                     className="size-3"
@@ -349,7 +349,6 @@ export default function HomePage() {
       <TrajectorySection
         experiences={profile.experiences}
         education={education}
-        languages={profile.languages}
         featuredCertification={featuredCertification}
         otherCertifications={profile.otherCertifications}
       />
@@ -361,8 +360,8 @@ export default function HomePage() {
               Contato
             </h2>
             <CardDescription className="prose-measure">
-              Aberto a conversas sobre oportunidades FullStack e processos
-              seletivos pelos canais diretos abaixo.
+              Disponível para vagas Full Stack e processos seletivos pelos
+              canais abaixo.
             </CardDescription>
           </CardHeader>
 

@@ -3,13 +3,13 @@ import type { Profile } from "./types";
 export const profile: Profile = {
   name: "Francisco Filho",
   handle: "ffilho.dev",
-  title: "Desenvolvedor FullStack",
+  title: "Desenvolvedor Full Stack",
   location: "Macau, RN — Brasil",
   availability:
-    "Disponível para atuação presencial (preferência), híbrida ou remota — apto para mudança de cidade.",
-  bio: "Mais de 6 anos construindo software — hoje evoluindo sistemas críticos de gestão universitária com Java EE, Spring Boot e PostgreSQL na ESIG Software, além de desenvolver aplicações web modernas com React, Next.js, TypeScript e fluxo diário com IA.",
+    "Disponível para atuação presencial (preferência), híbrida ou remota, com disponibilidade para mudança de cidade.",
+  bio: "Mais de 6 anos em desenvolvimento de software. Atuo em sistemas de gestão universitária em produção com Java EE, Spring Boot e PostgreSQL na ESIG Software, além de desenvolver aplicações web com React, Next.js, TypeScript e fluxo diário com IA.",
   resumeSummary:
-    "Desenvolvedor FullStack com mais de 6 anos de experiência (desde março de 2020), atuando em sistemas corporativos de gestão universitária em produção com Java EE, Spring Boot, APIs REST e PostgreSQL, além de aplicações modernas com React, Next.js, TypeScript, Angular e Docker. Experiência em liderança técnica e gestão de equipe, automações RPA e uso disciplinado de agentes de IA no fluxo de engenharia. Disponibilidade para atuação presencial (preferência), híbrida ou remota, com facilidade para mudança de cidade.",
+    "Desenvolvedor Full Stack com mais de 6 anos de experiência em software (desde março de 2020). Atuo em sistemas corporativos de gestão universitária em produção com Java EE, Spring Boot, APIs REST e PostgreSQL, além de desenvolver aplicações web com React, Next.js, TypeScript e Angular em ambientes com Docker. Experiência em liderança e gestão de equipe, automação de processos (RPA) e uso estruturado de agentes de IA com revisão humana.",
   contact: {
     email: "contato@ffilho.dev",
     whatsappDisplay: "(84) 99498-0792",
@@ -21,11 +21,11 @@ export const profile: Profile = {
   metrics: [
     {
       value: "6+ anos",
-      label: "em desenvolvimento de software (desde Mar/2020)",
+      label: "em desenvolvimento de software (desde mar/2020)",
     },
     {
       value: "12 instituições",
-      label: "públicas de ensino atendidas na ESIG",
+      label: "públicas de ensino atendidas na ESIG Software",
     },
     {
       value: "250+ entregas",
@@ -36,47 +36,49 @@ export const profile: Profile = {
     {
       company: "ESIG Software e Consultoria em TI",
       role: "Desenvolvedor de Software Java EE",
-      period: "Mai/2023 – Atual",
+      period: "maio/2023 – atual",
       location: "Natal, RN",
       summary:
-        "Desenvolvimento e evolução de módulos de sistemas de gestão universitária (Java EE / Spring Boot, APIs REST, PostgreSQL, frontend e sustentação em ambiente Linux com Git/GitLab).",
+        "Desenvolvimento e evolução de módulos de sistemas de gestão universitária com Java EE, Spring Boot, APIs REST, PostgreSQL, frontend e sustentação com Git/GitLab em ambiente Linux.",
     },
     {
       company: "Quark Tecnologia",
       role: "Desenvolvedor Full Stack",
-      period: "Jun/2022 – Abr/2023",
+      period: "jun/2022 – abr/2023",
       location: "Natal, RN",
-      summary: "Desenvolvimento full stack em aplicações web corporativas.",
+      summary:
+        "Desenvolvimento Full Stack no QuarkClinic, atuando com Java, Spring Boot, Groovy, PostgreSQL, Angular, Jenkins e Grafana.",
     },
     {
-      company: "Turing Tecnologia",
-      role: "Presidente (Jan/2022 – Mai/2023) e Desenvolvedor (Mar/2020 – Fev/2022)",
-      period: "Mar/2020 – Mai/2023",
+      company: "Turing Tecnologia (Empresa Júnior da UFERSA)",
+      role: "Presidente (jan/2022 – maio/2023) e Desenvolvedor (mar/2020 – dez/2021)",
+      period: "mar/2020 – maio/2023",
       location: "Angicos, RN",
       summary:
-        "Mais de 3 anos atuando no desenvolvimento de soluções tecnológicas e na liderança de equipe e gestão como Presidente.",
+        "Desenvolvimento de aplicações web com Java 11, Spring Boot, Thymeleaf e PostgreSQL, além de liderança de equipe e gestão da empresa júnior como Presidente.",
     },
     {
       company: "Yank Solutions",
       role: "Analista de Desenvolvimento",
-      period: "Jun/2021 – Abr/2022",
-      summary: "Criação de RPAs com Selenium, Java, Spring Boot e PostgreSQL.",
+      period: "jun/2021 – abr/2022",
+      location: "Remoto",
+      summary:
+        "Criação de automações de processos (RPA) com Selenium, Java, Spring Boot e PostgreSQL.",
     },
     {
-      company: "Salinor – Salinas do Nordeste",
+      company: "Salinor (Salinas do Nordeste)",
       role: "Estagiário de TI",
-      period: "Dez/2017 – Mai/2019",
+      period: "dez/2017 – maio/2019",
       location: "Macau, RN",
-      summary: "Suporte e rotinas de infraestrutura/TI.",
+      summary: "Suporte técnico e rotinas de infraestrutura de TI.",
     },
   ],
   education: {
     institution: "Universidade Federal Rural do Semi-Árido (UFERSA)",
     degree: "Bacharelado em Sistemas de Informação",
-    period: "Mar/2020 – Previsão 2027",
+    period: "mar/2020 – previsão 2027",
     expectedYear: "2027",
   },
-  languages: ["Inglês"],
   featuredCertification: {
     title: "Desenvolvimento Web Full Stack",
     issuer: "curso.dev (Filipe Deschamps)",
@@ -98,13 +100,29 @@ export const profile: Profile = {
       "Segurança de Senhas e Criptografia",
       "Autenticação e Autorização",
       "DNS e Protocolos de Rede",
-      "Infraestrutura de Email",
+      "Infraestrutura de E-mail",
       "API REST",
     ],
   },
   otherCertifications: [
-    "Fundamentos de Java",
-    "Imersão Dev com Google Gemini",
-    "ASP.NET Core MVC & EF Core",
+    {
+      title: "Fundamentos de Java",
+      issuer: "Rocketseat",
+      issuedAt: "fev/2026",
+      verifyUrl:
+        "https://app.rocketseat.com.br/certificates/64a9c287-e198-4351-9aba-fa6a4a26e51a",
+    },
+    {
+      title: "Imersão Dev com Google Gemini",
+      issuer: "Alura",
+      issuedAt: "abr/2025",
+      verifyUrl:
+        "https://cursos.alura.com.br/immersion/certificate/27cb032e-7572-4378-842c-b0e5d39c63a0?lang=pt_BR",
+    },
+    {
+      title: "ASP.NET Core MVC & EF Core",
+      issuer: "balta.io",
+      issuedAt: "jan/2020",
+    },
   ],
 };

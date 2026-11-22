@@ -104,7 +104,9 @@ describe("Global overlays and shell", () => {
     await user.click(screen.getByRole("button", { name: /buscar/i }));
     const dialogFromClick = screen.getByRole("dialog", { name: /paleta de comandos/i });
     expect(dialogFromClick).toBeInTheDocument();
-    expect(within(dialogFromClick).getByText("Cases em produção")).toBeInTheDocument();
+    expect(
+      within(dialogFromClick).getByText("Estudos de caso em produção"),
+    ).toBeInTheDocument();
     expect(within(dialogFromClick).getByText("Projetos públicos")).toBeInTheDocument();
     expect(within(dialogFromClick).getByText("Navegação")).toBeInTheDocument();
     expect(within(dialogFromClick).getByText("Ações rápidas")).toBeInTheDocument();
@@ -237,7 +239,9 @@ describe("Global overlays and shell", () => {
     renderShell();
 
     await user.click(screen.getByRole("button", { name: /buscar/i }));
-    const input = screen.getByPlaceholderText(/buscar cases, projetos, rotas ou ações/i);
+    const input = screen.getByPlaceholderText(
+      /buscar estudos de caso, projetos, rotas ou ações/i,
+    );
 
     await user.type(input, "MARC21");
     expect(screen.getByText("Saneamento MARC21 e biblioteca")).toBeInTheDocument();

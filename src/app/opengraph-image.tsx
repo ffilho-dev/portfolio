@@ -14,10 +14,14 @@ const HIGHLIGHTS = ["Java", "PostgreSQL", "React", "Next.js", "IA"] as const;
 export default function OpenGraphImage() {
   const [experienceMetric, ...impactMetrics] = profile.metrics;
   const summaryCopy = experienceMetric
-    ? `${experienceMetric.value} em sistemas corporativos em produção e aplicações web modernas.`
+    ? `${experienceMetric.value} em desenvolvimento de software — sistemas corporativos em produção e aplicações web Full Stack.`
     : profile.bio;
   const metricsCopy = (impactMetrics.length > 0 ? impactMetrics : profile.metrics)
-    .map((metric) => metric.value)
+    .map((metric) =>
+      metric.value === "12 instituições"
+        ? "12 instituições públicas"
+        : metric.value,
+    )
     .join(" | ");
 
   return new ImageResponse(

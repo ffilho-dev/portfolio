@@ -16,14 +16,15 @@ import type {
   CertificationItem,
   EducationItem,
   ExperienceItem,
+  OtherCertificationItem,
 } from "@/data/types";
+import { slugifyId } from "@/lib/site";
 
 export interface TrajectorySectionProps {
   readonly experiences: readonly ExperienceItem[];
   readonly education: EducationItem;
-  readonly languages: readonly string[];
   readonly featuredCertification: CertificationItem;
-  readonly otherCertifications: readonly string[];
+  readonly otherCertifications: readonly OtherCertificationItem[];
 }
 
 /**
@@ -33,7 +34,6 @@ export interface TrajectorySectionProps {
 export function TrajectorySection({
   experiences,
   education,
-  languages,
   featuredCertification,
   otherCertifications,
 }: TrajectorySectionProps) {
@@ -65,7 +65,10 @@ export function TrajectorySection({
                 const key = `${exp.company}-${exp.period}`;
                 return (
                   <AccordionItem key={key} value={key}>
-                    <AccordionTrigger className="cursor-pointer hover:no-underline [@media(pointer:coarse)]:min-h-11">
+                    <AccordionTrigger
+                      headingLevel="h4"
+                      className="cursor-pointer hover:no-underline [@media(pointer:coarse)]:min-h-11"
+                    >
                       <div className="flex flex-1 flex-wrap items-baseline justify-between gap-x-4 gap-y-1 pe-2">
                         <span className="text-base font-semibold text-foreground">
                           {exp.company}
@@ -115,13 +118,6 @@ export function TrajectorySection({
               <p className="tabular-data font-mono text-xs text-muted-foreground">
                 {education.period}
               </p>
-
-              <Separator className="my-3" />
-
-              <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">Idioma:</span>{" "}
-                {languages.join(", ")}
-              </p>
             </CardContent>
           </Card>
 
@@ -148,11 +144,11 @@ export function TrajectorySection({
                   >
                     {featuredCertification.hours}h
                   </Badge>
-                  <Badge
-                    variant="secondary"
-                    className="tabular-data font-mono font-normal"
-                  >
-                    {featuredCertification.modules.length} módulos
+                  <Badge variant="secondary" className="font-normal">
+                    <span className="tabular-data font-mono">
+                      {featuredCertification.modules.length}
+                    </span>{" "}
+                    módulos
                   </Badge>
                   <span>
                     Emitido em{" "}
@@ -208,10 +204,45 @@ export function TrajectorySection({
                 <p className="text-xs font-medium text-muted-foreground">
                   Outras certificações
                 </p>
-                <ul className="list-disc space-y-1 ps-4 text-sm text-muted-foreground">
-                  {otherCertifications.map((cert) => (
-                    <li key={cert}>{cert}</li>
-                  ))}
+                <ul className="list-disc space-y-1.5 ps-4 text-sm text-muted-foreground">
+                  {otherCertifications.map((cert) => {
+                    const key = slugifyId(cert.title);
+                    const titleId = `home-cert-title-${key}`;
+                    const verifyId = `home-cert-verify-${key}`;
+
+                    return (
+                      <li key={cert.title}>
+                        <span id={titleId} className="font-medium text-foreground">
+                          {cert.title}
+                        </span>{" "}
+                        — <span translate="no">{cert.issuer}</span> (
+                        <span className="tabular-data font-mono text-xs">
+                          {cert.issuedAt}
+                        </span>
+                        )
+                        {cert.verifyUrl ? (
+                          <>
+                            {" "}
+                            <a
+                              id={verifyId}
+                              href={cert.verifyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-labelledby={`${verifyId} ${titleId}`}
+                              className="inline-flex items-center gap-1 text-xs font-semibold text-signal underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-signal"
+                            >
+                              <span>Verificar</span>
+                              <ExternalLink
+                                aria-hidden="true"
+                                className="size-3"
+                                strokeWidth={1.75}
+                              />
+                            </a>
+                          </>
+                        ) : null}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </CardContent>

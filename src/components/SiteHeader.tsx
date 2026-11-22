@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { profile } from "@/data/profile";
 
 const NAV_ITEMS = [
-  { href: "/#cases", label: "Cases" },
+  { href: "/#cases", label: "Estudos de caso" },
   { href: "/#ia", label: "IA no fluxo" },
   { href: "/#projetos", label: "Projetos" },
   { href: "/#trajetoria", label: "Trajetória" },

@@ -36,6 +36,13 @@ export interface CertificationItem {
   readonly modules: readonly string[];
 }
 
+export interface OtherCertificationItem {
+  readonly title: string;
+  readonly issuer: string;
+  readonly issuedAt: string;
+  readonly verifyUrl?: string;
+}
+
 export interface Profile {
   readonly name: string;
   readonly handle: string;
@@ -48,9 +55,8 @@ export interface Profile {
   readonly metrics: readonly MetricItem[];
   readonly experiences: readonly ExperienceItem[];
   readonly education: EducationItem;
-  readonly languages: readonly string[];
   readonly featuredCertification: CertificationItem;
-  readonly otherCertifications: readonly string[];
+  readonly otherCertifications: readonly OtherCertificationItem[];
 }
 
 export interface DiagramNode {

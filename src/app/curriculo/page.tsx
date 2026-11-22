@@ -8,7 +8,12 @@ import { caseStudies } from "@/data/cases";
 import { profile } from "@/data/profile";
 import { publicProjects } from "@/data/projects";
 import { aiPillars, skillGroups } from "@/data/skills";
-import { buildPageMetadata, formatDisplayUrl, slugifyId } from "@/lib/site";
+import {
+  buildPageMetadata,
+  formatDisplayUrl,
+  getSiteUrl,
+  slugifyId,
+} from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Currículo",
@@ -20,11 +25,17 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function CurriculoPage() {
   const { contact, education, featuredCertification } = profile;
+  const siteUrl = getSiteUrl();
+  const hasPublicSiteUrl =
+    !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(siteUrl);
 
   return (
     <div className="site-container py-8 sm:py-12 print:py-0">
       <div className="mx-auto max-w-[52rem]">
-        <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-border pb-5">
+        <nav
+          aria-label="Ações do currículo"
+          className="no-print mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-border pb-5"
+        >
           <Button
             asChild
             variant="outline"
@@ -48,12 +59,12 @@ export default function CurriculoPage() {
                   className="size-4"
                   strokeWidth={1.75}
                 />
-                <span>Baixar PDF</span>
+                <span>Baixar currículo (PDF)</span>
               </a>
             </Button>
             <PrintButton />
           </div>
-        </div>
+        </nav>
 
         <Card className="gap-0 p-6 sm:p-10 print:block print:rounded-none print:border-0 print:bg-transparent print:p-0 print:shadow-none">
           <header className="border-b border-border pb-6 print:pb-3">
@@ -126,6 +137,14 @@ export default function CurriculoPage() {
                   github.com/{contact.githubHandle}
                 </a>
               </li>
+              {hasPublicSiteUrl ? (
+                <li className="hidden print:list-item">
+                  <span className="font-medium text-muted-foreground">
+                    Portfólio:{" "}
+                  </span>
+                  <span translate="no">{formatDisplayUrl(siteUrl)}</span>
+                </li>
+              ) : null}
             </ul>
           </header>
 
@@ -198,11 +217,14 @@ export default function CurriculoPage() {
                       {study.period}
                     </span>
                   </div>
+                  <p className="text-xs font-medium text-foreground print:text-[8pt]">
+                    {study.role}
+                  </p>
                   <p
                     translate="no"
                     className="text-xs text-muted-foreground print:text-[7.5pt]"
                   >
-                    {study.stack.join(", ")}
+                    Stack: {study.stack.join(", ")}
                   </p>
                   <p className="prose-measure text-sm leading-relaxed text-muted-foreground print:max-w-none print:text-[8.5pt] print:leading-snug">
                     {study.summary}
@@ -276,7 +298,7 @@ export default function CurriculoPage() {
                         </h3>
                         {project.isLegacyAccount ? (
                           <span className="text-xs italic text-muted-foreground print:text-[7.5pt]">
-                            ({project.legacyNote ?? "conta anterior"})
+                            ({project.legacyNote ?? "conta anterior no GitHub"})
                           </span>
                         ) : null}
                       </div>
@@ -331,7 +353,7 @@ export default function CurriculoPage() {
 
           <section className="print-avoid-break break-inside-avoid border-b border-border py-6 print:py-2.5">
             <h2 className="text-base font-bold tracking-tight text-signal sm:text-lg print:text-[10pt]">
-              Formação acadêmica e idiomas
+              Formação acadêmica
             </h2>
             <div className="mt-3 flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline print:mt-1.5">
               <div className="min-w-0">
@@ -346,10 +368,6 @@ export default function CurriculoPage() {
                 {education.period}
               </span>
             </div>
-            <p className="mt-2.5 text-sm text-muted-foreground print:mt-1 print:text-[8.5pt]">
-              <span className="font-semibold text-foreground">Idiomas: </span>
-              {profile.languages.join(", ")}
-            </p>
           </section>
 
           <section className="print-allow-break pt-6 print:pt-2.5">
@@ -411,12 +429,44 @@ export default function CurriculoPage() {
               <h3 className="text-xs font-semibold text-foreground print:text-[8pt]">
                 Outras certificações
               </h3>
-              <ul className="mt-1.5 space-y-1 ps-4 text-sm text-muted-foreground print:mt-0.5 print:space-y-0.5 print:ps-4 print:text-[8pt]">
-                {profile.otherCertifications.map((cert) => (
-                  <li key={cert} className="list-disc">
-                    {cert}
-                  </li>
-                ))}
+              <ul className="mt-1.5 space-y-1.5 ps-4 text-sm text-muted-foreground print:mt-0.5 print:space-y-0.5 print:ps-4 print:text-[8pt]">
+                {profile.otherCertifications.map((cert) => {
+                  const key = slugifyId(cert.title);
+                  const titleId = `curriculo-cert-title-${key}`;
+                  const verifyId = `curriculo-cert-verify-${key}`;
+
+                  return (
+                    <li key={cert.title} className="list-disc">
+                      <span id={titleId} className="font-medium text-foreground">
+                        {cert.title}
+                      </span>{" "}
+                      — <span translate="no">{cert.issuer}</span> (
+                      <span className="tabular-data font-mono text-xs print:text-[7.5pt]">
+                        {cert.issuedAt}
+                      </span>
+                      )
+                      {cert.verifyUrl ? (
+                        <>
+                          {" "}
+                          <a
+                            id={verifyId}
+                            href={cert.verifyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-labelledby={`${verifyId} ${titleId}`}
+                            className="inline-flex items-center text-xs font-semibold text-signal underline decoration-border underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:decoration-signal print:hidden"
+                          >
+                            Verificar
+                          </a>
+                          <span className="hidden text-[7.5pt] text-muted-foreground print:inline">
+                            {" — "}
+                            <span translate="no">{cert.verifyUrl}</span>
+                          </span>
+                        </>
+                      ) : null}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </section>

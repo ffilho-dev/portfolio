@@ -5,6 +5,7 @@ export const skillGroups: readonly SkillGroup[] = [
     category: "Backend e Dados",
     items: [
       "Java (Java EE, Spring Boot)",
+      "Groovy",
       "APIs REST",
       "PostgreSQL",
       "SQL",
@@ -23,7 +24,8 @@ export const skillGroups: readonly SkillGroup[] = [
       "Next.js",
       "Angular",
       "Tailwind CSS",
-      "HTML/CSS semântico",
+      "HTML semântico e CSS",
+      "Thymeleaf",
       "JSF/JSP",
     ],
   },
@@ -35,6 +37,8 @@ export const skillGroups: readonly SkillGroup[] = [
       "Git",
       "GitLab CI",
       "GitHub Actions",
+      "Jenkins",
+      "Grafana",
       "Jest",
       "JUnit",
       "Selenium (RPA/testes)",
@@ -47,10 +51,10 @@ export const skillGroups: readonly SkillGroup[] = [
 export const aiPillars: readonly AiPillar[] = [
   {
     id: "contexto",
-    shortTitle: "Contexto disciplinado",
-    title: "Agentes com contexto disciplinado (AGENTS.md, Skills e MCPs)",
+    shortTitle: "Gestão de contexto",
+    title: "Agentes com contexto estruturado (AGENTS.md, Skills e MCPs)",
     description:
-      "Estruturo instruções persistentes do projeto (AGENTS.md), carrego Skills reutilizáveis sob demanda e conecto MCPs a ferramentas externas (como navegador/DevTools e deploy) — lidando de forma consciente com execução stateless, limites de janela de contexto e não-determinismo de LLMs.",
+      "Estruturo instruções persistentes do projeto (AGENTS.md), carrego Skills reutilizáveis sob demanda e conecto MCPs (Model Context Protocol) a ferramentas externas como navegador/DevTools e deploy, considerando execução sem estado, limites de janela de contexto e não determinismo de LLMs.",
     artifacts: [
       "AGENTS.md versionado",
       "Skills sob demanda",
@@ -59,10 +63,10 @@ export const aiPillars: readonly AiPillar[] = [
   },
   {
     id: "multistack",
-    shortTitle: "Aceleração multi-stack",
-    title: "Aceleração multi-stack com base de engenharia",
+    shortTitle: "Múltiplas stacks",
+    title: "Aceleração em múltiplas stacks com base de engenharia",
     description:
-      "Uso agentes de codificação (como Claude Code, Codex e Antigravity) tanto para investigar e evoluir bases Java legadas extensas quanto para entregar com agilidade em React, Next.js e TypeScript — mantendo domínio sobre banco de dados, contratos de API e regras de negócio.",
+      "Uso agentes de codificação (como Claude Code, Codex e Antigravity) para investigar e evoluir bases Java legadas extensas e acelerar entregas em React, Next.js e TypeScript, mantendo controle sobre banco de dados, contratos de API e regras de negócio.",
     artifacts: [
       "Bases Java EE extensas",
       "React, Next.js e TypeScript",
@@ -74,11 +78,11 @@ export const aiPillars: readonly AiPillar[] = [
     shortTitle: "Especificação e revisão",
     title: "Especificação antes do código e verificação humana",
     description:
-      "Toda entrega nasce de especificação clara e passa por testes automatizados, revisão crítica de diff, validação de dados e auditoria de acessibilidade e performance. IA aumenta a velocidade; o critério técnico permanece humano.",
+      "Parto de especificação escrita e valido cada entrega com testes automatizados, revisão crítica de diff, conferência de dados e, em interfaces web, auditoria de acessibilidade e desempenho. A IA aumenta a velocidade; o critério técnico permanece humano.",
     artifacts: [
-      "Spec antes do diff",
+      "Especificação antes do código",
       "Testes automatizados",
-      "Auditoria a11y e performance",
+      "Acessibilidade e desempenho",
     ],
   },
 ];

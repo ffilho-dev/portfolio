@@ -13,6 +13,7 @@ export const BLOCKED_TOKEN_HASHES = new Set<string>([
   "961f8fe17db122e9e1b2fed6b4fcad0ef4c0a211c1b65f12089ec4e739385507",
   "9b48ebcff8d61cf6134ec5f4fbed37fd27f0b4f63f8cb7f8f8ca16aa1d50da0d",
   "a4f69824203b4e0937f5ef84f2b3a8c552c17c0a98dddaeef3f8a992c2420ee2",
+  "a543997d84f12798350c09bdef2cdb171bf41ed3e4a5f808af2feb0c56263009",
   "ceae92584cb684bd6a87f7794c5eda5f139f655a7032bdf13edb01ddbe2114ac",
   "d510b49b07d14fa02fa636dcf01665606c84981f0660939b5509231bbc487532",
   "d76ef387635c6569d1bcfb264d90666c15cc7c09b728a5ba6d14dbd81b0ff009",
@@ -24,7 +25,8 @@ export const BLOCKED_TOKEN_HASHES = new Set<string>([
 ]);
 
 export const OS_REFERENCE_REGEX = /\bO\.?S\.?[_ -]?\d{1,4}\b/;
-export const INTERNAL_REST_PATH_REGEX = /\/[a-z]+\/rest\//i;
+export const INTERNAL_REST_PATH_REGEX =
+  /(?:\/[a-z]+\/rest\/|(?:^|[\s(])\/[a-z]+\/[a-z]+_[a-z_]+)/i;
 
 export const FORBIDDEN_PATTERNS: ReadonlyArray<{ label: string; regex: RegExp }> = [
   { label: "Jira ticket key", regex: /\b[A-Z]{2,8}-\d{3,}\b/ },

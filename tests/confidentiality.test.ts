@@ -37,5 +37,6 @@ describe("NDA and confidentiality guard", () => {
     expect("OS 144").toMatch(OS_REFERENCE_REGEX);
     expect("O.S. 12").toMatch(OS_REFERENCE_REGEX);
     expect("/modulo/rest/endpoint").toMatch(INTERNAL_REST_PATH_REGEX);
+    expect("(/modulo/validar_acao_interna)").toMatch(INTERNAL_REST_PATH_REGEX);
   });
 });

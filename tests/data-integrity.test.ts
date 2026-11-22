@@ -8,8 +8,10 @@ describe("portfolio data integrity", () => {
   it("contains Francisco Filho profile, contact channels, and 5 experiences", () => {
     expect(profile.name).toBe("Francisco Filho");
     expect(profile.handle).toBe("ffilho.dev");
+    expect(profile.title).toBe("Desenvolvedor Full Stack");
     expect(profile.location).toContain("Macau");
     expect(profile.availability).toMatch(/presencial/i);
+    expect("languages" in profile).toBe(false);
     expect(profile.contact.email).toBe("contato@ffilho.dev");
     expect(profile.contact.whatsappUrl).toBe("https://wa.me/5584994980792");
     expect(profile.contact.linkedinUrl).toBe(
@@ -32,6 +34,12 @@ describe("portfolio data integrity", () => {
     expect(profile.featuredCertification.verifyUrl).toBe(
       "https://curso.dev/certificados/19acb84f-0036-43b6-bc20-fc39d7e4fa29",
     );
+    expect(profile.otherCertifications).toHaveLength(3);
+    for (const cert of profile.otherCertifications) {
+      expect(cert.title.trim().length).toBeGreaterThan(0);
+      expect(cert.issuer.trim().length).toBeGreaterThan(0);
+      expect(cert.issuedAt.trim().length).toBeGreaterThan(0);
+    }
   });
 
   it("contains 6 unique anonymized case studies with valid diagram flows and updated 2023–2026 metrics", () => {
@@ -53,7 +61,7 @@ describe("portfolio data integrity", () => {
       expect(item.constraints.length).toBeGreaterThan(30);
       expect(item.solution.length).toBeGreaterThan(40);
       expect(item.result.length).toBeGreaterThan(20);
-      expect(item.diagramNodes.length).toBeGreaterThanOrEqual(4);
+      expect(item.diagramNodes).toHaveLength(5);
       for (const node of item.diagramNodes) {
         expect(node.label.trim().length).toBeGreaterThan(0);
         expect(node.label.length).toBeLessThanOrEqual(40);
@@ -80,14 +88,18 @@ describe("portfolio data integrity", () => {
       "clone-tabnews",
       "ProjetoEsigGroup",
       "BotRegistroImoveisBrasil",
-      "ffilho-dev/portfolio",
+      "portfolio",
     ]);
     const legacy = publicProjects.filter((p) => p.isLegacyAccount);
     expect(legacy).toHaveLength(2);
   });
 
-  it("contains 3 categorized skill groups and 3 AI engineering pillars", () => {
+  it("contains 3 categorized skill groups, newly added experience stacks, and 3 AI engineering pillars with consistent PT-BR orthography", () => {
     expect(skillGroups).toHaveLength(3);
+    const allSkills = skillGroups.flatMap((g) => g.items);
+    for (const expectedSkill of ["Groovy", "Thymeleaf", "Jenkins", "Grafana"]) {
+      expect(allSkills).toContain(expectedSkill);
+    }
     expect(aiPillars).toHaveLength(3);
     for (const pillar of aiPillars) {
       expect(pillar.id.trim().length).toBeGreaterThan(0);
@@ -101,5 +113,8 @@ describe("portfolio data integrity", () => {
     expect(aiBlob).toMatch(/AGENTS\.md/);
     expect(aiBlob).toMatch(/Skills/i);
     expect(aiBlob).toMatch(/MCP/i);
+
+    const dataBlob = JSON.stringify({ profile, caseStudies, publicProjects, skillGroups, aiPillars });
+    expect(dataBlob).not.toMatch(/FullStack|fullstack|não-determinismo|anti-acúmulo|multi-stack/);
   });
 });

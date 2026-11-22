@@ -5,6 +5,8 @@ import { profile } from "@/data/profile";
  * Sober architectural footer with direct career and contact links (hidden on print).
  */
 export function SiteFooter() {
+  const formattedLocation = profile.location.replace(" — ", ", ");
+
   return (
     <footer className="no-print border-t border-border bg-background">
       <div className="site-container flex flex-col gap-6 py-8 sm:flex-row sm:items-start sm:justify-between">
@@ -13,9 +15,8 @@ export function SiteFooter() {
             {profile.name}
           </p>
           <p className="text-sm text-muted-foreground">
-            {profile.title}, {profile.location}
+            {profile.title} — {formattedLocation}
           </p>
-          <p className="text-sm text-muted-foreground">{profile.availability}</p>
         </div>
 
         <nav aria-label="Links diretos" className="min-w-0">
@@ -33,27 +34,7 @@ export function SiteFooter() {
                 href="/curriculo.pdf"
                 className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
-                Baixar PDF
-              </a>
-            </li>
-            <li>
-              <a
-                href={profile.contact.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
-              >
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href={profile.contact.linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
-              >
-                LinkedIn
+                Baixar currículo (PDF)
               </a>
             </li>
             <li>
@@ -72,6 +53,26 @@ export function SiteFooter() {
                 className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
               >
                 E-mail
+              </a>
+            </li>
+            <li>
+              <a
+                href={profile.contact.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
+              >
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a
+                href={profile.contact.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-9 items-center text-muted-foreground underline-offset-4 transition-[color] duration-150 hover:text-foreground hover:underline [@media(pointer:coarse)]:min-h-11"
+              >
+                GitHub
               </a>
             </li>
           </ul>

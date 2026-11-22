@@ -44,14 +44,14 @@ describe("CaseStudyPage", () => {
       expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(study.title);
       const expandedSvg = screen.getByRole("img");
       expect(expandedSvg.getAttribute("viewBox")).toMatch(/^0 0 720 \d+$/);
-      expect(screen.getByRole("heading", { name: /problema real/i })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: /^problema$/i })).toBeInTheDocument();
       expect(
         screen.getByRole("heading", { name: /restrições e contexto operacional/i }),
       ).toBeInTheDocument();
       expect(
         screen.getByRole("heading", { name: /solução e decisões técnicas/i }),
       ).toBeInTheDocument();
-      expect(screen.getByRole("heading", { name: /resultado prático/i })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: /^resultado$/i })).toBeInTheDocument();
       cleanup();
     }
   });
@@ -66,15 +66,17 @@ describe("CaseStudyPage", () => {
     const expandedSvg = screen.getByRole("img");
     expect(expandedSvg).toBeInTheDocument();
     expect(expandedSvg.getAttribute("viewBox")).toMatch(/^0 0 720 \d+$/);
-    expect(screen.getByRole("heading", { name: /problema real/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /^problema$/i })).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: /restrições e contexto operacional/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: /solução e decisões técnicas/i }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /resultado prático/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /voltar para cases/i })).toHaveAttribute(
+    expect(screen.getByRole("heading", { name: /^resultado$/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /voltar aos estudos de caso/i }),
+    ).toHaveAttribute(
       "href",
       "/#cases",
     );
