@@ -1,7 +1,7 @@
 # Redesign do Favicon — Terminal Prompt `>F_` (Opção C)
 
 **Data:** 2026-11-21  
-**Escopo:** Mudança pequena — atualização de `src/app/icon.svg`, `src/app/favicon.ico` e testes de integridade para representar visualmente o portfólio de desenvolvedor (`ffilho.dev`).
+**Escopo:** Mudança pequena — atualização de `src/app/icon.svg`, `src/app/favicon.ico`, marca visual ao lado de `ffilho.dev` em `src/components/SiteHeader.tsx` e testes de integridade para representar visualmente o portfólio de desenvolvedor (`ffilho.dev`).
 
 ---
 
@@ -18,10 +18,11 @@ O novo favicon (**Opção C — Terminal Prompt `>F_`**) funde o símbolo univer
 ### Objetivos
 - Substituir `src/app/icon.svg` pelo novo símbolo **`>F_`** em `viewBox="0 0 32 32"`, com adaptação automática via `@media (prefers-color-scheme: dark)` alinhada aos tokens atuais do design system (`Zinc` + Petróleo `#0F4C5C` no claro; `Zinc #09090B` + Âmbar `#E09F3E` no escuro).
 - Regenerar `src/app/favicon.ico` (contendo os frames `16×16` e `32×32` em RGBA 32-bit) com a mesma geometria **`>F_`**, garantindo consistência em navegadores e agregadores que requisitam `/favicon.ico`.
-- Adicionar verificação automatizada em `tests/site.test.ts` garantindo a presença dos 3 elementos gráficos (`>`, `F`, `_`), adaptação `prefers-color-scheme: dark` com os tokens oficiais e validade do header ICO multi-resolução.
+- Exibir o ícone **`>F_`** inline (`aria-hidden="true"`, `size-5` / `20×20 px`) ao lado esquerdo de `ffilho.dev` no link principal de `src/components/SiteHeader.tsx`, sincronizado tanto com a preferência do sistema quanto com o `ThemeToggle` manual (`Claro` / `Escuro`).
+- Adicionar verificação automatizada em `tests/site.test.ts` e `tests/home.test.tsx` garantindo a presença dos 3 elementos gráficos (`>`, `F`, `_`), adaptação `prefers-color-scheme: dark`, validade do header ICO multi-resolução e renderização acessível da marca no `SiteHeader`.
 
 ### Não-Objetivos
-- Não alterar componentes de página, cabeçalho (`SiteHeader`), rotas ou conteúdo textual do portfólio.
+- Não alterar layout das seções da Home, páginas de estudo de caso, currículo ou conteúdo textual do portfólio.
 
 ### Anti-Objetivos
 - Não usar traços finos ou detalhes excessivos que virem ruído ilegível em `16×16 px`.
@@ -61,6 +62,8 @@ O novo favicon (**Opção C — Terminal Prompt `>F_`**) funde o símbolo univer
   - **Escuro (`@media (prefers-color-scheme: dark)`):** fundo Zinc `#09090B` com moldura interna de `2px` (`rx="5"`) em Âmbar `#E09F3E` (destacando o ícone mesmo sobre abas escuras), letra `F` em `#FAFAFA`, prompt `>` e cursor `_` em Âmbar `#E09F3E` (`--signal-dark`).
 - **Fallback raster (`src/app/favicon.ico`):**
   - Arquivo `.ico` válido contendo exatamente 2 imagens PNG/BMP (`16×16` e `32×32`, 32 bits/pixel) renderizadas com anti-aliasing limpo a partir da geometria `>F_`.
+- **Marca no cabeçalho (`src/components/SiteHeader.tsx`):**
+  - SVG inline decorativo (`aria-hidden="true"`, `viewBox="0 0 32 32"`, `className="size-5 shrink-0"`) posicionado imediatamente antes de `{profile.handle}` dentro do `<Link href="/">` (com `gap-2`), preservando o nome acessível `"ffilho.dev"` do link e reagindo instantaneamente ao tema ativo (claro/escuro) do documento.
 
 ---
 
