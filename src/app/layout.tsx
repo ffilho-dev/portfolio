@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { CertificationDialog } from "@/components/CertificationDialog";
@@ -101,6 +102,7 @@ export default function RootLayout({
           <CertificationDialog />
           <Toaster className="toaster group no-print" />
         </PortfolioOverlayProvider>
+        <Analytics />
       </body>
     </html>
   );
