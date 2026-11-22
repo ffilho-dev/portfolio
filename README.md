@@ -42,3 +42,8 @@ npm run build      # Build estático de produção (Next.js)
 ## Variáveis de ambiente (Vercel)
 
 - `NEXT_PUBLIC_SITE_URL`: URL canônica opcional para sobrescrever o domínio padrão (`https://ffilho.dev`), usada em metadados OpenGraph, `sitemap.xml`, `robots.txt` e no PDF. Em ambientes de preview na Vercel, `VERCEL_URL` é usado automaticamente quando a variável não está definida.
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
+
