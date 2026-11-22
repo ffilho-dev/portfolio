@@ -1,12 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <style>
     .bg { fill: #0F4C5C; }
-    .fg { fill: #FFFFFF; }
+    .frame { stroke: none; }
+    .prompt-chevron { stroke: #A5F3FC; }
+    .letter { fill: #FFFFFF; }
+    .prompt-cursor { fill: #A5F3FC; }
     @media (prefers-color-scheme: dark) {
-      .bg { fill: #E09F3E; }
-      .fg { fill: #161B22; }
+      .bg { fill: #09090B; }
+      .frame { stroke: #E09F3E; }
+      .prompt-chevron { stroke: #E09F3E; }
+      .letter { fill: #FAFAFA; }
+      .prompt-cursor { fill: #E09F3E; }
     }
   </style>
   <rect class="bg" width="32" height="32" rx="6" />
-  <path class="fg" d="M6 8h9v3H9v4h5v3H9v6H6V8ZM17 8h9v3h-6v4h5v3h-5v6h-3V8Z" />
+  <rect class="frame" x="1.5" y="1.5" width="29" height="29" rx="5" fill="none" stroke-width="2" />
+  <path class="prompt-chevron" d="M5.5 11L11.5 16L5.5 21" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path class="letter" d="M15 9H24V12.5H18.5V15H23V18.5H18.5V23H15V9Z" />
+  <rect class="prompt-cursor" x="22" y="20.5" width="5.5" height="3" rx="1" />
 </svg>
