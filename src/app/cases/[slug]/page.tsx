@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CaseDiagram } from "@/components/CaseDiagram";
+import { JsonLd } from "@/components/JsonLd";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { caseStudies, getCaseStudyBySlug } from "@/data/cases";
 import { buildPageMetadata } from "@/lib/site";
+import { buildCaseStudyJsonLd } from "@/lib/structured-data";
 
 interface CasePageProps {
   readonly params: Promise<{ slug: string }>;
@@ -71,7 +73,9 @@ export default async function CaseStudyPage({ params }: CasePageProps) {
   ] as const;
 
   return (
-    <div className="site-container space-y-6 py-10 sm:space-y-8 sm:py-14">
+    <>
+      <JsonLd data={buildCaseStudyJsonLd(study)} />
+      <div className="site-container space-y-6 py-10 sm:space-y-8 sm:py-14">
       <nav aria-label="Navegação do estudo de caso">
         <Button
           asChild
@@ -276,6 +280,7 @@ export default async function CaseStudyPage({ params }: CasePageProps) {
           </Card>
         </footer>
       </article>
-    </div>
+      </div>
+    </>
   );
 }

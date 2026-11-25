@@ -23,6 +23,7 @@ Regras e convenções obrigatórias para qualquer alteração neste repositório
 
 - Next.js App Router (estático, SSG, sem banco de dados ou CMS), React 19, TypeScript (`strict: true`), Tailwind CSS v4, `pdf-lib`, Vitest + Testing Library + `jsdom`, ESLint, Node.js 24 (`npm`).
 - Camada única de dados tipados em `src/data/*.ts` alimentando a home (`/`), estudos de caso (`/cases/[slug]`), currículo web (`/curriculo`) e PDF vetorial (`/curriculo.pdf`).
+- Sempre que atualizar conteúdo do portfólio (`src/data/*.ts`, páginas ou estudos de caso), atualizar `SITE_LAST_MODIFIED` (`YYYY-MM-DD`) em `src/lib/site.ts` para manter o `<lastmod>` de `sitemap.xml` e o `dateModified` do JSON-LD sincronizados.
 
 ## Design e padrões web (`frontend-design` + `modern-web-guidance`)
 

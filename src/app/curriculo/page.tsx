@@ -1,6 +1,7 @@
 import { ArrowLeft, FileDown } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
 import { PrintButton } from "@/components/PrintButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -10,14 +11,16 @@ import { publicProjects } from "@/data/projects";
 import { aiPillars, skillGroups } from "@/data/skills";
 import {
   buildPageMetadata,
+  CURRICULO_DESCRIPTION,
   formatDisplayUrl,
   getSiteUrl,
   slugifyId,
 } from "@/lib/site";
+import { buildCurriculoJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Currículo",
-  description: `Currículo profissional de ${profile.name} — ${profile.title}. Experiência em Java EE, Spring Boot, PostgreSQL, React, Next.js, TypeScript e fluxo com IA.`,
+  description: CURRICULO_DESCRIPTION,
   path: "/curriculo",
   openGraphType: "profile",
   openGraphDescription: `Currículo profissional de ${profile.name} — ${profile.title}.`,
@@ -30,7 +33,9 @@ export default function CurriculoPage() {
     !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(siteUrl);
 
   return (
-    <div className="site-container py-8 sm:py-12 print:py-0">
+    <>
+      <JsonLd data={buildCurriculoJsonLd(siteUrl)} />
+      <div className="site-container py-8 sm:py-12 print:py-0">
       <div className="mx-auto max-w-[52rem]">
         <nav
           aria-label="Ações do currículo"
@@ -472,6 +477,7 @@ export default function CurriculoPage() {
           </section>
         </Card>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

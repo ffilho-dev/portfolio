@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
+import { JsonLd } from "@/components/JsonLd";
 import { AiTabsCard } from "@/components/home/AiTabsCard";
 import { CasesBentoSection } from "@/components/home/CasesBentoSection";
 import { InteractiveStackCard } from "@/components/home/InteractiveStackCard";
@@ -27,12 +28,15 @@ import { profile } from "@/data/profile";
 import { publicProjects } from "@/data/projects";
 import { aiPillars, skillGroups } from "@/data/skills";
 import { formatDisplayUrl, slugifyId } from "@/lib/site";
+import { buildHomeJsonLd } from "@/lib/structured-data";
 
 export default function HomePage() {
   const { contact, education, featuredCertification } = profile;
 
   return (
-    <div className="site-container space-y-12 py-10 sm:space-y-16 sm:py-14">
+    <>
+      <JsonLd data={buildHomeJsonLd()} />
+      <div className="site-container space-y-12 py-10 sm:space-y-16 sm:py-14">
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         <Card className="justify-between lg:col-span-8">
           <CardHeader className="space-y-3">
@@ -438,6 +442,7 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

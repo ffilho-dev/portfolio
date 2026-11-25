@@ -8,7 +8,12 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { profile } from "@/data/profile";
-import { getSiteUrl, SITE_LOCALE, SITE_NAME } from "@/lib/site";
+import {
+  getSiteUrl,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  SITE_NAME,
+} from "@/lib/site";
 import {
   THEME_COLOR_DARK,
   THEME_COLOR_LIGHT,
@@ -29,8 +34,6 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   display: "swap",
 });
-
-const SITE_DESCRIPTION = `Portfólio técnico de ${profile.name} (${profile.handle}): mais de 6 anos em desenvolvimento de software, atuando em produção com Java, Spring Boot e PostgreSQL, além de React, Next.js, TypeScript e fluxo diário com IA.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),

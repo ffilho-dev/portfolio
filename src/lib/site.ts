@@ -5,6 +5,9 @@ const DEFAULT_SITE_URL = "https://ffilho.dev";
 
 export const SITE_NAME = `${profile.name} (${profile.handle})`;
 export const SITE_LOCALE = "pt_BR";
+export const SITE_LAST_MODIFIED = "2026-11-25";
+export const SITE_DESCRIPTION = `Portfólio técnico de ${profile.name} (${profile.handle}): mais de 6 anos em desenvolvimento de software, atuando em produção com Java, Spring Boot e PostgreSQL, além de React, Next.js, TypeScript e fluxo diário com IA.`;
+export const CURRICULO_DESCRIPTION = `Currículo profissional de ${profile.name} — ${profile.title}. Experiência em Java EE, Spring Boot, PostgreSQL, React, Next.js, TypeScript e fluxo com IA.`;
 export const OPEN_GRAPH_IMAGE_ALT = `${profile.name} — ${profile.title}`;
 export const OPEN_GRAPH_IMAGE = {
   url: "/opengraph-image",
@@ -22,7 +25,7 @@ export interface PageMetadataOptions {
   readonly openGraphDescription?: string;
 }
 
-function normalizeUrl(rawUrl: string): string {
+export function normalizeUrl(rawUrl: string): string {
   return rawUrl.trim().replace(/\/+$/, "");
 }
 
